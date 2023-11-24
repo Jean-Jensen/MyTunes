@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="" />
+    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/ConnectionManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,11 +34,14 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "JeanBranch",
-    "last_opened_file_path": "C:/Users/Jean/Documents/GitHub/gitTest2",
+    "last_opened_file_path": "C:/Users/Jean/Documents/GitHub/MyTunes",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -44,6 +50,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="liberica-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="dk.MyTunes.Main" />
+      <module name="MyTunes" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="dk.MyTunes.*" />
@@ -66,6 +73,8 @@
       <workItem from="1700819692142" duration="427000" />
       <workItem from="1700820172760" duration="244000" />
       <workItem from="1700820425331" duration="28000" />
+      <workItem from="1700820469987" duration="295000" />
+      <workItem from="1700820776227" duration="1148000" />
     </task>
     <servers />
   </component>
