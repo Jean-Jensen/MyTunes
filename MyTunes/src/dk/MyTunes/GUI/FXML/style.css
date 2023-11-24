@@ -1,0 +1,45 @@
+.play-button {
+    -fx-shape: "M0 0 L1 0.5 L0 1 Z"; /* Triangle shape */
+}
+
+.pause-button {
+    -fx-shape: "M0 0 H0.3 V1 H0 Z M0.7 0 H1 V1 H0.7 Z"; /* Two vertical bars */
+}
+
+/*.pause-button {
+    -fx-background-image: url('pause.png');  //Image that we want to use 16x16
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 5;
+}
+*/
+.stop-button {
+    -fx-shape: "M0 0 H1 V1 H0 Z"; /* Square shape */
+}
+
+.prev-button {
+    -fx-shape: "M15 0 L15 20 M15 10 L5 0 L5 20 Z"; /* Left-pointing arrow with a vertical line */
+}
+
+.next-button {
+    -fx-shape: "M5 0 L5 20 M5 10 L15 0 L15 20 Z"; /* Right-pointing arrow with a vertical line */
+}
+
+.volume-slider .track {
+    -fx-background-color: #8a8a8a;
+    -fx-background-radius: 2;
+    -fx-pref-height: 4;
+}
+
+.volume-slider .thumb {
+    -fx-background-color: #0a0a0a;
+    -fx-background-radius: 4;
+    -fx-pref-width: 8;
+    -fx-pref-height: 8;
+}
+
+.volume-slider .fill {
+    -fx-background-color: #0a0a0a;
+    -fx-background-radius: 2;
+}
