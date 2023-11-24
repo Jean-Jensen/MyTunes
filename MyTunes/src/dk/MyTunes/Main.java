@@ -8,7 +8,4 @@ public class Main {
         GraphicalGUI.run();
     }
 
-    public void uselessMethod(){
-
-    }
 }

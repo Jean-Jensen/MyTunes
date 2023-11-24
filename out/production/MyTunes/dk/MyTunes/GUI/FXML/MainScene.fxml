@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+
+<BorderPane stylesheets="@style.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
+    <top>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="600.0">
+            <Label fx:id="currentSongLabel" layoutX="250" layoutY="50" />
+            <ProgressBar fx:id="songProgressBar" layoutX="50" layoutY="80" prefWidth="500" />
+            <Label fx:id="elapsedTimeLabel" layoutX="50" layoutY="80" />
+            <Label fx:id="remainingTimeLabel" layoutX="550" layoutY="80" />
+        </AnchorPane>
+    </top>
+    <left>
+        <VBox minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="100.0">
+            <TextField fx:id="searchField" />
+            <ListView fx:id="songListView" />
+        </VBox>
+    </left>
+    <center>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="400.0">
+            <MediaView fx:id="mediaView" fitHeight="200" fitWidth="400" />
+        </AnchorPane>
+    </center>
+    <right>
+        <ListView fx:id="playlistView" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="100.0" />
+    </right>
+    <bottom>
+        <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="600.0" spacing="20.0">
+            <Button fx:id="prevButton" onAction="#prev" styleClass="prev-button" />
+            <Button fx:id="playButton" onAction="#play" styleClass="play-button" />
+            <Button fx:id="pauseButton" onAction="#pause" styleClass="pause-button" />
+            <Button fx:id="stopButton" onAction="#stop" styleClass="stop-button" />
+            <Button fx:id="nextButton" onAction="#next" styleClass="next-button" />
+            <Slider fx:id="volumeSlider" onDragDone="#setVolume" styleClass="volume-slider" />
+        </HBox>
+    </bottom>
+</BorderPane>
