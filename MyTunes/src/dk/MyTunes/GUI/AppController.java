@@ -1,9 +1,17 @@
 package dk.MyTunes.GUI;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
+import javafx.scene.control.Button;
+
 
 public class AppController {
+
+
+
+    public void initialize() {
+}
     public void prev(ActionEvent actionEvent) {
     }
 
@@ -21,4 +29,21 @@ public class AppController {
 
     public void setVolume(DragEvent dragEvent) {
     }
+
+
+    public void renamePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void deletePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void savePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void addSong(ActionEvent actionEvent) {
+    }
+
+    public void removeSong(ActionEvent actionEvent) {
+    }
 }
+
