@@ -8,9 +8,9 @@ import dk.MyTunes.GUI.FXML.GraphicalGUI;
 
 public class Main {
     public static void main(String[] args) throws SQLServerException {
-        SongsDAO dao = new SongsDAO();
+       // SongsDAO dao = new SongsDAO();
         //ConnectionManager dao = new ConnectionManager();
-        dao.test();
+       // dao.test();
         GraphicalGUI.run();
     }
 }

@@ -1,30 +1,74 @@
-.play-button {
-    -fx-shape: "M0 0 L1 0.5 L0 1 Z"; /* Triangle shape */
-}
 
 .pause-button {
-    -fx-shape: "M0 0 H0.3 V1 H0 Z M0.7 0 H1 V1 H0.7 Z"; /* Two vertical bars */
+    -fx-background-image: url('pause-button.png'); /* Load the image from the package */
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 32px;
 }
 
-/*.pause-button {
-    -fx-background-image: url('pause.png');  //Image that we want to use 16x16
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-padding: 5;
+.pause-button:pressed {
+    -fx-background-color: rgba(41, 41, 41); /* change the shading when pressed */
+    -fx-background-radius: 50%; /* Make the button circular */
 }
-*/
+
 .stop-button {
-    -fx-shape: "M0 0 H1 V1 H0 Z"; /* Square shape */
+    -fx-background-image: url('stop-button.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 32px;
+}
+
+.stop-button:pressed {
+    -fx-background-color: rgba(41, 41, 41);
+    -fx-background-radius: 50%;
 }
 
 .prev-button {
-    -fx-shape: "M15 0 L15 20 M15 10 L5 0 L5 20 Z"; /* Left-pointing arrow with a vertical line */
+    -fx-background-image: url('prev-button.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 32px;
+}
+
+.prev-button:pressed {
+    -fx-background-color: rgba(41, 41, 41);
+    -fx-background-radius: 50%;
 }
 
 .next-button {
-    -fx-shape: "M5 0 L5 20 M5 10 L15 0 L15 20 Z"; /* Right-pointing arrow with a vertical line */
+    -fx-background-image: url('next-button.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 32px;
 }
+
+.next-button:pressed {
+    -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
+    -fx-background-radius: 50%; /* Make the button circular */
+}
+
+.play-button {
+    -fx-background-image: url('play-button.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 32px;
+}
+
+.play-button:pressed {
+    -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
+    -fx-background-radius: 50%; /* Make the button circular */
+}
+
+.table-view .column-header {
+    -fx-font-size: 10px; /* Adjust the font size */
+    -fx-padding: 2px; /* Adjust the padding */
+}
+
 
 .volume-slider .track {
     -fx-background-color: #8a8a8a;
