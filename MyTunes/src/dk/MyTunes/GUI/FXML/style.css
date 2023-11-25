@@ -1,6 +1,6 @@
 
 .pause-button {
-    -fx-background-image: url('pause-button.png'); /* Load the image from the package */
+    -fx-background-image: url('Icons/pause-button.png'); /* Load the image from the package */
     -fx-background-size: contain; /* Make the image fit the button size */
     -fx-background-color: transparent; /* Make the button background transparent */
     -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
@@ -10,10 +10,12 @@
 .pause-button:pressed {
     -fx-background-color: rgba(41, 41, 41); /* change the shading when pressed */
     -fx-background-radius: 50%; /* Make the button circular */
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
 }
 
 .stop-button {
-    -fx-background-image: url('stop-button.png');
+    -fx-background-image: url('Icons/stop-button.png');
     -fx-background-size: contain; /* Make the image fit the button size */
     -fx-background-color: transparent; /* Make the button background transparent */
     -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
@@ -23,36 +25,45 @@
 .stop-button:pressed {
     -fx-background-color: rgba(41, 41, 41);
     -fx-background-radius: 50%;
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
 }
 
 .prev-button {
-    -fx-background-image: url('prev-button.png');
+    -fx-background-image: url('Icons/prev-button.png');
     -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-repeat: no-repeat; /* Stop the image from repeating */
     -fx-background-color: transparent; /* Make the button background transparent */
-    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
-    -fx-min-height: 32px;
+    -fx-min-width: 28px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 28px;
+
 }
 
 .prev-button:pressed {
     -fx-background-color: rgba(41, 41, 41);
     -fx-background-radius: 50%;
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
 }
 
 .next-button {
-    -fx-background-image: url('next-button.png');
+    -fx-background-image: url('Icons/next-button.png');
     -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-repeat: no-repeat; /* Stop the image from repeating */
     -fx-background-color: transparent; /* Make the button background transparent */
-    -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
-    -fx-min-height: 32px;
+    -fx-min-width: 28px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 28px;
 }
 
 .next-button:pressed {
     -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
     -fx-background-radius: 50%; /* Make the button circular */
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
 }
 
 .play-button {
-    -fx-background-image: url('play-button.png');
+    -fx-background-image: url('Icons/play-button.png');
     -fx-background-size: contain; /* Make the image fit the button size */
     -fx-background-color: transparent; /* Make the button background transparent */
     -fx-min-width: 32px;  /* Adjust these values to change the size of the button */
@@ -62,6 +73,8 @@
 .play-button:pressed {
     -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
     -fx-background-radius: 50%; /* Make the button circular */
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
 }
 
 .table-view .column-header {
@@ -86,4 +99,66 @@
 .volume-slider .fill {
     -fx-background-color: #0a0a0a;
     -fx-background-radius: 2;
+}
+
+.remove-button {
+    -fx-background-image: url('Icons/removeblacksquare.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 26px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 26px;
+}
+.remove-button:pressed {
+    -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
+    -fx-background-radius: 50%; /* Make the button circular */
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
+}
+
+.addSong-button {
+    -fx-background-image: url('Icons/addblacksquare.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 26px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 26px;
+}
+.addSong-button:pressed {
+    -fx-background-color: rgba(41, 41, 41); /* 50% opaque light gray */
+    -fx-background-radius: 50%; /* Make the button circular */
+    -fx-scale-x: 0.95; /* Shrink the button horizontally */
+    -fx-scale-y: 0.95; /* Shrink the button vertically */
+}
+
+.savePlaylist-button {
+    -fx-background-image: url('Icons/saveblack.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 24px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 24px;
+}
+.savePlaylist-button:pressed {
+    -fx-scale-x: 0.90; /* Shrink the button horizontally */
+    -fx-scale-y: 0.90; /* Shrink the button vertically */
+}
+
+.rename-button {    -fx-background-image: url('Icons/renameblack.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 30px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 30px;
+}
+.rename-button:pressed {
+    -fx-scale-x: 0.90; /* Shrink the button horizontally */
+    -fx-scale-y: 0.90; /* Shrink the button vertically */
+}
+
+.delete-button {    -fx-background-image: url('Icons/deleteblack.png');
+    -fx-background-size: contain; /* Make the image fit the button size */
+    -fx-background-color: transparent; /* Make the button background transparent */
+    -fx-min-width: 24px;  /* Adjust these values to change the size of the button */
+    -fx-min-height: 24px;
+}
+.delete-button:pressed {
+    -fx-scale-x: 0.90; /* Shrink the button horizontally */
+    -fx-scale-y: 0.90; /* Shrink the button vertically */
 }

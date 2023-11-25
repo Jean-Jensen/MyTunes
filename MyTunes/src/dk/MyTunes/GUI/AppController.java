@@ -1,9 +1,8 @@
 package dk.MyTunes.GUI;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
-import javafx.scene.control.Button;
+
 
 
 public class AppController {
