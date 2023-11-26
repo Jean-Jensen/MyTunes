@@ -18,6 +18,12 @@ public class GraphicalGUI extends Application {
         primaryStage.setTitle("My Tunes");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        // Set minimum size
+        primaryStage.setMinWidth(300);
+        primaryStage.setMinHeight(200);
+        // Set maximum size
+        primaryStage.setMaxWidth(800);
+        primaryStage.setMaxHeight(600);
         primaryStage.show();
     }
 }
