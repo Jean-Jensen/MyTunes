@@ -104,8 +104,15 @@
     -fx-background-radius: 2; /* Sets the radius of the fill's corners */
 }
 
+.tableViewDB .table-cell {
+    -fx-text-fill: white;
+}
+.tableViewDB .table-row-cell:filled:selected .text {
+    -fx-fill: red;
+}
+
 .split-pane .split-pane-divider {
-    -fx-padding: 0 0.05em 0 0.05em;
+    -fx-padding: 0 0.038em 0 0.038em;
 
 }
 

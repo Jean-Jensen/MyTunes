@@ -22,8 +22,8 @@ public class GraphicalGUI extends Application {
         primaryStage.setMinWidth(300);
         primaryStage.setMinHeight(200);
         // Set maximum size
-        primaryStage.setMaxWidth(800);
-        primaryStage.setMaxHeight(600);
+        primaryStage.setMaxWidth(1024);
+        primaryStage.setMaxHeight(768);
         primaryStage.show();
     }
 }
