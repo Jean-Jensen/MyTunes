@@ -129,9 +129,9 @@ public class AppController {
     @FXML
     public void openUpdateWindow(ActionEvent actionEvent) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
             Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
             if(selectedSong != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
                 int id = selectedSong.getId();
                 UpdateWindow updatewindow = new UpdateWindow(id);
                 loader.setController(updatewindow);
