@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongsDAO implements ISongsDAO{
+public class SongsDAO implements ISongsDAO {
     private final ConnectionManager cm = new ConnectionManager();
 
     @Override
@@ -82,7 +82,26 @@ public class SongsDAO implements ISongsDAO{
 
     @Override
     public void createSong(Song s) {
+        try(Connection con = cm.getConnection()){
+            String sql = "INSERT INTO songs(Name, Artist, Length, Album, Comment, Year, Genre, FileType, FilePath)" +
+                    " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"; //command in SQL to add a new Song
+            PreparedStatement prStmt = con.prepareStatement(sql);
 
+            //setting the values based on the song object we're adding (replacing the "?"s)
+            prStmt.setString(1, s.getName());
+            prStmt.setString(2, s.getArtist());
+            prStmt.setString(3, s.getLength());
+            prStmt.setString(4, s.getAlbum());
+            prStmt.setString(5, s.getComment());
+            prStmt.setString(6, String.valueOf(s.getYear()));
+            prStmt.setString(7, s.getGenre());
+            prStmt.setString(8, s.getFileType());
+            prStmt.setString(9, s.getFileType());
+
+            prStmt.executeUpdate(); //execute command in the database
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -108,4 +127,25 @@ public class SongsDAO implements ISongsDAO{
         }
         return songs;
     }
+
+    public int getLastID(){
+        //SELECT * FROM Songs
+        //WHERE ID = (
+        //    SELECT IDENT_CURRENT('Songs'))
+        int ID = 0;
+        try (Connection con = cm.getConnection()) {
+            String sql = "SELECT * FROM Songs WHERE ID = (SELECT IDENT_CURRENT('Songs'))";
+            //"INDENT_CURRENT" finds the last identity value created for a table, which will always be the highest ID since it auto-increments
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                ID = rs.getInt("id");
+            }
+            return ID;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

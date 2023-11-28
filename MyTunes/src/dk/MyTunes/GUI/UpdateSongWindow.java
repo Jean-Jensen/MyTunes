@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class UpdateWindow {
+public class UpdateSongWindow {
 
     @FXML
     private TextField nameField;
@@ -25,12 +25,11 @@ public class UpdateWindow {
     @FXML
     private TextField filePathField;
 
-    private BLLManager bllManager;
+    private BLLManager bllManager = new BLLManager();
     private int id;
     private AppController appController;
 
-    public UpdateWindow(int songId) {
-        this.bllManager = new BLLManager();
+    public void setID(int songId){
         this.id = songId;
     }
     public void setAppController(AppController appController) {

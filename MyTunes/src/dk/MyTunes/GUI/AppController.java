@@ -3,7 +3,6 @@ package dk.MyTunes.GUI;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
-import dk.MyTunes.GUI.UpdateWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -121,7 +120,10 @@ public class AppController {
     public void savePlaylist(ActionEvent actionEvent) {
     }
 
-    public void addSong(ActionEvent actionEvent) {
+    public void addSong(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
+        AddSongWindow controller = loader.getController();
+        openNewScene(loader, "Add Song");
     }
 
     public void removeSong(ActionEvent actionEvent) {
@@ -133,22 +135,28 @@ public class AppController {
             if(selectedSong != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
                 int id = selectedSong.getId();
-                UpdateWindow updatewindow = new UpdateWindow(id);
+                UpdateSongWindow updatewindow = loader.getController();
                 loader.setController(updatewindow);
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage primaryStage = new Stage();
-                primaryStage.setTitle("Update Songs");
-                primaryStage.setScene(scene);
-                primaryStage.initModality(Modality.APPLICATION_MODAL);
-                primaryStage.show();
                 updatewindow.setAppController(this);
+                updatewindow.setID(id);
+                openNewScene(loader, "Update Song");
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        }
+    }
+
+    private void openNewScene(FXMLLoader loader, String title) throws IOException { //in order to avoid repeating the same lines of code over and over
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle(title);
+        primaryStage.setScene(scene);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        primaryStage.show();
+    }
     private void showDBtable() {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));

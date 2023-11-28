@@ -27,6 +27,14 @@ public class Song {
         this.filePath = filePath;
     }
 
+    public Song(int id, String name, String artist, String length, String fileType) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.length = length;
+        this.fileType = fileType;
+    }
+
     public Song(int id, String name, String artist) {
         this.id = id;
         this.name = name;
@@ -42,6 +50,7 @@ public class Song {
         this.album = album;
         this.fileType = fileType;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -74,10 +83,6 @@ public class Song {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

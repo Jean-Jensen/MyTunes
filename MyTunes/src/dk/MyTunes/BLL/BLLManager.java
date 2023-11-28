@@ -8,7 +8,7 @@ import dk.MyTunes.Exceptions.MyTunesExceptions;
 import java.util.List;
 
 public class BLLManager {
-    ISongsDAO songsDAO = new SongsDAO();
+    SongsDAO songsDAO = new SongsDAO();
 
     public void createSong(Song s) throws MyTunesExceptions {
         if(!s.getFileType().equals(".wav") && !s.getFileType().equals(".mp3")) {
@@ -38,6 +38,10 @@ public class BLLManager {
             }
         }
         return null;
+    }
+
+    public int getLastID(){
+        return songsDAO.getLastID();
     }
 
 }
