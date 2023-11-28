@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/AddSongs.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/UpdateWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/UpdateSongWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BE/Song.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BE/Song.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BLL/BLLManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BLL/BLLManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/SongsDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/SongsDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +100,7 @@
       <workItem from="1700820776227" duration="2781000" />
       <workItem from="1701112192217" duration="188000" />
       <workItem from="1701114003281" duration="2601000" />
-      <workItem from="1701188023340" duration="6487000" />
+      <workItem from="1701188023340" duration="7431000" />
     </task>
     <servers />
   </component>

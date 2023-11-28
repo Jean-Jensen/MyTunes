@@ -9,21 +9,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.awt.*;
+import java.awt.Button;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ import java.util.List;
 
 
 public class AppController {
+    @FXML
+    private Slider volumeSlider;
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -92,22 +95,56 @@ public class AppController {
         columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
     }
 
-    public void prev(ActionEvent actionEvent) {
-    }
+    private MediaPlayer mediaPlayer;
 
     public void play(ActionEvent actionEvent) {
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        playSong(selectedSong);
     }
 
     public void pause(ActionEvent actionEvent) {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
     }
 
     public void stop(ActionEvent actionEvent) {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 
     public void next(ActionEvent actionEvent) {
+        // Get the index of the selected song
+        int selectedIndex = tableViewDB.getSelectionModel().getSelectedIndex();
+        // Get the next song
+        Song nextSong = tableViewDB.getItems().get(selectedIndex + 1);
+        // Play the next song
+        playSong(nextSong);
+    }
+
+    public void prev(ActionEvent actionEvent) {
+        // Get the index of the selected song
+        int selectedIndex = tableViewDB.getSelectionModel().getSelectedIndex();
+        // Get the previous song
+        Song prevSong = tableViewDB.getItems().get(selectedIndex - 1);
+        // Play the previous song
+        playSong(prevSong);
+    }
+
+    private void playSong(Song song) {
+        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + song.getFilePath()).toUri().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     public void setVolume(DragEvent dragEvent) {
+        // Get the value from the volume slider
+        double volume = volumeSlider.getValue();
+        // Set the volume of the media player
+        if (mediaPlayer != null) {
+            mediaPlayer.setVolume(volume);
+        }
     }
 
 
