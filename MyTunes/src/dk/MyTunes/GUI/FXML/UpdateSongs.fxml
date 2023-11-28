@@ -66,9 +66,5 @@
          <RowConstraints />
       </rowConstraints>
    </GridPane>
-
-           <!-- More Label and TextField pairs for other properties -->
-
            <Button layoutY="122.0" onAction="#updateSong" prefHeight="76.0" prefWidth="639.0" text="Update" />
-
 </AnchorPane>

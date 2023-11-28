@@ -37,6 +37,7 @@ public class UpdateWindow {
         this.appController = appController;
     }
 
+    @FXML
     public void updateSong(ActionEvent actionEvent) {
         Song s = bllManager.getSongById(id);
 
@@ -54,6 +55,8 @@ public class UpdateWindow {
         }
         if (!yearField.getText().isEmpty()) {
             s.setYear(Integer.parseInt(yearField.getText()));
+        } else {
+            s.setFilePath("NULL");
         }
         if (!genreField.getText().isEmpty()) {
             s.setGenre(genreField.getText());
@@ -67,6 +70,7 @@ public class UpdateWindow {
             s.setFilePath("NULL");
         }
         bllManager.updateSong(s);
+
         appController.updateSongInTableView(s);
     }
 

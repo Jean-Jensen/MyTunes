@@ -72,7 +72,7 @@
                             <Button fx:id="removeSong" mnemonicParsing="false" onAction="#removeSong" styleClass="remove-button" />
                             <Button fx:id="addSong" mnemonicParsing="false" onAction="#addSong" styleClass="addSong-button" />
                             <TextField promptText="Search" style="-fx-opacity: .75; -fx-background-color: #5c6978;" />
-                        <Button fx:id="openUpdateWindow" mnemonicParsing="false" onAction="#openUpdateWindow" />
+                        <Button mnemonicParsing="false" onAction="#openUpdateWindow" />
                      </children>
                   </HBox>
                       <TableView fx:id="tableViewDB" styleClass="tableViewDB" style="-fx-background-color: #0f151f;">
