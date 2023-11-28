@@ -1,33 +1,22 @@
 package dk.MyTunes.GUI;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
-import dk.MyTunes.GUI.UpdateWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,10 +48,10 @@ public class AppController {
     private TableColumn<Song, String> columnLengthDB;
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
-    private BLLManager bllManager;
+    private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private MediaPlayer mediaPlayer;
 
-    public AppController() {
+    public AppController(){
         this.bllManager = new BLLManager();
     }
     public void initialize() {
@@ -96,9 +85,7 @@ public class AppController {
 
     public void play(ActionEvent actionEvent) {
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + selectedSong.getFilePath()).toUri().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+        playSong(selectedSong);
     }
 
     public void pause(ActionEvent actionEvent) {
@@ -119,9 +106,7 @@ public class AppController {
         // Get the next song
         Song nextSong = tableViewDB.getItems().get(selectedIndex + 1);
         // Play the next song
-        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + nextSong.getFilePath()).toUri().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+        playSong(nextSong);
     }
 
     public void prev(ActionEvent actionEvent) {
@@ -130,7 +115,11 @@ public class AppController {
         // Get the previous song
         Song prevSong = tableViewDB.getItems().get(selectedIndex - 1);
         // Play the previous song
-        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + prevSong.getFilePath()).toUri().toString());
+        playSong(prevSong);
+    }
+
+    private void playSong(Song song) {
+        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
@@ -189,8 +178,8 @@ public class AppController {
         columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
         //commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
-        List<Song> songs = bllManager.getAllSongs();
-        tableViewDB.getItems().setAll(songs);
+        List<Song> songs = bllManager.getAllSongs(); //Get all songs from the BLL layer through the getAllSongs method
+        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
 
     }
     public void updateSongInTableView(Song updatedSong) {
