@@ -7,21 +7,8 @@ public class Song {
     private String name;
     private String artist;
     private String length;
-    private String album;
-    private String comment;
-    private int year;
-    private String genre;
     private String fileType;
     private String filePath;
-
-
-    public Song(int id, String name, String artist, String length, String fileType) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.length = length;
-        this.fileType = fileType;
-    }
     
 
     public Song(int id, String name, String artist, String length, String fileType, String filePath) {
@@ -33,8 +20,20 @@ public class Song {
         this.filePath = filePath;
     }
 
-    public Song(int sid, String name, String artist, String length, String album, String fileType, String filePath) {
+    public Song(int id, String name, String artist, String length, String fileType) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.length = length;
+        this.fileType = fileType;
     }
+
+    public Song(int id, String name, String artist) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+    }
+    
 
     @Override
     public boolean equals(Object o) {
@@ -56,10 +55,6 @@ public class Song {
                 ", name: '" + name + '\'' +
                 ", artist: '" + artist + '\'' +
                 ", length: '" + length + '\'' +
-                ", album: '" + album + '\'' +
-                ", comment: '" + comment + '\'' +
-                ", year: " + year +
-                ", genre: '" + genre + '\'' +
                 ", fileType: '" + fileType + '\'' +
                 ", filePath: '" + filePath + '\'' +
                 '}';
@@ -67,10 +62,6 @@ public class Song {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -95,38 +86,6 @@ public class Song {
 
     public void setLength(String length) {
         this.length = length;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getFileType() {

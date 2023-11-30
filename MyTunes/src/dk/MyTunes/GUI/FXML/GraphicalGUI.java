@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class GraphicalGUI extends Application {
     public static void run() {
-        launch();
+        Application.launch();
     }
 
     @Override

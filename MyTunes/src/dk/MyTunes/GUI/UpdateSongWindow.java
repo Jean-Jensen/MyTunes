@@ -21,12 +21,11 @@ public class UpdateSongWindow {
     @FXML
     private TextField filePathField;
 
-    private BLLManager bllManager;
+    private BLLManager bllManager = new BLLManager();
     private int id;
     private AppController appController;
 
-    public UpdateSongWindow(int songId) {
-        this.bllManager = new BLLManager();
+    public void setID(int songId){
         this.id = songId;
     }
     public void setAppController(AppController appController) {
