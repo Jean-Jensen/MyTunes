@@ -45,17 +45,8 @@ public class UpdateSongWindow {
         if (!artistField.getText().isEmpty()) {
             s.setArtist(artistField.getText());
         }
-        if (!albumField.getText().isEmpty()) {
-            s.setAlbum(albumField.getText());
-        }
         if (!lengthField.getText().isEmpty()) {
             s.setLength(lengthField.getText());
-        }
-        if (!yearField.getText().isEmpty()) {
-            s.setYear(Integer.parseInt(yearField.getText()));
-        }
-        if (!genreField.getText().isEmpty()) {
-            s.setGenre(genreField.getText());
         }
         if (!fileTypeField.getText().isEmpty()) {
             s.setFileType(fileTypeField.getText());

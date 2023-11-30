@@ -7,22 +7,14 @@ public class Song {
     private String name;
     private String artist;
     private String length;
-    private String album;
-    private String comment;
-    private int year;
-    private String genre;
     private String fileType;
     private String filePath;
 
-    public Song(int id, String name, String artist, String length, String album, String comment, int year, String genre, String fileType, String filePath) {
+    public Song(int id, String name, String artist, String length, String fileType, String filePath) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.length = length;
-        this.album = album;
-        this.comment = comment;
-        this.year = year;
-        this.genre = genre;
         this.fileType = fileType;
         this.filePath = filePath;
     }
@@ -40,17 +32,6 @@ public class Song {
         this.name = name;
         this.artist = artist;
     }
-
-
-    public Song(int id, String name, String artist, String album, String length, String fileType) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.length = length;
-        this.album = album;
-        this.fileType = fileType;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -72,10 +53,6 @@ public class Song {
                 ", name: '" + name + '\'' +
                 ", artist: '" + artist + '\'' +
                 ", length: '" + length + '\'' +
-                ", album: '" + album + '\'' +
-                ", comment: '" + comment + '\'' +
-                ", year: " + year +
-                ", genre: '" + genre + '\'' +
                 ", fileType: '" + fileType + '\'' +
                 ", filePath: '" + filePath + '\'' +
                 '}';
@@ -107,38 +84,6 @@ public class Song {
 
     public void setLength(String length) {
         this.length = length;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getFileType() {
