@@ -27,6 +27,14 @@ public class Song {
         this.filePath = filePath;
     }
 
+    public Song(int id, String name, String artist, String length, String fileType) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.length = length;
+        this.fileType = fileType;
+    }
+
     public Song(int id, String name, String artist) {
         this.id = id;
         this.name = name;

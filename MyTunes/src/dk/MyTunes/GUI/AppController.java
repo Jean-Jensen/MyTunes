@@ -119,7 +119,8 @@ public class AppController {
     }
 
     private void playSong(Song song) {
-        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + song.getFilePath()).toUri().toString());
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        Media media = new Media(Paths.get(selectedSong.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
@@ -142,7 +143,10 @@ public class AppController {
     public void savePlaylist(ActionEvent actionEvent) {
     }
 
-    public void addSong(ActionEvent actionEvent) {
+    public void addSong(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
+        AddSongWindow controller = loader.getController();
+        openNewScene(loader, "Add Song");
     }
 
     public void removeSong(ActionEvent actionEvent) {
@@ -154,7 +158,7 @@ public class AppController {
             Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
             if(selectedSong != null) {
                 int id = selectedSong.getId();
-                UpdateWindow updatewindow = new UpdateWindow(id);
+                UpdateSongWindow updatewindow = new UpdateSongWindow(id);
                 loader.setController(updatewindow);
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
@@ -168,8 +172,16 @@ public class AppController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        }
+    }
+    private void openNewScene(FXMLLoader loader, String title) throws IOException { //in order to avoid repeating the same lines of code over and over
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle(title);
+        primaryStage.setScene(scene);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        primaryStage.show();
+    }
     private void showDBtable() {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
