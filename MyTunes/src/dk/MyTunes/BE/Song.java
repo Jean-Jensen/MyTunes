@@ -51,6 +51,16 @@ public class Song {
         this.fileType = fileType;
     }
 
+    public Song(int id, String name, String artist, String album, String length, String fileType, String filePath) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.length = length;
+        this.album = album;
+        this.fileType = fileType;
+        this.filePath = filePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

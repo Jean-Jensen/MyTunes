@@ -3,6 +3,8 @@ package dk.MyTunes.GUI;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,6 +60,7 @@ public class AppController {
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showDBtable();
+        setVolumeSlider();
     }
 
     private void windowCenterBar() {
@@ -90,7 +93,11 @@ public class AppController {
 
     public void pause(ActionEvent actionEvent) {
         if (mediaPlayer != null) {
-            mediaPlayer.pause();
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.pause();
+            } else if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+                mediaPlayer.play();
+            }
         }
     }
 
@@ -125,15 +132,17 @@ public class AppController {
         mediaPlayer.play();
     }
 
-    public void setVolume(DragEvent dragEvent) {
-        // Get the value from the volume slider
-        double volume = volumeSlider.getValue();
-        // Set the volume of the media player
-        if (mediaPlayer != null) {
-            mediaPlayer.setVolume(volume);
-        }
+    public void setVolume(){
     }
-
+    public void setVolumeSlider(){  //observable (the property that was changed), oldValue (the previous value of the property), and newValue (the new value of the property).
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (mediaPlayer != null) {
+                double sliderValue = newValue.doubleValue(); //This value is normally between 0 and 100 but next line makes this more precise, so we need a double
+                double volume = (Math.log10(sliderValue) - 2) / -2; // Convert slider value to logarithmic scale
+                mediaPlayer.setVolume(volume);
+            }
+        });
+    }
     public void renamePlaylist(ActionEvent actionEvent) {
     }
 

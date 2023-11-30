@@ -96,7 +96,7 @@ public class SongsDAO implements ISongsDAO {
             prStmt.setString(6, String.valueOf(s.getYear()));
             prStmt.setString(7, s.getGenre());
             prStmt.setString(8, s.getFileType());
-            prStmt.setString(9, s.getFileType());
+            prStmt.setString(9, s.getFilePath());
 
             prStmt.executeUpdate(); //execute command in the database
         } catch (SQLException e) {
@@ -108,7 +108,7 @@ public class SongsDAO implements ISongsDAO {
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
-            String sql = "SELECT id, name, artist, album, length, fileType, comment FROM songs";
+            String sql = "SELECT id, name, artist, album, length, fileType, filePath FROM songs";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -118,8 +118,8 @@ public class SongsDAO implements ISongsDAO {
                 String album = rs.getString("album");
                 String length = rs.getString("length");
                 String fileType = rs.getString("fileType");
-                //String comment = rs.getString("comment");
-                Song song = new Song(id, name, artist, album, length, fileType);
+                String filePath = rs.getString("filePath");
+                Song song = new Song(id, name, artist, album, length, fileType, filePath);
                 songs.add(song);
             }
         } catch (SQLException e) {
