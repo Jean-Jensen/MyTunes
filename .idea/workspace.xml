@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BE/Song.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BE/Song.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/SongsDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/SongsDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +51,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "JeanBranch",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Jean/Documents/GitHub/MyTunes/MyTunes/src/dk/MyTunes/GUI/FXML",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -112,6 +105,8 @@
       <workItem from="1701363153819" duration="14000" />
       <workItem from="1701363549908" duration="332000" />
       <workItem from="1701363928108" duration="845000" />
+      <workItem from="1701364870906" duration="13000" />
+      <workItem from="1701364891450" duration="9000" />
     </task>
     <servers />
   </component>
