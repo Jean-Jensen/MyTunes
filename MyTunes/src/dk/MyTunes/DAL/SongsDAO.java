@@ -12,7 +12,7 @@ public class SongsDAO implements ISongsDAO {
     private final ConnectionManager cm = new ConnectionManager();
 
     @Override
-    public Song getSong(int id) {
+  /*  public Song getSong(int id) {
         try(Connection con = cm.getConnection())
         {
             String sql = "SELECT * FROM Songs WHERE id=?";
@@ -27,9 +27,7 @@ public class SongsDAO implements ISongsDAO {
                 String fileType = rs.getString("fileType");
                 String filePath = rs.getString("filePath");
 
-
-
-                Song s = new Song(sid, name, artist, length,fileType,filePath);
+                Song s = new Song(sid, name, artist, length, fileType,filePath);
                 System.out.println(s);
                 System.out.println("Connection Established");
                 return s;
@@ -39,6 +37,11 @@ public class SongsDAO implements ISongsDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }*/
+
+
+    public Song getSong(int id) {
+        return null;
     }
 
     @Override
@@ -94,7 +97,7 @@ public class SongsDAO implements ISongsDAO {
             prStmt.setString(2, s.getArtist());
             prStmt.setString(3, s.getLength());
             prStmt.setString(4, s.getFileType());
-            prStmt.setString(5, s.getFileType());
+            prStmt.setString(5, s.getFilePath());
 
             prStmt.executeUpdate(); //execute command in the database
         } catch (SQLException e) {
@@ -115,8 +118,8 @@ public class SongsDAO implements ISongsDAO {
                 String artist = rs.getString("artist");
                 String length = rs.getString("length");
                 String fileType = rs.getString("fileType");
-                //String comment = rs.getString("comment");
-                Song song = new Song(id, name, artist, length, fileType);
+                String filePath = rs.getString("filePath");
+                Song song = new Song(id, name, artist, length, fileType, filePath);
                 songs.add(song);
             }
         } catch (SQLException e) {

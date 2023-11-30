@@ -11,13 +11,7 @@ public class AddSongWindow {
     @FXML
     private TextField artistField;
     @FXML
-    private TextField albumField;
-    @FXML
     private TextField lengthField;
-    @FXML
-    private TextField yearField;
-    @FXML
-    private TextField genreField;
     @FXML
     private TextField fileTypeField;
     @FXML

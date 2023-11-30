@@ -12,14 +12,10 @@ public class UpdateSongWindow {
     private TextField nameField;
     @FXML
     private TextField artistField;
-    @FXML
-    private TextField albumField;
+
     @FXML
     private TextField lengthField;
-    @FXML
-    private TextField yearField;
-    @FXML
-    private TextField genreField;
+
     @FXML
     private TextField fileTypeField;
     @FXML
@@ -36,6 +32,7 @@ public class UpdateSongWindow {
         this.appController = appController;
     }
 
+    @FXML
     public void updateSong(ActionEvent actionEvent) {
         Song s = bllManager.getSongById(id);
 
@@ -45,9 +42,11 @@ public class UpdateSongWindow {
         if (!artistField.getText().isEmpty()) {
             s.setArtist(artistField.getText());
         }
+
         if (!lengthField.getText().isEmpty()) {
             s.setLength(lengthField.getText());
         }
+
         if (!fileTypeField.getText().isEmpty()) {
             s.setFileType(fileTypeField.getText());
         }
@@ -57,6 +56,7 @@ public class UpdateSongWindow {
             s.setFilePath("NULL");
         }
         bllManager.updateSong(s);
+
         appController.updateSongInTableView(s);
     }
 

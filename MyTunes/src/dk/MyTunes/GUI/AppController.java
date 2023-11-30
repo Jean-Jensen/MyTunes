@@ -1,33 +1,21 @@
 package dk.MyTunes.GUI;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.awt.*;
-import java.awt.Button;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,16 +46,17 @@ public class AppController {
     private TableColumn<Song, String> columnLengthDB;
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
-    private Button openUpdateWindow;
-    private BLLManager bllManager;
+    private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
+    private MediaPlayer mediaPlayer;
 
-    public AppController() {
+    public AppController(){
         this.bllManager = new BLLManager();
     }
     public void initialize() {
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
-        coloumnSizes(); //This makes it so the header for the table (Coloumns) readjust to the window size
+        coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showDBtable();
+        setVolumeSlider();
     }
 
     private void windowCenterBar() {
@@ -78,22 +67,18 @@ public class AppController {
     }
 
     private void coloumnSizes() {
-        int numberOfColumns = 5;        //To adjust columns sizing with window size of playlist list
+        int numberOfColumns = 4;        //To adjust columns sizing with window size of playlist list
         columnSongs.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnArtists.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
-        //columnAlbum.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnLength.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnFileType.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
 
-        int numberOfColumnsDB = 5;      //To adjust columns sizing with window size of Database list
+        int numberOfColumnsDB = 4;      //To adjust columns sizing with window size of Database list
         columnSongsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnArtistsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-        //columnAlbumDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnLengthDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
     }
-
-    private MediaPlayer mediaPlayer;
 
     public void play(ActionEvent actionEvent) {
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
@@ -102,7 +87,11 @@ public class AppController {
 
     public void pause(ActionEvent actionEvent) {
         if (mediaPlayer != null) {
-            mediaPlayer.pause();
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.pause();
+            } else if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+                mediaPlayer.play();
+            }
         }
     }
 
@@ -131,21 +120,23 @@ public class AppController {
     }
 
     private void playSong(Song song) {
-        Media media = new Media(Paths.get("src/dk/MyTunes/DAL/Songs/" + song.getFilePath()).toUri().toString());
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        Media media = new Media(Paths.get(selectedSong.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
 
-    public void setVolume(DragEvent dragEvent) {
-        // Get the value from the volume slider
-        double volume = volumeSlider.getValue();
-        // Set the volume of the media player
-        if (mediaPlayer != null) {
-            mediaPlayer.setVolume(volume);
-        }
+    public void setVolume(){
     }
-
-
+    public void setVolumeSlider(){  //observable (the property that was changed[not used but needed for .addListener]), oldValue (the previous value of the property), and newValue (the new value of the property).
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (mediaPlayer != null) {
+                double sliderValue = newValue.doubleValue(); //This value is normally between 0 and 100 but next line makes this more precise, so we need a double
+                double volume = (Math.log10(sliderValue) - 2) / -2; // Convert slider value to logarithmic scale
+                mediaPlayer.setVolume(volume);
+            }
+        });
+    }
     public void renamePlaylist(ActionEvent actionEvent) {
     }
 
@@ -209,14 +200,13 @@ public class AppController {
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
         columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
 
-        List<Song> songs = bllManager.getAllSongs();
-        tableViewDB.getItems().setAll(songs);
+        List<Song> songs = bllManager.getAllSongs(); //Get all songs from the BLL layer through the getAllSongs method
+        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
 
     }
     public void updateSongInTableView(Song updatedSong) {
         // Find the index of the song in the TableView's items
         int index = tableViewDB.getItems().indexOf(updatedSong);
-
         // Replace the song in the TableView's items with the updated song
         if (index != -1) {
             tableViewDB.getItems().set(index, updatedSong);

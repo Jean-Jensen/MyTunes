@@ -9,6 +9,7 @@ public class Song {
     private String length;
     private String fileType;
     private String filePath;
+    
 
     public Song(int id, String name, String artist, String length, String fileType, String filePath) {
         this.id = id;
@@ -32,6 +33,7 @@ public class Song {
         this.name = name;
         this.artist = artist;
     }
+    
 
     @Override
     public boolean equals(Object o) {
