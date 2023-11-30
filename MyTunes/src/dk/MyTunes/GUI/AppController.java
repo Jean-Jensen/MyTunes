@@ -95,7 +95,7 @@ public class AppController {
         }
     }
 
-    public void stop(ActionEvent actionEvent) {
+    public void stop() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
@@ -120,8 +120,10 @@ public class AppController {
     }
 
     private void playSong(Song song) {
-        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-        Media media = new Media(Paths.get(selectedSong.getFilePath()).toUri().toString());
+        if(mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)){
+            stop();
+        }
+        Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
