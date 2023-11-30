@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="168.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AddSongWindow">
+
+    <GridPane hgap="10" layoutX="10.0" layoutY="10.0" vgap="10">
+        <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="artistField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Album" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <TextField fx:id="albumField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+    <GridPane hgap="10" layoutX="210.0" layoutY="10.0" vgap="10">
+        <children>
+            <Label text="Length" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="lengthField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Year" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="yearField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Genre" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="genreField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </children>
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+    <GridPane hgap="10" layoutX="420.0" layoutY="10.0" vgap="10">
+        <children>
+            <Label text="File Type" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="fileTypeField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="File Path" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="filePathField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        </children>
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+
+    <!-- More Label and TextField pairs for other properties -->
+
+    <Button layoutY="122.0" onAction="#AddSong" prefHeight="76.0" prefWidth="639.0" text="Add" />
+
+</AnchorPane>
