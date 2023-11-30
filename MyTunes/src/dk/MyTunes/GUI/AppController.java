@@ -3,8 +3,6 @@ package dk.MyTunes.GUI;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
 import java.io.IOException;
 import java.nio.file.Paths;
 import javafx.scene.media.Media;
@@ -71,17 +68,15 @@ public class AppController {
     }
 
     private void coloumnSizes() {
-        int numberOfColumns = 5;        //To adjust columns sizing with window size of playlist list
+        int numberOfColumns = 4;        //To adjust columns sizing with window size of playlist list
         columnSongs.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnArtists.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
-        columnAlbum.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnLength.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
         columnFileType.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
 
-        int numberOfColumnsDB = 5;      //To adjust columns sizing with window size of Database list
+        int numberOfColumnsDB = 4;      //To adjust columns sizing with window size of Database list
         columnSongsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnArtistsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-        columnAlbumDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnLengthDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
     }
@@ -134,7 +129,7 @@ public class AppController {
 
     public void setVolume(){
     }
-    public void setVolumeSlider(){  //observable (the property that was changed), oldValue (the previous value of the property), and newValue (the new value of the property).
+    public void setVolumeSlider(){  //observable (the property that was changed[not used but needed for .addListener]), oldValue (the previous value of the property), and newValue (the new value of the property).
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (mediaPlayer != null) {
                 double sliderValue = newValue.doubleValue(); //This value is normally between 0 and 100 but next line makes this more precise, so we need a double
@@ -194,10 +189,8 @@ public class AppController {
     private void showDBtable() {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
-        columnAlbumDB.setCellValueFactory(new PropertyValueFactory<>("album"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
         columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
-        //commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
         List<Song> songs = bllManager.getAllSongs(); //Get all songs from the BLL layer through the getAllSongs method
         tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs

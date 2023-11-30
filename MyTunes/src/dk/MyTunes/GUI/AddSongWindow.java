@@ -11,13 +11,7 @@ public class AddSongWindow {
     @FXML
     private TextField artistField;
     @FXML
-    private TextField albumField;
-    @FXML
     private TextField lengthField;
-    @FXML
-    private TextField yearField;
-    @FXML
-    private TextField genreField;
     @FXML
     private TextField fileTypeField;
     @FXML
@@ -27,6 +21,7 @@ public class AddSongWindow {
 
     private BLLManager bll = new BLLManager();
 
+
     public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions {
         if(nameField.getText() != null && artistField.getText() != null && filePathField.getText() != null
                 && fileTypeField.getText() != null && lengthField.getText() != null){
@@ -35,19 +30,7 @@ public class AddSongWindow {
             //since that's how the database would decide its ID
             s.setFilePath(filePathField.getText());
 
-            if (!albumField.getText().isEmpty()) {
-                s.setAlbum(albumField.getText());
-            }
-            if (!yearField.getText().isEmpty()) {
-                s.setYear(Integer.parseInt(yearField.getText()));
-            }
-            if (!genreField.getText().isEmpty()) {
-                s.setGenre(genreField.getText());
-            }
-
             bll.createSong(s);
         }
-
-
     }
 }
