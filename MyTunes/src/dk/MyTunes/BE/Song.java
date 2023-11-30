@@ -14,18 +14,6 @@ public class Song {
     private String fileType;
     private String filePath;
 
-    public Song(int id, String name, String artist, String length, String album, String comment, int year, String genre, String fileType, String filePath) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.length = length;
-        this.album = album;
-        this.comment = comment;
-        this.year = year;
-        this.genre = genre;
-        this.fileType = fileType;
-        this.filePath = filePath;
-    }
 
     public Song(int id, String name, String artist, String length, String fileType) {
         this.id = id;
@@ -34,31 +22,18 @@ public class Song {
         this.length = length;
         this.fileType = fileType;
     }
+    
 
-    public Song(int id, String name, String artist) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-    }
-
-
-    public Song(int id, String name, String artist, String album, String length, String fileType) {
+    public Song(int id, String name, String artist, String length, String fileType, String filePath) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.length = length;
-        this.album = album;
-        this.fileType = fileType;
-    }
-
-    public Song(int id, String name, String artist, String album, String length, String fileType, String filePath) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.length = length;
-        this.album = album;
         this.fileType = fileType;
         this.filePath = filePath;
+    }
+
+    public Song(int sid, String name, String artist, String length, String album, String fileType, String filePath) {
     }
 
     @Override

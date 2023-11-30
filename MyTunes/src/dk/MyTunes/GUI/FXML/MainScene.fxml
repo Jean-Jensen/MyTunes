@@ -62,7 +62,6 @@
                           <columns>
                               <TableColumn fx:id="columnSongs" prefWidth="120.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
                               <TableColumn fx:id="columnArtists" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Artists" />
-                              <TableColumn fx:id="columnAlbum" prefWidth="110.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Album" />
                               <TableColumn fx:id="columnLength" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Length" />
                               <TableColumn fx:id="columnFileType" prefWidth="60.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="File Type" />
                           </columns>
@@ -79,7 +78,6 @@
                           <columns>
                               <TableColumn fx:id="columnSongsDB" prefWidth="120.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
                               <TableColumn fx:id="columnArtistsDB" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Artists" />
-                              <TableColumn fx:id="columnAlbumDB" prefWidth="110.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Album" />
                               <TableColumn fx:id="columnLengthDB" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Length" />
                               <TableColumn fx:id="columnFileTypeDB" prefWidth="60.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="File Type" />
                           </columns>

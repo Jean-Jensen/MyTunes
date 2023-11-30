@@ -15,8 +15,7 @@
         <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <Label text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="artistField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Label text="Album" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="albumField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
         <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -32,10 +31,8 @@
         <children>
             <Label text="Length" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <TextField fx:id="lengthField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <Label text="Year" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="yearField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Genre" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="genreField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+
         </children>
         <columnConstraints>
             <ColumnConstraints />
