@@ -37,7 +37,7 @@ public class AddSongWindow {
 
 
             bll.createSong(s);
-            appController.showDBtable();
+            appController.showSongs();
         }
 
 

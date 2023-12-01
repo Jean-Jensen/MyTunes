@@ -5,12 +5,15 @@ import java.util.List;
 public class Playlist {
     private int id;
     private String name;
+    private String length;
+    private int songCount;
     private List<Song> songs;
 
-    public Playlist(int id, String name, List<Song> songs) {
+    public Playlist(int id, String name, String length, int songCount) {
         this.id = id;
         this.name = name;
-        this.songs = songs;
+        this.length = length;
+        this.songCount = songCount;
     }
 
     public int getId() {
@@ -27,6 +30,22 @@ public class Playlist {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public int getSongCount() {
+        return songCount;
+    }
+
+    public void setSongCount(int songCount) {
+        this.songCount = songCount;
     }
 
     public List<Song> getSongs() {
