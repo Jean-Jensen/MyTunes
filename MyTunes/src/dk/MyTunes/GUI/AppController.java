@@ -15,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
@@ -36,7 +38,7 @@ public class AppController {
     @FXML
     private SplitPane splitPane;
     @FXML
-    private TableView<?> tableView;
+    private TableView<Song> tableSongsFromPlayList;
     @FXML
     private TableColumn<Song, String> columnSongs;
     @FXML
@@ -79,10 +81,10 @@ public class AppController {
 
     private void coloumnSizes() {
         int numberOfColumns = 4;        //To adjust columns sizing with window size of playlist list
-        columnSongs.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
-        columnArtists.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
-        columnLength.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
-        columnFileType.prefWidthProperty().bind(tableView.widthProperty().divide(numberOfColumns));
+        columnSongs.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnArtists.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnLength.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnFileType.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
 
         int numberOfColumnsDB = 4;      //To adjust columns sizing with window size of Database list
         columnSongsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
@@ -242,5 +244,16 @@ public class AppController {
     }
 
 
+    public void displaySongs(MouseEvent mouseEvent) throws MyTunesExceptions {
+        Playlist selected = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
+        if(selected != null){
+            columnSongs.setCellValueFactory(new PropertyValueFactory<>("name"));
+            columnArtists.setCellValueFactory(new PropertyValueFactory<>("artist"));
+            columnLength.setCellValueFactory(new PropertyValueFactory<>("length"));
+            columnFileType.setCellValueFactory(new PropertyValueFactory<>("fileType"));
+            List<Song> songs = bllPlaylist.getSongsInPlaylist(selected.getId());
+            tableSongsFromPlayList.getItems().setAll(songs);
+        }
+    }
 }
 
