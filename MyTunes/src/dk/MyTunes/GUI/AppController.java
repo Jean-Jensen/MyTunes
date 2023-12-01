@@ -3,6 +3,7 @@ package dk.MyTunes.GUI;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
+import dk.MyTunes.BLL.BLLPlaylist;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,6 +49,7 @@ public class AppController {
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
+    private BLLPlaylist playlistBLL = new BLLPlaylist();
     private MediaPlayer mediaPlayer;
 
     public AppController(){
