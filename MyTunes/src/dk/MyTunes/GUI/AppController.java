@@ -20,7 +20,8 @@ import java.util.List;
 
 
 public class AppController {
-    public Slider volumeSlider;
+    @FXML
+    private Slider volumeSlider;
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -41,8 +42,6 @@ public class AppController {
     private TableColumn<Song, String> columnSongsDB;
     @FXML
     private TableColumn<Song, String> columnArtistsDB;
-    @FXML
-    private TableColumn<Song, String> columnAlbumDB;
     @FXML
     private TableColumn<Song, String> columnLengthDB;
     @FXML
@@ -96,7 +95,7 @@ public class AppController {
         }
     }
 
-    public void stop(ActionEvent actionEvent) {
+    public void stop() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
@@ -121,8 +120,10 @@ public class AppController {
     }
 
     private void playSong(Song song) {
-        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-        Media media = new Media(Paths.get(selectedSong.getFilePath()).toUri().toString());
+        if(mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)){
+            stop();
+        }
+        Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
@@ -149,36 +150,45 @@ public class AppController {
 
     public void addSong(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
+        Parent root = loader.load();
         AddSongWindow controller = loader.getController();
-        openNewScene(loader, "Add Song");
+        controller.setAppController(this);
+        openNewScene(root, "Add Song");
     }
 
-    public void removeSong(ActionEvent actionEvent) {
+    public void removeSong(ActionEvent actionEvent) throws IOException {
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        if(selectedSong != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/DeleteSongs.fxml"));
+            Parent root = loader.load();
+            DeleteSongsController controller = loader.getController();
+            controller.setData(selectedSong.getId(),selectedSong.getName());
+            controller.setAppController(this);
+            openNewScene(root,"RemoveSong");
+        }
     }
     @FXML
     public void openUpdateWindow(ActionEvent actionEvent) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
             Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
             if(selectedSong != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
                 int id = selectedSong.getId();
-                UpdateSongWindow updatewindow = new UpdateSongWindow(id);
-                loader.setController(updatewindow);
                 Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage primaryStage = new Stage();
-                primaryStage.setTitle("Update Songs");
-                primaryStage.setScene(scene);
-                primaryStage.initModality(Modality.APPLICATION_MODAL);
-                primaryStage.show();
-                updatewindow.setAppController(this);
+                UpdateSongWindow controller = loader.getController();
+                controller.setAppController(this);
+                controller.setID(id);
+                openNewScene(root,"Update Song");
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
-    private void openNewScene(FXMLLoader loader, String title) throws IOException { //in order to avoid repeating the same lines of code over and over
-        Parent root = loader.load();
+
+    //in order to avoid repeating the same lines of code over and over
+    private void openNewScene(Parent root, String title) throws IOException {
         Scene scene = new Scene(root);
         Stage primaryStage = new Stage();
         primaryStage.setTitle(title);
@@ -186,7 +196,7 @@ public class AppController {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
-    private void showDBtable() {
+    public void showDBtable() {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));

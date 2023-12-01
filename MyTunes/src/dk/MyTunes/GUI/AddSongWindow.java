@@ -21,16 +21,25 @@ public class AddSongWindow {
 
     private BLLManager bll = new BLLManager();
 
+    private AppController appController;
+
+    public void setAppController(AppController appController) {
+        this.appController = appController;
+    }
 
     public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions {
         if(nameField.getText() != null && artistField.getText() != null && filePathField.getText() != null
                 && fileTypeField.getText() != null && lengthField.getText() != null){
             Song s = new Song(bll.getLastID()+1, nameField.getText(), artistField.getText(), lengthField.getText(), fileTypeField.getText());
-            //creates a new song object and uses the last ID of the table +1
+            //creates a new song object and with a temporary ID that uses the last ID of the table +1
             //since that's how the database would decide its ID
             s.setFilePath(filePathField.getText());
 
+
             bll.createSong(s);
+            appController.showDBtable();
         }
+
+
     }
 }

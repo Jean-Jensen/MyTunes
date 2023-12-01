@@ -46,7 +46,17 @@ public class SongsDAO implements ISongsDAO {
 
     @Override
     public void deleteSong(int id) {
+        try(Connection con = cm.getConnection()){
+            String sql = "DELETE FROM SONGS WHERE ID = ?"; //command in SQL to delete a song
+            PreparedStatement prStmt = con.prepareStatement(sql);
 
+            //setting the values based on the song object we're adding (replacing the "?"s)
+            prStmt.setString(1, String.valueOf(id));
+
+            prStmt.executeUpdate(); //execute command in the database
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -99,7 +109,7 @@ public class SongsDAO implements ISongsDAO {
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
-            String sql = "SELECT id, name, artist,length, fileType, filePath FROM songs";
+            String sql = "SELECT * FROM songs";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {

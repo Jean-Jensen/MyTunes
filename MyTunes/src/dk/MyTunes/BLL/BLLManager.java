@@ -17,6 +17,10 @@ public class BLLManager {
         songsDAO.createSong(s);
     }
 
+    public void deleteSong(int id){
+        songsDAO.deleteSong(id);
+    }
+
     public List<Song> getAllSongs() {
         List<Song> songs = songsDAO.getAllSongs();
         for (Song song : songs) {
@@ -43,7 +47,6 @@ public class BLLManager {
     public int getLastID(){
         return songsDAO.getLastID();
     }
-
 
 }
 
