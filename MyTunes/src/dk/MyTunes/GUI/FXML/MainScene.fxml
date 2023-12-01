@@ -26,7 +26,7 @@
                             <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" styleClass="delete-button" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tablePlaylists" prefHeight="558.0" prefWidth="420.0" style="-fx-background-color: #0f151f;" styleClass="tableViewDB">
+                  <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongs" prefHeight="558.0" prefWidth="420.0" style="-fx-background-color: #0f151f;" styleClass="tableViewDB">
                      <columns>
                         <TableColumn fx:id="colPlaylistName" prefWidth="279.20001834630966" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Name" />
                         <TableColumn fx:id="colSongCount" prefWidth="46.39996337890625" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
@@ -72,7 +72,7 @@
                             <Button fx:id="savePlaylist" mnemonicParsing="false" onAction="#savePlaylist" styleClass="savePlaylist-button" />
                      </children>
                   </HBox>
-                      <TableView fx:id="tableView" style="-fx-border-width: 0.05; -fx-background-color: #0f151f;">
+                      <TableView fx:id="tableSongsFromPlayList" style="-fx-border-width: 0.05; -fx-background-color: #0f151f;">
                           <columns>
                               <TableColumn fx:id="columnSongs" prefWidth="120.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
                               <TableColumn fx:id="columnArtists" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Artists" />

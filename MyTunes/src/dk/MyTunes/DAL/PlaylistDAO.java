@@ -14,6 +14,7 @@ import java.util.List;
 public class PlaylistDAO implements IPlaylistDAO {
 
     ConnectionManager cm = new ConnectionManager();
+    SongsDAO songsDAO = new SongsDAO();
     @Override
     public void createPlaylist(String name) throws MyTunesExceptions {
 
@@ -63,6 +64,31 @@ public class PlaylistDAO implements IPlaylistDAO {
 
     @Override
     public List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions {
-        return null;
+        List<Integer> IDs = getIdsOfAllSongsInPlaylist(playlistId);
+        List<Song> songs = new ArrayList<>();
+        for(int ID : IDs){
+            System.out.println("addedSong" + ID);
+            songs.add(songsDAO.getSong(ID));
+        }
+        return songs;
+    }
+
+    private List<Integer> getIdsOfAllSongsInPlaylist(int playlistID) throws MyTunesExceptions {
+        List<Integer> IDs = new ArrayList<>();
+        try (Connection con = cm.getConnection()) {
+            String sql = "SELECT * FROM connection WHERE PlaylistID = " + playlistID;
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("SongID");
+                IDs.add(id);
+            }
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error getting all Connections", e);
+        }
+        for(int ID : IDs){
+            System.out.println(ID);
+        }
+        return IDs;
     }
 }

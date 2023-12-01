@@ -22,8 +22,7 @@ public class BLLManager {
     }
 
     public List<Song> getAllSongs() throws MyTunesExceptions {
-        List<Song> songs = songsDAO.getAllSongs();
-        return songs;
+        return songsDAO.getAllSongs();
     }
 
     public void updateSong(Song s) throws MyTunesExceptions {
