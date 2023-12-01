@@ -28,12 +28,6 @@ public class Song {
         this.fileType = fileType;
     }
 
-    public Song(int id, String name, String artist) {
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-    }
-    
 
     @Override
     public boolean equals(Object o) {
