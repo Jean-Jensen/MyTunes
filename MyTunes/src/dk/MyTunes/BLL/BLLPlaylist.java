@@ -2,6 +2,7 @@ package dk.MyTunes.BLL;
 
 import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.Song;
+import dk.MyTunes.DAL.IPlaylistDAO;
 import dk.MyTunes.DAL.PlaylistDAO;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 
 public class BLLPlaylist {
-    private PlaylistDAO playlistDAO = new PlaylistDAO();
+    private IPlaylistDAO playlistDAO = new PlaylistDAO();
 
     public void createPlaylist(String name) throws MyTunesExceptions {
         playlistDAO.createPlaylist(name);
