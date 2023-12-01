@@ -3,6 +3,7 @@ package dk.MyTunes.DAL;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.MyTunes.BE.Song;
+import dk.MyTunes.Exceptions.MyTunesExceptions;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class SongsDAO implements ISongsDAO {
     private final ConnectionManager cm = new ConnectionManager();
 
     @Override
-  /*  public Song getSong(int id) {
+   public Song getSong(int id) throws MyTunesExceptions {
         try(Connection con = cm.getConnection())
         {
             String sql = "SELECT * FROM Songs WHERE id=?";
@@ -28,24 +29,20 @@ public class SongsDAO implements ISongsDAO {
                 String filePath = rs.getString("filePath");
 
                 Song s = new Song(sid, name, artist, length, fileType,filePath);
-                System.out.println(s);
-                System.out.println("Connection Established");
+
                 return s;
 
             }
             return null;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new MyTunesExceptions("Error getting song with ID " + id, e);
         }
-    }*/
-
-
-    public Song getSong(int id) {
-        return null;
     }
 
+
+
     @Override
-    public void deleteSong(int id) {
+    public void deleteSong(int id) throws MyTunesExceptions{
         try(Connection con = cm.getConnection()){
             String sql = "DELETE FROM SONGS WHERE ID = ?"; //command in SQL to delete a song
             PreparedStatement prStmt = con.prepareStatement(sql);
@@ -55,12 +52,12 @@ public class SongsDAO implements ISongsDAO {
 
             prStmt.executeUpdate(); //execute command in the database
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new MyTunesExceptions("Error deleting song with ID " + id, e);
         }
     }
 
     @Override
-    public void updateSong(Song s) {
+    public void updateSong(Song s) throws MyTunesExceptions{
         try(Connection con = cm.getConnection())
         {
             String sql = "UPDATE songs SET name=?, artist=?, length=?, fileType=?, filePath=? WHERE id=?";
@@ -72,21 +69,14 @@ public class SongsDAO implements ISongsDAO {
             pstmt.setString(5, s.getFilePath());
             pstmt.setInt(6, s.getId());
             pstmt.execute();
-
-            boolean isResultSet = pstmt.execute();
-            System.out.println("Is the first result a ResultSet? " + isResultSet);
-
-            int updateCount = pstmt.getUpdateCount();
-            System.out.println("Number of rows updated: " + updateCount);
-
             con.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new MyTunesExceptions("Error updating song with ID " + s.getId(), e);
         }
     }
 
     @Override
-    public void createSong(Song s) {
+    public void createSong(Song s) throws MyTunesExceptions{
         try(Connection con = cm.getConnection()){
             String sql = "INSERT INTO songs(Name, Artist, Length, FileType, FilePath)" +
                     " VALUES(?, ?, ?, ?, ?)"; //command in SQL to add a new Song
@@ -101,12 +91,12 @@ public class SongsDAO implements ISongsDAO {
 
             prStmt.executeUpdate(); //execute command in the database
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new MyTunesExceptions("Error creating song", e);
         }
     }
 
     @Override
-    public List<Song> getAllSongs() {
+    public List<Song> getAllSongs() throws MyTunesExceptions{
         List<Song> songs = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
             String sql = "SELECT * FROM songs";
@@ -123,12 +113,12 @@ public class SongsDAO implements ISongsDAO {
                 songs.add(song);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new MyTunesExceptions("Error getting all songs", e);
         }
         return songs;
     }
 
-    public int getLastID(){
+    public int getLastID() throws MyTunesExceptions{
         //SELECT * FROM Songs
         //WHERE ID = (
         //    SELECT IDENT_CURRENT('Songs'))
@@ -143,7 +133,7 @@ public class SongsDAO implements ISongsDAO {
             }
             return ID;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new MyTunesExceptions("Error getting last song ID", e);
         }
     }
 

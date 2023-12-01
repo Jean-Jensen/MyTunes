@@ -1,6 +1,7 @@
 package dk.MyTunes.GUI;
 
 import dk.MyTunes.BLL.BLLManager;
+import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,7 +36,7 @@ public class DeleteSongsController implements Initializable {
         lblSong.setText(name);
     }
 
-    public void deleteSong(ActionEvent actionEvent) {
+    public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions {
         bll.deleteSong(ID);
         appController.showDBtable();
         closeWindow(actionEvent);
