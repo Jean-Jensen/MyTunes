@@ -8,7 +8,7 @@ import dk.MyTunes.Exceptions.MyTunesExceptions;
 import java.util.List;
 
 public class BLLManager {
-    SongsDAO songsDAO = new SongsDAO();
+    ISongsDAO songsDAO = new SongsDAO();
 
     public void createSong(Song s) throws MyTunesExceptions {
         if(!s.getFileType().equals(".wav") && !s.getFileType().equals(".mp3")) {
@@ -17,34 +17,24 @@ public class BLLManager {
         songsDAO.createSong(s);
     }
 
-    public void deleteSong(int id){
+    public void deleteSong(int id) throws MyTunesExceptions {
         songsDAO.deleteSong(id);
     }
 
-    public List<Song> getAllSongs() {
+    public List<Song> getAllSongs() throws MyTunesExceptions {
         List<Song> songs = songsDAO.getAllSongs();
-        for (Song song : songs) {
-            System.out.println(song);
-            System.out.println("This is the BLL talking");
-        }
         return songs;
     }
 
-    public void updateSong(Song s){
+    public void updateSong(Song s) throws MyTunesExceptions {
         songsDAO.updateSong(s);
     }
 
-    public Song getSongById(int id) {
-        List<Song> songs = songsDAO.getAllSongs();
-        for (Song song : songs) {
-            if (song.getId() == id) {
-                return song;
+    public Song getSongById(int id) throws MyTunesExceptions {
+                return songsDAO.getSong(id);
             }
-        }
-        return null;
-    }
 
-    public int getLastID(){
+    public int getLastID() throws MyTunesExceptions {
         return songsDAO.getLastID();
     }
 
