@@ -3,6 +3,7 @@ package dk.MyTunes.GUI;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
+import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +53,7 @@ public class AppController {
     public AppController(){
         this.bllManager = new BLLManager();
     }
-    public void initialize() {
+    public void initialize() throws MyTunesExceptions {
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showDBtable();
@@ -196,7 +197,7 @@ public class AppController {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
-    public void showDBtable() {
+    public void showDBtable() throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));

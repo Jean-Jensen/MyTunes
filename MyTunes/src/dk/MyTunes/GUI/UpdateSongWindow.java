@@ -2,6 +2,7 @@ package dk.MyTunes.GUI;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
+import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -33,7 +34,7 @@ public class UpdateSongWindow {
     }
 
     @FXML
-    public void updateSong(ActionEvent actionEvent) {
+    public void updateSong(ActionEvent actionEvent) throws MyTunesExceptions {
         Song s = bllManager.getSongById(id);
 
         if (!nameField.getText().isEmpty()) {
@@ -52,8 +53,6 @@ public class UpdateSongWindow {
         }
         if (!filePathField.getText().isEmpty()) {
             s.setFilePath(filePathField.getText());
-        } else {
-            s.setFilePath("NULL");
         }
         bllManager.updateSong(s);
 
