@@ -1,6 +1,7 @@
 package dk.MyTunes.GUI;
 
 
+import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
 import dk.MyTunes.BLL.BLLPlaylist;
@@ -23,6 +24,14 @@ import java.util.List;
 
 public class AppController {
     @FXML
+    private TableView tablePlaylists;
+    @FXML
+    private TableColumn colPlaylistName;
+    @FXML
+    private TableColumn colSongCount;
+    @FXML
+    private TableColumn colLength;
+    @FXML
     private Slider volumeSlider;
     @FXML
     private SplitPane splitPane;
@@ -32,8 +41,6 @@ public class AppController {
     private TableColumn<Song, String> columnSongs;
     @FXML
     private TableColumn<Song, String> columnArtists;
-    @FXML
-    private TableColumn<Song, String> columnAlbum;
     @FXML
     private TableColumn<Song, String> columnLength;
     @FXML
@@ -49,7 +56,7 @@ public class AppController {
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
-    private BLLPlaylist playlistBLL = new BLLPlaylist();
+    private BLLPlaylist bllPlaylist = new BLLPlaylist();
     private MediaPlayer mediaPlayer;
 
     public AppController(){
@@ -58,7 +65,8 @@ public class AppController {
     public void initialize() throws MyTunesExceptions {
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
-        showDBtable();
+        showSongs();
+        showPlayLists();
         setVolumeSlider();
     }
 
@@ -81,6 +89,11 @@ public class AppController {
         columnArtistsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnLengthDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
         columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
+
+        int numberOfColumnsPlaylist = 3;
+        colPlaylistName.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsPlaylist));
+        colLength.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsPlaylist));
+        colSongCount.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsPlaylist));
     }
 
     public void play(ActionEvent actionEvent) {
@@ -199,7 +212,7 @@ public class AppController {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
-    public void showDBtable() throws MyTunesExceptions {
+    public void showSongs() throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
@@ -207,6 +220,16 @@ public class AppController {
 
         List<Song> songs = bllManager.getAllSongs(); //Get all songs from the BLL layer through the getAllSongs method
         tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
+
+    }
+
+    public void showPlayLists() throws MyTunesExceptions {
+        colPlaylistName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colSongCount.setCellValueFactory(new PropertyValueFactory<>("songCount"));
+        colLength.setCellValueFactory(new PropertyValueFactory<>("length"));
+
+        List<Playlist> playlists = bllPlaylist.getAllPlaylists();
+        tablePlaylists.getItems().setAll(playlists);
 
     }
     public void updateSongInTableView(Song updatedSong) {
