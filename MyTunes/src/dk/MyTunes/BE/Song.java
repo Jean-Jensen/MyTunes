@@ -42,17 +42,6 @@ public class Song {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() { //Java automatically calls toString in System.out.println so this overrides that and
-        return "Song{" +       //prints it out in something readable.
-                "id: " + id +
-                ", name: '" + name + '\'' +
-                ", artist: '" + artist + '\'' +
-                ", length: '" + length + '\'' +
-                ", fileType: '" + fileType + '\'' +
-                ", filePath: '" + filePath + '\'' +
-                '}';
-    }
 
     public int getId() {
         return id;
