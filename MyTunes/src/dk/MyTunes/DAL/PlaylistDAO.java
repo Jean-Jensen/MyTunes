@@ -77,27 +77,21 @@ public class PlaylistDAO implements IPlaylistDAO {
     }
 
     public List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions {
-        List<Integer> songIDs = new ArrayList<>();
-        List<Integer> orderIDs = new ArrayList<>();
+        List<PlaylistConnection> connections = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
-            String sql = "SELECT * FROM connection WHERE PlaylistID = " + playlistId;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM connection WHERE PlaylistID = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, playlistId);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int songId = rs.getInt("SongID");
                 int orderId = rs.getInt("OrderID");
-                songIDs.add(songId);
-                orderIDs.add(orderId);
+                Song song = songsDAO.getSong(songId);
+                PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderId, playlistId);
+                connections.add(connection);
             }
         } catch (SQLException e) {
             throw new MyTunesExceptions("Error getting all Connections", e);
-        }
-
-        List<PlaylistConnection> connections = new ArrayList<>();
-        for(int i = 0; i < songIDs.size(); i++){
-            Song song = songsDAO.getSong(songIDs.get(i));
-            PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderIDs.get(i), playlistId);
-            connections.add(connection);
         }
         return connections;
     }
