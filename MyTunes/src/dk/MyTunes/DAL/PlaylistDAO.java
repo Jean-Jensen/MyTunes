@@ -1,13 +1,11 @@
 package dk.MyTunes.DAL;
 
 import dk.MyTunes.BE.Playlist;
+import dk.MyTunes.BE.PlaylistConnection;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class PlaylistDAO implements IPlaylistDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("playlist added");
+             //   System.out.println("playlist added");
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String length = rs.getString("length");
@@ -53,27 +51,70 @@ public class PlaylistDAO implements IPlaylistDAO {
     }
 
     @Override
-    public void addSongToPlaylist(int songId, int playlistId) throws MyTunesExceptions {
-
+    public void addSongToPlaylist(int playlistId, int songId) throws MyTunesExceptions {
+        try (Connection con = cm.getConnection()) {
+            String sql = "INSERT INTO connection (PlaylistID, SongID) VALUES (?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, playlistId);
+            pstmt.setInt(2, songId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error adding song to playlist", e);
+        }
     }
 
-    @Override
-    public void removeSongFromPlaylist(int songId, int playlistId) throws MyTunesExceptions {
 
+    @Override
+    public void removeSongFromPlaylist(int orderId) throws MyTunesExceptions {
+        try (Connection con = cm.getConnection()) {
+            String sql = "DELETE FROM connection WHERE OrderID = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, orderId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error removing song from playlist", e);
+        }
     }
 
-    @Override
+    public List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions {
+        List<Integer> songIDs = new ArrayList<>();
+        List<Integer> orderIDs = new ArrayList<>();
+        try (Connection con = cm.getConnection()) {
+            String sql = "SELECT * FROM connection WHERE PlaylistID = " + playlistId;
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int songId = rs.getInt("SongID");
+                int orderId = rs.getInt("OrderID");
+                songIDs.add(songId);
+                orderIDs.add(orderId);
+            }
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error getting all Connections", e);
+        }
+
+        List<PlaylistConnection> connections = new ArrayList<>();
+        for(int i = 0; i < songIDs.size(); i++){
+            Song song = songsDAO.getSong(songIDs.get(i));
+            PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderIDs.get(i), playlistId);
+            connections.add(connection);
+        }
+        return connections;
+    }
+
+
+    /*@Override
     public List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions {
         List<Integer> IDs = getIdsOfAllSongsInPlaylist(playlistId);
         List<Song> songs = new ArrayList<>();
         for(int ID : IDs){
-            System.out.println("addedSong" + ID);
+          //  System.out.println("addedSong" + ID);
             songs.add(songsDAO.getSong(ID));
         }
         return songs;
     }
 
-    private List<Integer> getIdsOfAllSongsInPlaylist(int playlistID) throws MyTunesExceptions {
+    /*private List<Integer> getIdsOfAllSongsInPlaylist(int playlistID) throws MyTunesExceptions {
         List<Integer> IDs = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
             String sql = "SELECT * FROM connection WHERE PlaylistID = " + playlistID;
@@ -87,8 +128,8 @@ public class PlaylistDAO implements IPlaylistDAO {
             throw new MyTunesExceptions("Error getting all Connections", e);
         }
         for(int ID : IDs){
-            System.out.println(ID);
+          //  System.out.println(ID);
         }
         return IDs;
-    }
+    }*/
 }

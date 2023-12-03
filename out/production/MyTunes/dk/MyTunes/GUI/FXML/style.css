@@ -104,10 +104,15 @@
     -fx-background-radius: 2; /* Sets the radius of the fill's corners */
 }
 
-.tableViewDB .table-cell {
-    -fx-text-fill: white;
+.tableViewDB .table-row-cell .text,
+.tableSongsFromPlayList .table-row-cell .text,
+.tablePlaylists .table-row-cell .text {
+    -fx-fill: white;
 }
-.tableViewDB .table-row-cell:filled:selected .text {
+
+.tableViewDB .table-row-cell:filled:focused:selected .text,
+.tableSongsFromPlayList .table-row-cell:filled:focused:selected .text,
+.tablePlaylists .table-row-cell:filled:focused:selected .text {
     -fx-fill: red;
 }
 
