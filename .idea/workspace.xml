@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/PlaylistConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/PlaylistConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/PlaylistDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/PlaylistDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/PlaylistDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubProjectSettings">
