@@ -26,7 +26,6 @@ public class PlaylistDAO implements IPlaylistDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-             //   System.out.println("playlist added");
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String length = rs.getString("length");
@@ -47,7 +46,14 @@ public class PlaylistDAO implements IPlaylistDAO {
 
     @Override
     public void deletePlaylist(int id) throws MyTunesExceptions {
-
+        try(Connection con = cm.getConnection()){
+            String sql = "DELETE FROM Playlist WHERE ID = ?";
+            PreparedStatement prStmt = con.prepareStatement(sql);
+            prStmt.setString(1, String.valueOf(id));
+            prStmt.executeUpdate(); //execute command in the database
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error deleting playlist with ID " + id, e);
+        }
     }
 
     @Override

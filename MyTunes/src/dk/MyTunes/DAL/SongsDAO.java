@@ -29,7 +29,6 @@ public class SongsDAO implements ISongsDAO {
                 String filePath = rs.getString("filePath");
 
                 Song s = new Song(sid, name, artist, length, fileType,filePath);
-              //  System.out.println("gotten Song");
                 return s;
 
             }
@@ -119,9 +118,6 @@ public class SongsDAO implements ISongsDAO {
     }
 
     public int getLastID() throws MyTunesExceptions{
-        //SELECT * FROM Songs
-        //WHERE ID = (
-        //    SELECT IDENT_CURRENT('Songs'))
         int ID = 0;
         try (Connection con = cm.getConnection()) {
             String sql = "SELECT * FROM Songs WHERE ID = (SELECT IDENT_CURRENT('Songs'))";
