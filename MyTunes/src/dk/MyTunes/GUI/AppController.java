@@ -26,6 +26,9 @@ import java.util.logging.Logger;
 
 
 public class AppController {
+
+    @FXML
+    private TextField txtSearch;
     @FXML
     private TableView tablePlaylists;
     @FXML
@@ -291,6 +294,17 @@ public class AppController {
                 tableSongsFromPlayList.getSelectionModel().select(selectedIndex - 1);
             }
         }
+    }
+
+    public void Search(ActionEvent actionEvent) throws MyTunesExceptions {
+        columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
+        columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
+
+        List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
+        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
+
     }
 }
 
