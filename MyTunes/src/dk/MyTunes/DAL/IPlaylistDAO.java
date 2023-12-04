@@ -2,8 +2,11 @@ package dk.MyTunes.DAL;
 
 
 import dk.MyTunes.BE.Playlist;
+import dk.MyTunes.BE.PlaylistConnection;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
+
+import java.sql.Connection;
 import java.util.List;
 
 public interface IPlaylistDAO {
@@ -12,6 +15,8 @@ public interface IPlaylistDAO {
     void updatePlaylist(Playlist p) throws MyTunesExceptions;
     void deletePlaylist(int id) throws MyTunesExceptions;
     void addSongToPlaylist(int songId, int playlistId) throws MyTunesExceptions;
-    void removeSongFromPlaylist(int songId, int playlistId) throws MyTunesExceptions;
-    List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions;
+    public void removeSongFromPlaylist(int orderId) throws MyTunesExceptions;
+    /*List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions;*/
+    List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions;
+
 }

@@ -1,13 +1,11 @@
 package dk.MyTunes.DAL;
 
 import dk.MyTunes.BE.Playlist;
+import dk.MyTunes.BE.PlaylistConnection;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class PlaylistDAO implements IPlaylistDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("playlist added");
+             //   System.out.println("playlist added");
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String length = rs.getString("length");
@@ -53,42 +51,50 @@ public class PlaylistDAO implements IPlaylistDAO {
     }
 
     @Override
-    public void addSongToPlaylist(int songId, int playlistId) throws MyTunesExceptions {
-
-    }
-
-    @Override
-    public void removeSongFromPlaylist(int songId, int playlistId) throws MyTunesExceptions {
-
-    }
-
-    @Override
-    public List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions {
-        List<Integer> IDs = getIdsOfAllSongsInPlaylist(playlistId);
-        List<Song> songs = new ArrayList<>();
-        for(int ID : IDs){
-            System.out.println("addedSong" + ID);
-            songs.add(songsDAO.getSong(ID));
-        }
-        return songs;
-    }
-
-    private List<Integer> getIdsOfAllSongsInPlaylist(int playlistID) throws MyTunesExceptions {
-        List<Integer> IDs = new ArrayList<>();
+    public void addSongToPlaylist(int playlistId, int songId) throws MyTunesExceptions {
         try (Connection con = cm.getConnection()) {
-            String sql = "SELECT * FROM connection WHERE PlaylistID = " + playlistID;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "INSERT INTO connection (PlaylistID, SongID) VALUES (?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, playlistId);
+            pstmt.setInt(2, songId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error adding song to playlist", e);
+        }
+    }
+
+
+    @Override
+    public void removeSongFromPlaylist(int orderId) throws MyTunesExceptions {
+        try (Connection con = cm.getConnection()) {
+            String sql = "DELETE FROM connection WHERE OrderID = ?"; //uses the order ID below to delete a song
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, orderId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error removing song from playlist", e);
+        }
+    }
+
+    //Display a list to the table on GUI that carries over the order ID to make it possible to remove
+    //duplicate songs.
+    public List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions {
+        List<PlaylistConnection> connectionToDB = new ArrayList<>();
+        try (Connection con = cm.getConnection()) {
+            String sql = "SELECT * FROM connection WHERE PlaylistID = ?"; //Checks what playlist I am on and then query's that
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, playlistId);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("SongID");
-                IDs.add(id);
+                int songId = rs.getInt("SongID");
+                int orderId = rs.getInt("OrderID"); //Gets the ID and assigns it to the constructed connection
+                Song song = songsDAO.getSong(songId);
+                PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderId);
+                connectionToDB.add(connection);
             }
         } catch (SQLException e) {
-            throw new MyTunesExceptions("Error getting all Connections", e);
+            throw new MyTunesExceptions("Error getting orderID", e);
         }
-        for(int ID : IDs){
-            System.out.println(ID);
-        }
-        return IDs;
+        return connectionToDB;
     }
 }

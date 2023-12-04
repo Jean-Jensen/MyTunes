@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Added Playlist Foundations">
+    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/PlaylistConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BE/PlaylistConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/MainScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/PlaylistDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/DAL/PlaylistDAO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +62,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "JeanBranch",
+    "git-widget-placeholder": "MyTunesBranch",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Jean/Documents/GitHub/MyTunes/MyTunes/src/dk/MyTunes/GUI/FXML",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -122,6 +121,9 @@
       <workItem from="1701432182111" duration="2888000" />
       <workItem from="1701436240637" duration="135000" />
       <workItem from="1701436392129" duration="4495000" />
+      <workItem from="1701504118298" duration="25284000" />
+      <workItem from="1701617182421" duration="3833000" />
+      <workItem from="1701676411752" duration="5694000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />
@@ -147,7 +149,55 @@
       <option name="project" value="LOCAL" />
       <updated>1701428707771</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701526552056</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701526552056</updated>
+    </task>
+    <task id="LOCAL-00005" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701526554869</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701526554869</updated>
+    </task>
+    <task id="LOCAL-00006" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701526558737</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701526558737</updated>
+    </task>
+    <task id="LOCAL-00007" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701526565872</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701526565872</updated>
+    </task>
+    <task id="LOCAL-00008" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701526660535</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701526660535</updated>
+    </task>
+    <task id="LOCAL-00009" summary="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read">
+      <option name="closed" value="true" />
+      <created>1701619057544</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1701619057544</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +229,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments" />
     <MESSAGE value="-Added Playlist Foundations" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Added Playlist Foundations" />
+    <MESSAGE value="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read" />
   </component>
 </project>
