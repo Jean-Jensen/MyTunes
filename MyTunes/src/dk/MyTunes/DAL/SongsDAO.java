@@ -36,8 +36,37 @@ public class SongsDAO implements ISongsDAO {
         } catch (SQLException e) {
             throw new MyTunesExceptions("Error getting song with ID " + id, e);
         }
-    }
+   }
 
+   public List<Song> searchForSong(String searchword) throws MyTunesExceptions {
+        if(searchword.isEmpty()){
+            return getAllSongs();
+        }
+       List<Song> songs = new ArrayList<>();
+       try (Connection con = cm.getConnection()) {
+           String sql = "SELECT * FROM songs a WHERE Name LIKE ?" +
+                   "UNION SELECT * FROM songs WHERE Artist LIKE ?"; //"UNION" is so that there are no duplicate values 
+           PreparedStatement pstmt = con.prepareStatement(sql);
+           pstmt.setString(1, "%" + searchword + "%");
+           pstmt.setString(2, "%" + searchword + "%");
+           //the "%" are to indicate that we're searching for something
+           //that CONTAINS this string and is not 1-to-1 equal to it
+           ResultSet rs = pstmt.executeQuery();
+           while (rs.next()) {
+               int id = rs.getInt("id");
+               String name = rs.getString("name");
+               String artist = rs.getString("artist");
+               String length = rs.getString("length");
+               String fileType = rs.getString("fileType");
+               String filePath = rs.getString("filePath");
+               Song song = new Song(id, name, artist, length, fileType, filePath);
+               songs.add(song);
+           }
+       } catch (SQLException e) {
+           throw new MyTunesExceptions("Error getting all songs where name/artist is " + searchword, e);
+       }
+       return songs;
+   }
 
 
     @Override

@@ -8,13 +8,17 @@ import dk.MyTunes.Exceptions.MyTunesExceptions;
 import java.util.List;
 
 public class BLLManager {
-    ISongsDAO songsDAO = new SongsDAO();
+    SongsDAO songsDAO = new SongsDAO();
 
     public void createSong(Song s) throws MyTunesExceptions {
         if(!s.getFileType().equals(".wav") && !s.getFileType().equals(".mp3")) {
             throw new MyTunesExceptions("Invalid file format");
         }
         songsDAO.createSong(s);
+    }
+
+    public List<Song> searchForSong(String searchWord) throws MyTunesExceptions {
+        return songsDAO.searchForSong(searchWord);
     }
 
     public void deleteSong(int id) throws MyTunesExceptions {
