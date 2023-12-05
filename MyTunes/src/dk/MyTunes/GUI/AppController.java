@@ -81,13 +81,13 @@ public class AppController {
     }
 
     public void initialize() throws MyTunesExceptions {
-        songSelector();
-        toolTips();
+        songSelector(); //This figured out which song in which table you have selected and plays that one
+        toolTips(); //Lets you add notes to buttons when you hover them with your mouse
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
-        showSongs();
-        showPlayLists();
-        setVolumeSlider();
+        showSongs(); //Shows the songs in the Database on the Database Table
+        showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
+        setVolumeSlider(); //Initializes the volume slider
     }
 public void toolTips(){
     Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
@@ -229,10 +229,6 @@ public void songSelector(){
             Song prevSong = currentTableView.getItems().get(previousSong);
             playSong(prevSong);
         }
-    }
-
-
-    public void setVolume() {
     }
 
     public void setVolumeSlider() {  //observable (the property that was changed[not used but needed for .addListener]), oldValue (the previous value of the property), and newValue (the new value of the property).
