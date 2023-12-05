@@ -71,23 +71,32 @@ public class AddSongWindow {
         File selected = chooser.showOpenDialog(nameField.getScene().getWindow());
 
         if(selected != null){
-            String filepath = selected.getPath();
-            filePathField.setText(filepath);
-            fileTypeField.setText(filepath.substring(filepath.lastIndexOf('.')));
-            setAudioFileLength(selected);
+            setDataOfFile(selected);
         }
     }
 
-    private void setAudioFileLength(File file) { //sets the textfield "lengthField" to the current length
+    private void setDataOfFile(File file) { //sets the textfields to the correct value from the file
+        nameField.setText(file.getName()); //gets filename
+        String filepath = file.getPath(); //string value for the filepath (since we'll be reusing it)
+        filePathField.setText(filepath); //sets filepath
+        fileTypeField.setText(filepath.substring(filepath.lastIndexOf('.'))); //gets filetype by getting everything after the last instance of "."
+
+
         Media media = new Media(Paths.get(file.getPath()).toUri().toString()); //gets media from filepath
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
         mediaPlayer.setOnReady(() -> {
             //the media.getDuration method can only work properly once
             //the mediaPlayer status is "Ready", thus why we need to wait. this is also why I had to make a mediaplayer
-            lengthString = media.getDuration().toString(); //obtains duration of song
+            lengthString = String.valueOf(media.getDuration().toSeconds()); //obtains duration of song in seconds
             //lengthString needs to be a variable outside of any method in order to be able to be changed here and used elsewhere
+            lengthString = ((int) (Double.parseDouble(lengthString) / 60)) + ":" + String.valueOf(Double.parseDouble(lengthString) % 60).substring(0,5);
+            //converting to time in seconds to seconds and minutes
+            //the minutes are typecasted into an integer so that there are no decimal values (which would make it hard to read)
+
             lengthField.setText(lengthString);//sets the textfield to the songs length
+            artistField.setText((String) media.getMetadata().get("artist")); //sets the "artist" field
+
         });
 
     }
