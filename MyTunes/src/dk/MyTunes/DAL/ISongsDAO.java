@@ -6,10 +6,10 @@ import dk.MyTunes.Exceptions.MyTunesExceptions;
 import java.util.List;
 
 public interface ISongsDAO {
-    public Song getSong(int id) throws MyTunesExceptions;
-    public void deleteSong(int id) throws MyTunesExceptions;
-    public void updateSong(Song s) throws MyTunesExceptions;
-    public void createSong(Song s) throws MyTunesExceptions;
-    public List<Song> getAllSongs() throws MyTunesExceptions;
-    public int getLastID() throws MyTunesExceptions;
+   Song getSong(int id) throws MyTunesExceptions;
+    void deleteSong(int id) throws MyTunesExceptions;
+    void updateSong(Song s) throws MyTunesExceptions;
+    void createSong(Song s) throws MyTunesExceptions;
+    List<Song> getAllSongs() throws MyTunesExceptions;
+    int getLastID() throws MyTunesExceptions;
 }

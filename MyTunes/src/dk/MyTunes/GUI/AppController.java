@@ -58,6 +58,10 @@ public class AppController {
     private TableColumn<Song, String> columnLengthDB;
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
+    @FXML
+    private Button addSongToPlaylistButton;
+    @FXML
+    private Button removeSongFromPlaylistButton;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
     private MediaPlayer mediaPlayer;
@@ -69,13 +73,22 @@ public class AppController {
     }
 
     public void initialize() throws MyTunesExceptions {
+
+        toolTips();
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showSongs();
         showPlayLists();
         setVolumeSlider();
     }
+public void toolTips(){
+    Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
+        Tooltip.install(addSongToPlaylistButton, tooltipAddSong);
 
+    Tooltip tooltipRemoveSong = new Tooltip("Remove selected song from the selected playlist");
+    Tooltip.install(removeSongFromPlaylistButton, tooltipRemoveSong);
+
+}
     private void windowCenterBar() {
         splitPane.widthProperty().addListener((obs, oldVal, newVal) -> {
             // Set the divider position to the middle of the SplitPane
