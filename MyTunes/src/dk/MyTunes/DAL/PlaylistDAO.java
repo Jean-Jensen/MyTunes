@@ -95,7 +95,7 @@ public class PlaylistDAO implements IPlaylistDAO {
                 int songId = rs.getInt("SongID");
                 int orderId = rs.getInt("OrderID"); //Gets the ID and assigns it to the constructed connection
                 Song song = songsDAO.getSong(songId);
-                PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderId);
+                PlaylistConnection connection = new PlaylistConnection(song.getId(), song.getName(), song.getArtist(), song.getLength(), song.getFileType(), orderId, song.getFilePath());
                 connectionToDB.add(connection);
             }
         } catch (SQLException e) {
