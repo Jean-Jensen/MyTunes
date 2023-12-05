@@ -43,7 +43,7 @@
                                 <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stop" styleClass="stop-button" />
                         <ToggleButton fx:id="togglePlayPause" ellipsisString="Pause" mnemonicParsing="false" onAction="#togglePlayPause" text="Play" />
                                 <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" styleClass="next-button" />
-                                <Slider fx:id="volumeSlider" onDragDone="#setVolume" styleClass="volume-slider" />
+                                <Slider fx:id="volumeSlider" styleClass="volume-slider" />
                             </children>
                         </HBox>
                         <VBox fx:id="imageArtParent" alignment="CENTER" spacing="5.0">
