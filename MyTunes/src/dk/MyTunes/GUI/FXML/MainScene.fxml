@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="853.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
+<VBox prefHeight="853.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
     <children>
         <SplitPane fx:id="splitPane" dividerPositions="0.5" style="-fx-background-color: #192638;" styleClass="splitPane" stylesheets="@style.css" VBox.vgrow="SOMETIMES">
             <items>
@@ -40,8 +41,7 @@
                             <children>
                                 <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prev" styleClass="prev-button" />
                                 <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stop" styleClass="stop-button" />
-                                <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pause" styleClass="pause-button" />
-                                <Button fx:id="playButton" mnemonicParsing="false" onAction="#play" styleClass="play-button" />
+                        <ToggleButton fx:id="togglePlayPause" ellipsisString="Pause" mnemonicParsing="false" onAction="#togglePlayPause" text="Play" />
                                 <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" styleClass="next-button" />
                                 <Slider fx:id="volumeSlider" onDragDone="#setVolume" styleClass="volume-slider" />
                             </children>

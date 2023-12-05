@@ -65,10 +65,15 @@ public class AppController {
     private Button addSongToPlaylistButton;
     @FXML
     private Button removeSongFromPlaylistButton;
+    @FXML
+    private ToggleButton togglePlayPause;
+    private TableView<PlaylistConnection> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
     private MediaPlayer mediaPlayer;
-    private static final Logger LOGGER = Logger.getLogger(AppController.class.getName());
+    private Song selectedSong;
+    private int currentSong;
+    private int previousSong = -1;
 
 
     public AppController() {
@@ -76,7 +81,7 @@ public class AppController {
     }
 
     public void initialize() throws MyTunesExceptions {
-
+        songSelector();
         toolTips();
         // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
@@ -118,20 +123,86 @@ public void toolTips(){
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
     }
 
-    public void play(ActionEvent actionEvent) {
-        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-        playSong(selectedSong);
-    }
+public void songSelector(){
+    // Add a listener to the selection model of tableSongsFromPlayList
+    tableSongsFromPlayList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        if (newSelection != null) {
+            selectedSong = newSelection;
+            currentTableView = tableSongsFromPlayList;
+        }
+    });
+    // Add a listener to the selection model of tableViewDB
+    tableViewDB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        if (newSelection != null) {
+            selectedSong = newSelection;
+            currentTableView = tableSongsFromPlayList;
+        }
+    });
+}
 
-    public void pause(ActionEvent actionEvent) {
-        if (mediaPlayer != null) {
-            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                mediaPlayer.pause();
-            } else if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-                mediaPlayer.play();
-            }
+
+    public void togglePlayPause(ActionEvent actionEvent) {
+        if (selectedSong == null) {
+            return;
+        }
+
+        boolean isMediaPlayerDefined = mediaPlayer != null;
+        // Check if mediaPlayer is currently playing a song
+        boolean isMediaPlayerPlaying = isMediaPlayerDefined && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
+        // Check if the same song is already loaded in the mediaPlayer
+        boolean isSameSongPlaying = isMediaPlayerDefined && mediaPlayer.getMedia().getSource().equals(Paths.get(selectedSong.getFilePath()).toUri().toString());
+
+        if (isMediaPlayerPlaying) {
+            mediaPlayer.pause();
+            // If a different song is loaded, play the selected song
+        } else if (!isMediaPlayerDefined || !isSameSongPlaying) {
+            playSong(selectedSong);
+            // If mediaPlayer is paused, resume
+        } else {
+            mediaPlayer.play();
         }
     }
+
+    private void playSong(Song song) {
+        //Setting previousSong for previous song button
+        if (currentSong != -1) {
+            previousSong = currentSong;
+        }
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            stop();
+        }
+
+        Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
+        mediaPlayer = new MediaPlayer(media);
+
+        // Set the volume to the current value of the volumeSlider
+        double sliderValue = volumeSlider.getValue();
+        double volume = (Math.log10(sliderValue) - 2) / -2; // using the same scale as our slider
+        mediaPlayer.setVolume(volume);
+
+        mediaPlayer.play();
+
+        // Update currentSong so the Next Button works
+        currentSong = currentTableView.getItems().indexOf(song);
+
+        mediaPlayer.setOnEndOfMedia(() -> {
+            // Get the index of the current song
+            int currentSong = currentTableView.getItems().indexOf(song);
+            // Check if there is a next song
+            if (currentSong + 1 < currentTableView.getItems().size()) {
+                // Get the next song
+                Song nextSong = currentTableView.getItems().get(currentSong + 1);
+                playSong(nextSong);
+            } else {
+                // If there is no next song, play the first song in the table
+                if (!currentTableView.getItems().isEmpty()) {
+                    Song firstSong = currentTableView.getItems().get(0);
+                    playSong(firstSong);
+                }
+            }
+        });
+    }
+
 
     public void stop() {
         if (mediaPlayer != null) {
@@ -140,31 +211,26 @@ public void toolTips(){
     }
 
     public void next(ActionEvent actionEvent) {
-        // Get the index of the selected song
-        int selectedIndex = tableViewDB.getSelectionModel().getSelectedIndex();
-        // Get the next song
-        Song nextSong = tableViewDB.getItems().get(selectedIndex + 1);
-        // Play the next song
-        playSong(nextSong);
+        // Check if currentSong + 1 is a valid index
+        if (currentSong + 1 < currentTableView.getItems().size()) {
+            Song nextSong = currentTableView.getItems().get(currentSong + 1);
+            playSong(nextSong);
+        } else {
+            // If there is no next song, play the first song in the table
+            if (!currentTableView.getItems().isEmpty()) {
+                Song firstSong = currentTableView.getItems().get(0);
+                playSong(firstSong);
+            }
+        }
     }
 
     public void prev(ActionEvent actionEvent) {
-        // Get the index of the selected song
-        int selectedIndex = tableViewDB.getSelectionModel().getSelectedIndex();
-        // Get the previous song
-        Song prevSong = tableViewDB.getItems().get(selectedIndex - 1);
-        // Play the previous song
-        playSong(prevSong);
+        if (previousSong != -1) {
+            Song prevSong = currentTableView.getItems().get(previousSong);
+            playSong(prevSong);
+        }
     }
 
-    private void playSong(Song song) {
-        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-            stop();
-        }
-        Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
-    }
 
     public void setVolume() {
     }
