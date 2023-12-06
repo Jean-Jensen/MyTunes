@@ -4,18 +4,20 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SongsDAO implements ISongsDAO {
     private final ConnectionManager cm = new ConnectionManager();
 
     @Override
-   public Song getSong(int id) throws MyTunesExceptions {
-        try(Connection con = cm.getConnection())
-        {
+   public Song getSong(int id) throws SQLException {
+        Connection con = cm.getConnection();
             String sql = "SELECT * FROM Songs WHERE id=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, id);
@@ -33,17 +35,15 @@ public class SongsDAO implements ISongsDAO {
 
             }
             return null;
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error getting song with ID " + id, e);
-        }
+
    }
 
-   public List<Song> searchForSong(String searchword) throws MyTunesExceptions {
+   public List<Song> searchForSong(String searchword) throws SQLException {
         if(searchword.isEmpty()){
-            return getAllSongs();
+            //return getAllSongs();
         }
        List<Song> songs = new ArrayList<>();
-       try (Connection con = cm.getConnection()) {
+       Connection con = cm.getConnection();
            String sql = "SELECT * FROM songs a WHERE Name LIKE ?" +
                    "UNION SELECT * FROM songs WHERE Artist LIKE ?"; //"UNION" is so that there are no duplicate values 
            PreparedStatement pstmt = con.prepareStatement(sql);
@@ -62,16 +62,14 @@ public class SongsDAO implements ISongsDAO {
                Song song = new Song(id, name, artist, length, fileType, filePath);
                songs.add(song);
            }
-       } catch (SQLException e) {
-           throw new MyTunesExceptions("Error getting all songs where name/artist is " + searchword, e);
-       }
+
        return songs;
    }
 
 
     @Override
-    public void deleteSong(int id) throws MyTunesExceptions{
-        try(Connection con = cm.getConnection()){
+    public void deleteSong(int id) throws SQLException {
+        Connection con = cm.getConnection();
             String sql = "DELETE FROM SONGS WHERE ID = ?"; //command in SQL to delete a song
             PreparedStatement prStmt = con.prepareStatement(sql);
 
@@ -79,15 +77,12 @@ public class SongsDAO implements ISongsDAO {
             prStmt.setString(1, String.valueOf(id));
 
             prStmt.executeUpdate(); //execute command in the database
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error deleting song with ID " + id, e);
-        }
+
     }
 
     @Override
-    public void updateSong(Song s) throws MyTunesExceptions{
-        try(Connection con = cm.getConnection())
-        {
+    public void updateSong(Song s) throws SQLException {
+        Connection con = cm.getConnection();
             String sql = "UPDATE songs SET name=?, artist=?, length=?, fileType=?, filePath=? WHERE id=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, s.getName());
@@ -98,14 +93,12 @@ public class SongsDAO implements ISongsDAO {
             pstmt.setInt(6, s.getId());
             pstmt.execute();
             con.commit();
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error updating song with ID " + s.getId(), e);
-        }
+
     }
 
     @Override
-    public void createSong(Song s) throws MyTunesExceptions{
-        try(Connection con = cm.getConnection()){
+    public void createSong(Song s) throws SQLException {
+            Connection con = cm.getConnection();
             String sql = "INSERT INTO songs(Name, Artist, Length, FileType, FilePath)" +
                     " VALUES(?, ?, ?, ?, ?)"; //command in SQL to add a new Song
             PreparedStatement prStmt = con.prepareStatement(sql);
@@ -118,15 +111,13 @@ public class SongsDAO implements ISongsDAO {
             prStmt.setString(5, s.getFilePath());
 
             prStmt.executeUpdate(); //execute command in the database
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error creating song", e);
-        }
+
     }
 
     @Override
-    public List<Song> getAllSongs() throws MyTunesExceptions{
+    public List<Song> getAllSongs() throws SQLException {
         List<Song> songs = new ArrayList<>();
-        try (Connection con = cm.getConnection()) {
+        Connection con = cm.getConnection();
             String sql = "SELECT * FROM songs";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -140,15 +131,13 @@ public class SongsDAO implements ISongsDAO {
                 Song song = new Song(id, name, artist, length, fileType, filePath);
                 songs.add(song);
             }
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error getting all songs", e);
-        }
+
         return songs;
     }
 
-    public int getLastID() throws MyTunesExceptions{
+    public int getLastID() throws SQLException {
         int ID = 0;
-        try (Connection con = cm.getConnection()) {
+        Connection con = cm.getConnection();
             String sql = "SELECT * FROM Songs WHERE ID = (SELECT IDENT_CURRENT('Songs'))";
             //"INDENT_CURRENT" finds the last identity value created for a table, which will always be the highest ID since it auto-increments
             Statement stmt = con.createStatement();
@@ -157,10 +146,9 @@ public class SongsDAO implements ISongsDAO {
                 ID = rs.getInt("id");
             }
             return ID;
-        } catch (SQLException e) {
-            throw new MyTunesExceptions("Error getting last song ID", e);
-        }
+
     }
+
 
 
 }

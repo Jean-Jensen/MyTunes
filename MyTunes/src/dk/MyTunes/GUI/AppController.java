@@ -27,6 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -102,7 +103,7 @@ public class AppController {
         this.bllManager = new BLLManager();
     }
 
-    public void initialize() throws MyTunesExceptions {
+    public void initialize() throws MyTunesExceptions, SQLException {
         songSelector(); //This figured out which song in which table you have selected and plays that one
         toolTips(); //Lets you add notes to buttons when you hover them with your mouse
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
@@ -364,7 +365,7 @@ public class AppController {
         primaryStage.show();
     }
 
-    public void showSongs() throws MyTunesExceptions {
+    public void showSongs() throws MyTunesExceptions, SQLException {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));

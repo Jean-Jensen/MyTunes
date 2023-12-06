@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Fixed issues with MAIN">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/ISongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/ISongsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/Exceptions/MyTunesExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/Exceptions/MyTunesExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/DeleteSongsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/DeleteSongsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +137,7 @@
       <workItem from="1701720463234" duration="5475000" />
       <workItem from="1701783523935" duration="9459000" />
       <workItem from="1701878156058" duration="133000" />
+      <workItem from="1701885065500" duration="5480000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />

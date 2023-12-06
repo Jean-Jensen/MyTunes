@@ -1,6 +1,8 @@
 package dk.MyTunes.Exceptions;
 
-public class MyTunesExceptions extends Exception{
+import java.sql.SQLException;
+
+public class MyTunesExceptions extends SQLException {
 
     public MyTunesExceptions(String message){
         super();
@@ -13,7 +15,6 @@ public class MyTunesExceptions extends Exception{
         super(cause);
     }
 
-    protected MyTunesExceptions(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+
+
 }
