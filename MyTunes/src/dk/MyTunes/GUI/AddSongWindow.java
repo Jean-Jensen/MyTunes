@@ -84,17 +84,29 @@ public class AddSongWindow {
         Media media = new Media(Paths.get(file.getPath()).toUri().toString()); //gets media from filepath
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
+
         mediaPlayer.setOnReady(() -> {
             //the media.getDuration method can only work properly once
             //the mediaPlayer status is "Ready", thus why we need to wait. this is also why I had to make a mediaplayer
-            lengthString = String.valueOf(media.getDuration().toSeconds()); //obtains duration of song in seconds
+            // lengthString = String.valueOf(media.getDuration().toSeconds()); //obtains duration of song in seconds
             //lengthString needs to be a variable outside of any method in order to be able to be changed here and used elsewhere
-            lengthString = ((int) (Double.parseDouble(lengthString) / 60)) + ":" + String.valueOf(Double.parseDouble(lengthString) % 60).substring(0,5);
+            //lengthString = ((int) (Double.parseDouble(lengthString) / 60)) + ":" + String.valueOf(Double.parseDouble(lengthString) % 60).substring(0,5);
             //converting to time in seconds to seconds and minutes
             //the minutes are typecasted into an integer so that there are no decimal values (which would make it hard to read)
 
-            lengthField.setText(lengthString);//sets the textfield to the songs length
+            // lengthField.setText(lengthString);//sets the textfield to the songs length
+
+            double totalSeconds = media.getDuration().toSeconds();
+            int hours = (int) totalSeconds / 3600;
+            int minutes = (int) (totalSeconds % 3600) / 60;
+            int seconds = (int) totalSeconds % 60;
+            //using %02d with String.format will ensure that 2 digits always show up, padding with 0s
+            lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            lengthField.setText(lengthString);
+
+
             artistField.setText((String) media.getMetadata().get("artist")); //sets the "artist" field
+
 
         });
 
