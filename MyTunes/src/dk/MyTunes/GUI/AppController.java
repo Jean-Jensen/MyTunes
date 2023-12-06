@@ -6,6 +6,8 @@ import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
 import dk.MyTunes.BLL.BLLPlaylist;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,20 +15,40 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 import java.nio.file.Paths;
+
 import dk.MyTunes.BE.PlaylistConnection;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.util.List;
 import java.util.logging.Logger;
 
 
 public class AppController {
 
+    @FXML
+    private Label lblSongName;
+    @FXML
+    private Label lblArtist;
+    @FXML
+    private ProgressBar songProgress;
+    @FXML
+    private Slider songProgressSlider;
+    @FXML
+    private Button updateButton;
+    @FXML
+    private Button removeSongButton;
+    @FXML
+    private Button addSongButton;
+    @FXML
+    private Button searchButton;
     @FXML
     private TextField txtSearch;
     @FXML
@@ -83,25 +105,32 @@ public class AppController {
     public void initialize() throws MyTunesExceptions {
         songSelector(); //This figured out which song in which table you have selected and plays that one
         toolTips(); //Lets you add notes to buttons when you hover them with your mouse
-        // windowCenterBar(); //Keeps the middle of the splitpane centered relative to window(maybe not needed)
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
         setVolumeSlider(); //Initializes the volume slider
+
     }
-public void toolTips(){
-    Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
+
+    public void toolTips() {
+        Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
         Tooltip.install(addSongToPlaylistButton, tooltipAddSong);
 
-    Tooltip tooltipRemoveSong = new Tooltip("Remove selected song from the selected playlist");
-    Tooltip.install(removeSongFromPlaylistButton, tooltipRemoveSong);
+        Tooltip tooltipRemoveSong = new Tooltip("Remove selected song from the selected playlist");
+        Tooltip.install(removeSongFromPlaylistButton, tooltipRemoveSong);
 
-}
-    private void windowCenterBar() {
-        splitPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            // Set the divider position to the middle of the SplitPane
-            splitPane.setDividerPositions(0.5);
-        });
+        Tooltip tooltipSearch = new Tooltip("Search for song that contains what you typed in its name/artist name");
+        Tooltip.install(searchButton, tooltipSearch);
+
+        Tooltip tooltipAdd = new Tooltip("Add song to songs list");
+        Tooltip.install(addSongButton, tooltipAdd);
+
+        Tooltip tooltipDelete = new Tooltip("Delete currently selected song. Will do nothing if no song selected");
+        Tooltip.install(removeSongButton, tooltipDelete);
+
+        Tooltip tooltipUpdate = new Tooltip("Update values of currently selected song. Will do nothing if no song selected");
+        Tooltip.install(updateButton, tooltipUpdate);
+
     }
 
     private void coloumnSizes() {
@@ -123,22 +152,24 @@ public void toolTips(){
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
     }
 
-public void songSelector(){
-    // Add a listener to the selection model of tableSongsFromPlayList
-    tableSongsFromPlayList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            selectedSong = newSelection;
-            currentTableView = tableSongsFromPlayList;
-        }
-    });
-    // Add a listener to the selection model of tableViewDB
-    tableViewDB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            selectedSong = newSelection;
-            currentTableView = tableSongsFromPlayList;
-        }
-    });
-}
+    public void songSelector() {
+        // Add a listener to the selection model of tableSongsFromPlayList
+        tableSongsFromPlayList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedSong = newSelection;
+                currentTableView = tableSongsFromPlayList;
+            }
+        });
+
+        // Add a listener to the selection model of tableViewDB
+        tableViewDB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedSong = newSelection;
+                System.out.println(tableViewDB.getSelectionModel().getSelectedItem().getName());
+                currentTableView = tableSongsFromPlayList;
+            }
+        });
+    }
 
 
     public void togglePlayPause(ActionEvent actionEvent) {
@@ -151,7 +182,6 @@ public void songSelector(){
         boolean isMediaPlayerPlaying = isMediaPlayerDefined && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
         // Check if the same song is already loaded in the mediaPlayer
         boolean isSameSongPlaying = isMediaPlayerDefined && mediaPlayer.getMedia().getSource().equals(Paths.get(selectedSong.getFilePath()).toUri().toString());
-
         if (isMediaPlayerPlaying) {
             mediaPlayer.pause();
             // If a different song is loaded, play the selected song
@@ -160,6 +190,7 @@ public void songSelector(){
             // If mediaPlayer is paused, resume
         } else {
             mediaPlayer.play();
+            setProgressBar();
         }
     }
 
@@ -168,13 +199,17 @@ public void songSelector(){
         if (currentSong != -1) {
             previousSong = currentSong;
         }
-        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+
+        //checking if the media player is already playing something, prevents the same song playing twice
+        /*if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
             stop();
         }
 
+         */
         Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
-
+        setProgressBar();
+        setSongLabels(song);
         // Set the volume to the current value of the volumeSlider
         double sliderValue = volumeSlider.getValue();
         double volume = (Math.log10(sliderValue) - 2) / -2; // using the same scale as our slider
@@ -231,7 +266,7 @@ public void songSelector(){
         }
     }
 
-    public void setVolumeSlider() {  //observable (the property that was changed[not used but needed for .addListener]), oldValue (the previous value of the property), and newValue (the new value of the property).
+    private void setVolumeSlider() {  //observable (the property that was changed[not used but needed for .addListener]), oldValue (the previous value of the property), and newValue (the new value of the property).
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (mediaPlayer != null) {
                 double sliderValue = newValue.doubleValue(); //This value is normally between 0 and 100 but next line makes this more precise, so we need a double
@@ -240,6 +275,36 @@ public void songSelector(){
             }
         });
     }
+
+    private void setProgressBar(){ //adjusts the progressbar and slider value everytime a new song plays
+        if(mediaPlayer != null){
+            //add a listener for whenever the current time changes
+            //(so we can set the slider to be the same as the current duration)
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                    songProgressSlider.setValue(newValue.toSeconds() / 100);
+                    songProgress.progressProperty().set(newValue.toSeconds() / 100);
+                }
+            });
+
+        }
+    }
+
+    private void setSongLabels(Song song){
+        lblArtist.setText(song.getArtist());
+        lblSongName.setText(song.getName());
+    }
+
+    //setting it so that any adjustment of the slider will change the current time in the song
+    public void adjustSongTime(MouseEvent mouseEvent) {
+        if(mediaPlayer != null){
+            mediaPlayer.seek(Duration.seconds(songProgressSlider.getValue() * 100));
+            songProgress.progressProperty().set(songProgressSlider.getValue());
+        }
+    }
+
+
 
     public void renamePlaylist(ActionEvent actionEvent) {
     }
@@ -381,5 +446,7 @@ public void songSelector(){
         tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
 
     }
+
+
 }
 

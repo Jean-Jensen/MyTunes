@@ -34,7 +34,6 @@ public class AddSongWindow {
     private TextField nameField;
 
     private BLLManager bll = new BLLManager();
-    private double length = 0;
     private String lengthString = "";
 
     private AppController appController;
