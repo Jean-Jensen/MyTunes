@@ -201,11 +201,10 @@ public class AppController {
         }
 
         //checking if the media player is already playing something, prevents the same song playing twice
-        /*if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
             stop();
         }
-
-         */
+        
         Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         setProgressBar();
