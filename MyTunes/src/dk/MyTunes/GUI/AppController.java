@@ -1,6 +1,6 @@
 package dk.MyTunes.GUI;
 
-
+//imports
 import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.BLL.BLLManager;
@@ -15,10 +15,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.nio.file.Paths;
-
 import dk.MyTunes.BE.PlaylistConnection;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -26,13 +24,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.List;
-import java.util.logging.Logger;
-
 
 public class AppController {
-
+//UI Elements
     @FXML
     private Label lblSongName;
     @FXML
@@ -42,6 +37,11 @@ public class AppController {
     @FXML
     private Slider songProgressSlider;
     @FXML
+    private Slider volumeSlider;
+    @FXML
+    private TextField txtSearch;
+//Buttons
+    @FXML
     private Button updateButton;
     @FXML
     private Button removeSongButton;
@@ -50,7 +50,10 @@ public class AppController {
     @FXML
     private Button searchButton;
     @FXML
-    private TextField txtSearch;
+    private Button addSongToPlaylistButton;
+    @FXML
+    private Button removeSongFromPlaylistButton;
+//Tables
     @FXML
     private TableView tablePlaylists;
     @FXML
@@ -59,10 +62,6 @@ public class AppController {
     private TableColumn colSongCount;
     @FXML
     private TableColumn colLength;
-    @FXML
-    private Slider volumeSlider;
-    @FXML
-    private SplitPane splitPane;
     @FXML
     private TableView<PlaylistConnection> tableSongsFromPlayList;
     @FXML
@@ -83,12 +82,7 @@ public class AppController {
     private TableColumn<Song, String> columnLengthDB;
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
-    @FXML
-    private Button addSongToPlaylistButton;
-    @FXML
-    private Button removeSongFromPlaylistButton;
-    @FXML
-    private ToggleButton togglePlayPause;
+//Non-UI related
     private TableView<PlaylistConnection> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
@@ -96,7 +90,6 @@ public class AppController {
     private Song selectedSong;
     private int currentSong;
     private int previousSong = -1;
-
 
     public AppController() {
         this.bllManager = new BLLManager();
@@ -133,25 +126,8 @@ public class AppController {
 
     }
 
-    private void coloumnSizes() {
-        int numberOfColumns = 4;        //To adjust columns sizing with window size of playlist list
-        columnSongs.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
-        columnArtists.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
-        columnLength.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
-        columnFileType.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
 
-        int numberOfColumnsDB = 4;      //To adjust columns sizing with window size of Database list
-        columnSongsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-        columnArtistsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-        columnLengthDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-        columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
-
-        int numberOfColumnsPlaylist = 3;
-        colPlaylistName.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
-        colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
-        colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
-    }
-
+    /////////////////Media-player Functions//////////////////
     public void songSelector() {
         // Add a listener to the selection model of tableSongsFromPlayList
         tableSongsFromPlayList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -170,7 +146,6 @@ public class AppController {
             }
         });
     }
-
 
     public void togglePlayPause(ActionEvent actionEvent) {
         if (selectedSong == null) {
@@ -201,11 +176,10 @@ public class AppController {
         }
 
         //checking if the media player is already playing something, prevents the same song playing twice
-        /*if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
             stop();
         }
 
-         */
         Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         setProgressBar();
@@ -237,7 +211,6 @@ public class AppController {
             }
         });
     }
-
 
     public void stop() {
         if (mediaPlayer != null) {
@@ -291,11 +264,6 @@ public class AppController {
         }
     }
 
-    private void setSongLabels(Song song){
-        lblArtist.setText(song.getArtist());
-        lblSongName.setText(song.getName());
-    }
-
     //setting it so that any adjustment of the slider will change the current time in the song
     public void adjustSongTime(MouseEvent mouseEvent) {
         if(mediaPlayer != null){
@@ -304,7 +272,22 @@ public class AppController {
         }
     }
 
+    ///////////////////////////UI + Buttons//////////////////////////
+    public void Search(ActionEvent actionEvent) throws MyTunesExceptions {
+        columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
+        columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
 
+        List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
+        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
+
+    }
+
+    private void setSongLabels(Song song){
+        lblArtist.setText(song.getArtist());
+        lblSongName.setText(song.getName());
+    }
 
     public void renamePlaylist(ActionEvent actionEvent) {
     }
@@ -315,26 +298,36 @@ public class AppController {
     public void savePlaylist(ActionEvent actionEvent) {
     }
 
-    public void addSong(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
-        Parent root = loader.load();
-        AddSongWindow controller = loader.getController();
-        controller.setAppController(this);
-        openNewScene(root, "Add Song");
-    }
-
-    public void removeSong(ActionEvent actionEvent) throws IOException {
+    public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-        if (selectedSong != null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/DeleteSongs.fxml"));
-            Parent root = loader.load();
-            DeleteSongsController controller = loader.getController();
-            controller.setData(selectedSong.getId(), selectedSong.getName());
-            controller.setAppController(this);
-            openNewScene(root, "RemoveSong");
+
+        if (selectedPlaylist != null && selectedSong != null) {
+            bllPlaylist.addSongToPlaylist(selectedPlaylist.getId(), selectedSong.getId());
+            displaySongs(null);  // Refresh the song list in the selected playlist
+            showPlayLists(); //Refresh display everytime new song is added
         }
     }
 
+    public void removeSongFromPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
+        PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
+        if (selectedPlaylist != null && selectedSong != null) {
+            int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
+            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
+            displaySongs(null);  // Refresh the song list in the selected playlist
+
+            // Stops cursor from jumping to the top
+            if (tableSongsFromPlayList.getItems().size() > selectedIndex) {
+                tableSongsFromPlayList.getSelectionModel().select(selectedIndex);
+            } else if (selectedIndex > 0) {  // If at bottom of list, move up 1
+                tableSongsFromPlayList.getSelectionModel().select(selectedIndex - 1);
+            }
+        }
+    }
+
+
+    ///////////////////////New Window Buttons////////////////////////
     @FXML
     public void openUpdateWindow(ActionEvent actionEvent) throws IOException {
         try {
@@ -365,6 +358,28 @@ public class AppController {
         primaryStage.show();
     }
 
+    public void addSong(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
+        Parent root = loader.load();
+        AddSongWindow controller = loader.getController();
+        controller.setAppController(this);
+        openNewScene(root, "Add Song");
+    }
+
+    public void removeSong(ActionEvent actionEvent) throws IOException {
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        if (selectedSong != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/DeleteSongs.fxml"));
+            Parent root = loader.load();
+            DeleteSongsController controller = loader.getController();
+            controller.setData(selectedSong.getId(), selectedSong.getName());
+            controller.setAppController(this);
+            openNewScene(root, "RemoveSong");
+        }
+    }
+
+
+    ///////////////////////Table Displays/////////////////////////
     public void showSongs() throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
@@ -386,16 +401,6 @@ public class AppController {
 
     }
 
-    public void updateSongInTableView(Song updatedSong) {
-        // Find the index of the song in the TableView's items
-        int index = tableViewDB.getItems().indexOf(updatedSong);
-        // Replace the song in the TableView's items with the updated song
-        if (index != -1) {
-            tableViewDB.getItems().set(index, updatedSong);
-        }
-    }
-
-
     public void displaySongs(MouseEvent mouseEvent) throws MyTunesExceptions {
         Playlist selected = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -408,43 +413,32 @@ public class AppController {
         }
     }
 
-    public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
-        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
-        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-
-        if (selectedPlaylist != null && selectedSong != null) {
-            bllPlaylist.addSongToPlaylist(selectedPlaylist.getId(), selectedSong.getId());
-            displaySongs(null);  // Refresh the song list in the selected playlist
+    public void updateSongInTableView(Song updatedSong) {
+        // Find the index of the song in the TableView's items
+        int index = tableViewDB.getItems().indexOf(updatedSong);
+        // Replace the song in the TableView's items with the updated song
+        if (index != -1) {
+            tableViewDB.getItems().set(index, updatedSong);
         }
     }
 
+    private void coloumnSizes() {
+        int numberOfColumns = 4;        //To adjust columns sizing with window size of playlist list
+        columnSongs.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnArtists.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnLength.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
+        columnFileType.prefWidthProperty().bind(tableSongsFromPlayList.widthProperty().divide(numberOfColumns));
 
-    public void removeSongFromPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
-        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
-        PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
-        if (selectedPlaylist != null && selectedSong != null) {
-            int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
-            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
-            displaySongs(null);  // Refresh the song list in the selected playlist
+        int numberOfColumnsDB = 4;      //To adjust columns sizing with window size of Database list
+        columnSongsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
+        columnArtistsDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
+        columnLengthDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
+        columnFileTypeDB.prefWidthProperty().bind(tableViewDB.widthProperty().divide(numberOfColumnsDB));
 
-            // Stops cursor from jumping to the top
-            if (tableSongsFromPlayList.getItems().size() > selectedIndex) {
-                tableSongsFromPlayList.getSelectionModel().select(selectedIndex);
-            } else if (selectedIndex > 0) {  // If at bottom of list, move up 1
-                tableSongsFromPlayList.getSelectionModel().select(selectedIndex - 1);
-            }
-        }
-    }
-
-    public void Search(ActionEvent actionEvent) throws MyTunesExceptions {
-        columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
-        columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
-        columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
-
-        List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
-        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
-
+        int numberOfColumnsPlaylist = 3;
+        colPlaylistName.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
+        colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
+        colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
     }
 
 
