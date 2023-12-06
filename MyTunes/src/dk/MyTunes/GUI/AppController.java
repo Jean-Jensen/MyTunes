@@ -316,7 +316,7 @@ public class AppController {
             int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
             bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
             displaySongs(null);  // Refresh the song list in the selected playlist
-
+            showPlayLists(); //Refresh display everytime new song is added
             // Stops cursor from jumping to the top
             if (tableSongsFromPlayList.getItems().size() > selectedIndex) {
                 tableSongsFromPlayList.getSelectionModel().select(selectedIndex);
