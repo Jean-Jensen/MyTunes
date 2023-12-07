@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Made it so table auto updates when removing a song">
+    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="errors added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/Exceptions/MyTunesExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/Exceptions/MyTunesExceptions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/DeleteSongsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/DeleteSongsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/Exceptions/MyTunesExceptions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/Exceptions/MyTunesExceptions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/DeleteSongsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/DeleteSongsController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,6 +269,7 @@
     <MESSAGE value="-Fixed issues with MAIN" />
     <MESSAGE value="-Cleaned up the AppController code&#10;-Changed the way the length of songs are input&#10;-Made these changes reflect on the tablePlaylist" />
     <MESSAGE value="-Made it so table auto updates when removing a song" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Made it so table auto updates when removing a song" />
+    <MESSAGE value="errors added" />
+    <option name="LAST_COMMIT_MESSAGE" value="errors added" />
   </component>
 </project>
