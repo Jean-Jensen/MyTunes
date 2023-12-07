@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DeleteSongsController implements Initializable {
@@ -36,7 +37,7 @@ public class DeleteSongsController implements Initializable {
         lblSong.setText(name);
     }
 
-    public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions {
+    public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions, SQLException {
         bll.deleteSong(ID);
         appController.showSongs();
         closeWindow(actionEvent);

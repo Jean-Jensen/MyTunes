@@ -34,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="MyTunesBranch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -135,7 +135,9 @@
       <workItem from="1701621280100" duration="442000" />
       <workItem from="1701621854267" duration="15188000" />
       <workItem from="1701720463234" duration="5475000" />
-      <workItem from="1701783523935" duration="8838000" />
+      <workItem from="1701783523935" duration="9459000" />
+      <workItem from="1701878156058" duration="133000" />
+      <workItem from="1701885065500" duration="6681000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />
