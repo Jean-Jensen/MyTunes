@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Fixed issues with MAIN">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/googlecode_soundlibs_mp3spi.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AddSongWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BLL/BLLPlaylist.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/BLL/BLLPlaylist.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AddSongWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -146,7 +140,7 @@
       <workItem from="1701948705051" duration="595000" />
       <workItem from="1701963263366" duration="32000" />
       <workItem from="1701963354129" duration="42000" />
-      <workItem from="1701963797349" duration="7495000" />
+      <workItem from="1701963797349" duration="8100000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />

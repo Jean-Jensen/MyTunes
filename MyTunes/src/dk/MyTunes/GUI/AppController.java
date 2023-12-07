@@ -393,7 +393,9 @@ public class AppController {
             AudioFormat format = audioInput.getFormat();
             long totalFrames = audioInput.getFrameLength();
             duration = totalFrames / format.getFrameRate(); //gets duration in seconds
-
+            if(format.getProperty("artist") != null){ //it most likely will, I've heard .wav files have poor tagging support
+                artist = format.getProperty("artist").toString();
+            }
         }
 
 
