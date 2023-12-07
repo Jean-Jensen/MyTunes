@@ -80,10 +80,8 @@ public class AddSongWindow {
         filePathField.setText(filepath); //sets filepath
         fileTypeField.setText(filepath.substring(filepath.lastIndexOf('.'))); //gets filetype by getting everything after the last instance of "."
 
-
         Media media = new Media(Paths.get(file.getPath()).toUri().toString()); //gets media from filepath
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-
 
         mediaPlayer.setOnReady(() -> {
             //the media.getDuration method can only work properly once
@@ -104,12 +102,9 @@ public class AddSongWindow {
             lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             lengthField.setText(lengthString);
 
-
             artistField.setText((String) media.getMetadata().get("artist")); //sets the "artist" field
 
-
         });
-
     }
 
 }

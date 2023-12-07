@@ -15,16 +15,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import dk.MyTunes.BE.PlaylistConnection;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
+
+
+import javax.sound.sampled.*;
+import javax.sound.sampled.spi.AudioFileReader;
 import java.util.List;
+import java.util.Map;
 
 public class AppController {
 //UI Elements
@@ -90,6 +99,10 @@ public class AppController {
     private Song selectedSong;
     private int currentSong;
     private int previousSong = -1;
+    //filters so users can only select .mp3 or .wav files
+    private FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter(".mp3 files", "*.mp3");
+    private FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter(".wav files", "*.wav");
+
 
     public AppController() {
         this.bllManager = new BLLManager();
@@ -348,6 +361,64 @@ public class AppController {
 
     }
 
+    public void addSong(ActionEvent actionEvent) throws MyTunesExceptions, IOException, UnsupportedAudioFileException {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select Song");
+        chooser.getExtensionFilters().addAll(filter1, filter2);
+        File selected = chooser.showOpenDialog(lblSongName.getScene().getWindow());
+
+        if(selected != null){
+            bllManager.createSong(getSongFromFile(selected));
+            showSongs(); //refreshing table after adding song
+        }
+    }
+    private Song getSongFromFile(File file) throws MyTunesExceptions, UnsupportedAudioFileException, IOException { //creates Song with correct values from the file
+        String name = file.getName(); //gets filename
+        String filepath = file.getPath(); //string value for the filepath (since we'll be reusing it)
+        String fileType = filepath.substring(filepath.lastIndexOf('.')); //gets filetype by getting everything after the last instance of "."
+
+        //AudioFileFormat fileFormat = null;
+        double duration = 0.0;
+        String artist = "";
+        if(fileType.equals(".mp3")){
+            AudioFileFormat fileFormat = new MpegAudioFileReader().getAudioFileFormat(file);
+            //the MP3SPI library allows us to read MP3 info
+            Map properties = fileFormat.properties();
+            Long durationLong = (Long) properties.get("duration");
+            duration = durationLong.doubleValue() / 1000;
+            duration = (duration / 1000) ;
+            artist = (String) properties.get("artist");
+        } else { //assuming it's a .wav file
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
+            AudioFormat format = audioInput.getFormat();
+            long totalFrames = audioInput.getFrameLength();
+            duration = totalFrames / format.getFrameRate(); //gets duration in seconds
+
+        }
+
+
+
+
+        int hours = (int) (duration / 3600);
+        int minutes = (int) ((duration % 3600) / 60);
+        int seconds = (int) (duration % 60);
+        //using %02d with String.format will ensure that 2 digits always show up, padding with 0s
+        String lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+
+
+
+
+        if(artist == null || artist.isEmpty()){ //so that we don't run into any errors
+            artist = "Unknown";
+        }
+        //System.out.println("Song: " + (bllManager.getLastID()+1) + name + " " + artist + " " + lengthString + " " + fileType + " " + filepath);
+
+        return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
+    }
+
+    //Old addSong method (can delete later)
+    /*
     public void addSong(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
         Parent root = loader.load();
@@ -355,6 +426,7 @@ public class AppController {
         controller.setAppController(this);
         openNewScene(root, "Add Song");
     }
+     */
 
     public void removeSong(ActionEvent actionEvent) throws IOException {
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
