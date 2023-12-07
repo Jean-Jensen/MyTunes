@@ -42,6 +42,7 @@ public class BLLManager {
             errorAlert(e);
             throw new MyTunesExceptions("Error getting all songs where name/artist is " + searchWord, e);
         }
+
     }
 
     public void deleteSong(int id) throws MyTunesExceptions {

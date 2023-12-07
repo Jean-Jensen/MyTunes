@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DeleteSongsController implements Initializable {
@@ -37,9 +36,12 @@ public class DeleteSongsController implements Initializable {
         lblSong.setText(name);
     }
 
-    public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions, SQLException {
+    public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions {
         bll.deleteSong(ID);
+        //refresh all the tables after delete
         appController.showSongs();
+        appController.displaySongs(null);
+        appController.showPlayLists();
         closeWindow(actionEvent);
     }
 
@@ -47,6 +49,4 @@ public class DeleteSongsController implements Initializable {
         Stage stg = (Stage) lblSong.getScene().getWindow(); //fetching the current stage by getting it from the label (can be done with any child node)
         stg.close();
     }
-
-
 }

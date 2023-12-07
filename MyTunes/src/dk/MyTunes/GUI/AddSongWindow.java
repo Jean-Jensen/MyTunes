@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class AddSongWindow {
@@ -48,9 +47,11 @@ public class AddSongWindow {
         this.appController = appController;
     }
 
-    public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions, SQLException {
+    public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions {
         if(nameField.getText() != null && artistField.getText() != null && filePathField.getText() != null
                 && fileTypeField.getText() != null && lengthField.getText() != null){
+
+
             Song s = new Song(bll.getLastID()+1, nameField.getText(), artistField.getText(), lengthField.getText(), fileTypeField.getText());
             //creates a new song object and with a temporary ID that uses the last ID of the table +1
             //since that's how the database would decide its ID
@@ -60,8 +61,6 @@ public class AddSongWindow {
             bll.createSong(s);
             appController.showSongs();
         }
-
-
     }
 
     public void findSong(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
@@ -85,17 +84,29 @@ public class AddSongWindow {
         Media media = new Media(Paths.get(file.getPath()).toUri().toString()); //gets media from filepath
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
+
         mediaPlayer.setOnReady(() -> {
             //the media.getDuration method can only work properly once
             //the mediaPlayer status is "Ready", thus why we need to wait. this is also why I had to make a mediaplayer
-            lengthString = String.valueOf(media.getDuration().toSeconds()); //obtains duration of song in seconds
+            // lengthString = String.valueOf(media.getDuration().toSeconds()); //obtains duration of song in seconds
             //lengthString needs to be a variable outside of any method in order to be able to be changed here and used elsewhere
-            lengthString = ((int) (Double.parseDouble(lengthString) / 60)) + ":" + String.valueOf(Double.parseDouble(lengthString) % 60).substring(0,5);
+            //lengthString = ((int) (Double.parseDouble(lengthString) / 60)) + ":" + String.valueOf(Double.parseDouble(lengthString) % 60).substring(0,5);
             //converting to time in seconds to seconds and minutes
             //the minutes are typecasted into an integer so that there are no decimal values (which would make it hard to read)
 
-            lengthField.setText(lengthString);//sets the textfield to the songs length
+            // lengthField.setText(lengthString);//sets the textfield to the songs length
+
+            double totalSeconds = media.getDuration().toSeconds();
+            int hours = (int) totalSeconds / 3600;
+            int minutes = (int) (totalSeconds % 3600) / 60;
+            int seconds = (int) totalSeconds % 60;
+            //using %02d with String.format will ensure that 2 digits always show up, padding with 0s
+            lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            lengthField.setText(lengthString);
+
+
             artistField.setText((String) media.getMetadata().get("artist")); //sets the "artist" field
+
 
         });
 
