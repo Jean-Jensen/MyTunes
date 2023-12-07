@@ -18,7 +18,13 @@ public class BLLManager {
     }
 
     public List<Song> searchForSong(String searchWord) throws MyTunesExceptions {
-        return songsDAO.searchForSong(searchWord);
+        try{
+            return songsDAO.searchForSong(searchWord);
+        }catch (SQLException e) {
+            errorAlert(e);
+            throw new MyTunesExceptions("Error getting all songs where name/artist is " + searchWord, e);
+        }
+
     }
 
     public void deleteSong(int id) throws MyTunesExceptions {
