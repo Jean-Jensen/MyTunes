@@ -50,6 +50,8 @@ public class AddSongWindow {
     public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions {
         if(nameField.getText() != null && artistField.getText() != null && filePathField.getText() != null
                 && fileTypeField.getText() != null && lengthField.getText() != null){
+
+
             Song s = new Song(bll.getLastID()+1, nameField.getText(), artistField.getText(), lengthField.getText(), fileTypeField.getText());
             //creates a new song object and with a temporary ID that uses the last ID of the table +1
             //since that's how the database would decide its ID
@@ -59,8 +61,6 @@ public class AddSongWindow {
             bll.createSong(s);
             appController.showSongs();
         }
-
-
     }
 
     public void findSong(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {

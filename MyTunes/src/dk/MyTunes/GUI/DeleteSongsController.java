@@ -38,7 +38,10 @@ public class DeleteSongsController implements Initializable {
 
     public void deleteSong(ActionEvent actionEvent) throws MyTunesExceptions {
         bll.deleteSong(ID);
+        //refresh all the tables after delete
         appController.showSongs();
+        appController.displaySongs(null);
+        appController.showPlayLists();
         closeWindow(actionEvent);
     }
 
