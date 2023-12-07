@@ -49,6 +49,4 @@ public class DeleteSongsController implements Initializable {
         Stage stg = (Stage) lblSong.getScene().getWindow(); //fetching the current stage by getting it from the label (can be done with any child node)
         stg.close();
     }
-
-
 }
