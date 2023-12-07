@@ -33,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="MyTunesBranch" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -134,9 +134,10 @@
       <workItem from="1701621280100" duration="442000" />
       <workItem from="1701621854267" duration="15188000" />
       <workItem from="1701720463234" duration="5475000" />
-      <workItem from="1701783523935" duration="9459000" />
-      <workItem from="1701878156058" duration="133000" />
-      <workItem from="1701885065500" duration="6681000" />
+      <workItem from="1701783523935" duration="8838000" />
+      <workItem from="1701880667054" duration="3802000" />
+      <workItem from="1701893078618" duration="1270000" />
+      <workItem from="1701933407259" duration="5629000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />
@@ -218,7 +219,31 @@
       <option name="project" value="LOCAL" />
       <updated>1701774569045</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="-Cleaned up the AppController code&#10;-Changed the way the length of songs are input&#10;-Made these changes reflect on the tablePlaylist">
+      <option name="closed" value="true" />
+      <created>1701855378480</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1701855378480</updated>
+    </task>
+    <task id="LOCAL-00012" summary="-Made it so table auto updates when removing a song">
+      <option name="closed" value="true" />
+      <created>1701855583624</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1701855583624</updated>
+    </task>
+    <task id="LOCAL-00013" summary="-Made it so table auto updates when removing a song">
+      <option name="closed" value="true" />
+      <created>1701942590225</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1701942590225</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +260,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/JeanBranch" />
+                        <option value="MyTunesBranch" />
                       </list>
                     </value>
                   </entry>
@@ -252,6 +277,8 @@
     <MESSAGE value="-Added Playlist Foundations" />
     <MESSAGE value="-Added buttons for remove/add songs to playlist&#10;-Added new BE &quot;Playlistconnector&quot; and set up as a subclass for Song Class&#10;-Added some styling to make the playlists easier to read" />
     <MESSAGE value="-Fixed issues with MAIN" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Fixed issues with MAIN" />
+    <MESSAGE value="-Cleaned up the AppController code&#10;-Changed the way the length of songs are input&#10;-Made these changes reflect on the tablePlaylist" />
+    <MESSAGE value="-Made it so table auto updates when removing a song" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Made it so table auto updates when removing a song" />
   </component>
 </project>

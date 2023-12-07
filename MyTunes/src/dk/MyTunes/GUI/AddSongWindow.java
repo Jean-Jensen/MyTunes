@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class AddSongWindow {
@@ -48,9 +47,11 @@ public class AddSongWindow {
         this.appController = appController;
     }
 
-    public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions, SQLException {
+    public void AddSong(ActionEvent actionEvent) throws MyTunesExceptions {
         if(nameField.getText() != null && artistField.getText() != null && filePathField.getText() != null
                 && fileTypeField.getText() != null && lengthField.getText() != null){
+
+
             Song s = new Song(bll.getLastID()+1, nameField.getText(), artistField.getText(), lengthField.getText(), fileTypeField.getText());
             //creates a new song object and with a temporary ID that uses the last ID of the table +1
             //since that's how the database would decide its ID
@@ -60,8 +61,6 @@ public class AddSongWindow {
             bll.createSong(s);
             appController.showSongs();
         }
-
-
     }
 
     public void findSong(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {

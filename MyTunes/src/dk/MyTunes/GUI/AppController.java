@@ -24,8 +24,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public class AppController {
@@ -97,7 +95,7 @@ public class AppController {
         this.bllManager = new BLLManager();
     }
 
-    public void initialize() throws MyTunesExceptions, SQLException {
+    public void initialize() throws MyTunesExceptions {
         songSelector(); //This figured out which song in which table you have selected and plays that one
         toolTips(); //Lets you add notes to buttons when you hover them with your mouse
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
@@ -181,7 +179,7 @@ public class AppController {
         if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
             stop();
         }
-        
+
         Media media = new Media(Paths.get(song.getFilePath()).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         setProgressBar();
@@ -360,7 +358,29 @@ public class AppController {
         primaryStage.show();
     }
 
-    public void showSongs() throws MyTunesExceptions, SQLException {
+    public void addSong(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
+        Parent root = loader.load();
+        AddSongWindow controller = loader.getController();
+        controller.setAppController(this);
+        openNewScene(root, "Add Song");
+    }
+
+    public void removeSong(ActionEvent actionEvent) throws IOException {
+        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+        if (selectedSong != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/DeleteSongs.fxml"));
+            Parent root = loader.load();
+            DeleteSongsController controller = loader.getController();
+            controller.setData(selectedSong.getId(), selectedSong.getName());
+            controller.setAppController(this);
+            openNewScene(root, "RemoveSong");
+        }
+    }
+
+
+    ///////////////////////Table Displays/////////////////////////
+    public void showSongs() throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
