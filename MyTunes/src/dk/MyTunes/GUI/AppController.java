@@ -348,16 +348,6 @@ public class AppController {
 
     }
 
-    //in order to avoid repeating the same lines of code over and over
-    private void openNewScene(Parent root, String title) throws IOException {
-        Scene scene = new Scene(root);
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle(title);
-        primaryStage.setScene(scene);
-        primaryStage.initModality(Modality.APPLICATION_MODAL);
-        primaryStage.show();
-    }
-
     public void addSong(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
         Parent root = loader.load();
@@ -376,6 +366,16 @@ public class AppController {
             controller.setAppController(this);
             openNewScene(root, "RemoveSong");
         }
+    }
+
+    //in order to avoid repeating the same lines of code over and over
+    private void openNewScene(Parent root, String title) throws IOException {
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle(title);
+        primaryStage.setScene(scene);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        primaryStage.show();
     }
 
 
