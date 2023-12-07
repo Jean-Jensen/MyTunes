@@ -134,6 +134,9 @@
       <workItem from="1701885065500" duration="6716000" />
       <workItem from="1701892544413" duration="505000" />
       <workItem from="1701947921695" duration="571000" />
+      <workItem from="1701948559939" duration="129000" />
+      <workItem from="1701948705051" duration="595000" />
+      <workItem from="1701963263366" duration="32000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />
