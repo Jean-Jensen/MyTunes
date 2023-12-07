@@ -64,9 +64,6 @@ public class BLLPlaylist {
         }
     }
 
-    /*public List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions {
-        return playlistDAO.getSongsInPlaylist(playlistId);
-    }*/
     public List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions {
         try {
             return playlistDAO.getPlaylistConnections(playlistId);
