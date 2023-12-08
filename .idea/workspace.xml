@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Gave our Playlist table parameters to avoid typecasting&#10;-Added Context Menu">
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/UpdateSongWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/UpdateSongWindow.java" afterDir="false" />
+    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Changed Update window to only allow name and artist editing">
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702031926261</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="-Changed Update window to only allow name and artist editing">
+      <option name="closed" value="true" />
+      <created>1702032148395</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1702032148395</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,6 +315,7 @@
     <MESSAGE value="-Made it so table auto updates when removing a song" />
     <MESSAGE value="-Fixed issues with MAIN" />
     <MESSAGE value="-Gave our Playlist table parameters to avoid typecasting&#10;-Added Context Menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Gave our Playlist table parameters to avoid typecasting&#10;-Added Context Menu" />
+    <MESSAGE value="-Changed Update window to only allow name and artist editing" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Changed Update window to only allow name and artist editing" />
   </component>
 </project>

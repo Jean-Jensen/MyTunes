@@ -162,9 +162,18 @@ public class AppController {
                 ex.printStackTrace();
             }
         });
+        MenuItem deleteSong = new MenuItem("Delete Song");
+        deleteSong.setOnAction(mouseClick -> {
+            try {
+                removeSong(mouseClick);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         contextMenu.getItems().add(updateSongItem);
         contextMenu.getItems().add(addSong);
+        contextMenu.getItems().add(deleteSong);
 
         // Set the context menu on the TableView
         tableViewDB.setContextMenu(contextMenu);
@@ -409,6 +418,7 @@ public class AppController {
 
         return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
     }
+
     ///////////////////////New Window Buttons////////////////////////
     @FXML
     public void openUpdateWindow() throws IOException {
@@ -463,7 +473,6 @@ public class AppController {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
-
 
     ///////////////////////Table Displays/////////////////////////
     public void showSongs() throws MyTunesExceptions {
