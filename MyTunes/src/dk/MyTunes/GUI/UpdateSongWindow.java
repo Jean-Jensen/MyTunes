@@ -14,13 +14,6 @@ public class UpdateSongWindow {
     @FXML
     private TextField artistField;
 
-    @FXML
-    private TextField lengthField;
-
-    @FXML
-    private TextField fileTypeField;
-    @FXML
-    private TextField filePathField;
 
     private BLLManager bllManager = new BLLManager();
     private int id;
@@ -44,16 +37,6 @@ public class UpdateSongWindow {
             s.setArtist(artistField.getText());
         }
 
-        if (!lengthField.getText().isEmpty()) {
-            s.setLength(lengthField.getText());
-        }
-
-        if (!fileTypeField.getText().isEmpty()) {
-            s.setFileType(fileTypeField.getText());
-        }
-        if (!filePathField.getText().isEmpty()) {
-            s.setFilePath(filePathField.getText());
-        }
         bllManager.updateSong(s);
 
         appController.updateSongInTableView(s);
