@@ -95,6 +95,7 @@ public class AppController {
     private TableView<PlaylistConnection> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
+
     private MediaPlayer mediaPlayer;
     private Song selectedSong;
     private int currentSong;
@@ -110,12 +111,12 @@ public class AppController {
 
     public void initialize() throws MyTunesExceptions {
         songSelector(); //This figured out which song in which table you have selected and plays that one
-        toolTips(); //Lets you add notes to buttons when you hover them with your mouse
+       toolTips(); //Lets you add notes to buttons when you hover them with your mouse
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
         setVolumeSlider(); //Initializes the volume slider
-        contextMenu(); //Gives us the ability to right click things
+       contextMenu(); //Gives us the ability to right click things
     }
 
 
@@ -144,6 +145,7 @@ public class AppController {
     public void contextMenu(){
         // Create the context menu
         ContextMenu contextMenu = new ContextMenu();
+        Menu addToPlaylistMenu = new Menu("Add to playlist");
 
         // Add menuitem for Updatesong that runs openUpdateWindow method
         MenuItem updateSongItem = new MenuItem("Update song");
@@ -171,13 +173,52 @@ public class AppController {
             }
         });
 
+
         contextMenu.getItems().add(updateSongItem);
         contextMenu.getItems().add(addSong);
         contextMenu.getItems().add(deleteSong);
+        contextMenu.getItems().add(createAddToPlaylistMenu());
 
         // Set the context menu on the TableView
         tableViewDB.setContextMenu(contextMenu);
         tableSongsFromPlayList.setContextMenu(contextMenu);
+    }
+
+    private Menu createAddToPlaylistMenu() {
+        Menu addToPlaylistMenu = new Menu("Add to playlist");
+        // Create local list for playlists
+        List<Playlist> playlists = null;
+        try {
+            playlists = bllPlaylist.getAllPlaylists();
+        } catch (MyTunesExceptions e) {
+            e.printStackTrace();
+        }
+        //Makes sure there is playlists
+        if (playlists != null) {
+            for (Playlist playlist : playlists) {
+                //Loop to display all playlists
+                MenuItem playlistItem = new MenuItem(playlist.getName());
+                playlistItem.setOnAction(e -> {
+                    try {
+                        //to target the playlist you click
+                        tablePlaylists.getSelectionModel().select(playlist);
+                        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+                        if (selectedSong != null) {
+                            //uses our addsongtoplaylist method
+                            bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
+                            //updates lists
+                            displaySongs(null);
+                            showPlayLists();
+                        }
+                    } catch (MyTunesExceptions ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                // Add playlistItem to the addToPlaylistMenu menu
+                addToPlaylistMenu.getItems().add(playlistItem);
+            }
+        }
+        return addToPlaylistMenu;
     }
 
     /////////////////Media-player Functions//////////////////

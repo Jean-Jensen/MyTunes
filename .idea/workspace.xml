@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Changed Update window to only allow name and artist editing">
+    <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Added Delete Song to Context Menu">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/FXML/UpdateSongs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/UpdateSongWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyTunes/dk/MyTunes/GUI/AppController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702032148395</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="-Added Delete Song to Context Menu">
+      <option name="closed" value="true" />
+      <created>1702032571618</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1702032571618</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,6 +325,7 @@
     <MESSAGE value="-Fixed issues with MAIN" />
     <MESSAGE value="-Gave our Playlist table parameters to avoid typecasting&#10;-Added Context Menu" />
     <MESSAGE value="-Changed Update window to only allow name and artist editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Changed Update window to only allow name and artist editing" />
+    <MESSAGE value="-Added Delete Song to Context Menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Added Delete Song to Context Menu" />
   </component>
 </project>
