@@ -243,6 +243,8 @@ public class PlaylistDAO implements IPlaylistDAO {
         return connectionToDB;
     }
     public int getLastID(int playlistID) throws MyTunesExceptions{
+        //I fear this may be slowing down the program since we're needing to call the database twice as we add a song.
+        //even if this only returns 1 value, it's still calling the database twice
         int ID = 0;
         try (Connection con = cm.getConnection()) {
             String sql = "SELECT MAX(OrderID2) FROM connection WHERE PlaylistID = ?";
