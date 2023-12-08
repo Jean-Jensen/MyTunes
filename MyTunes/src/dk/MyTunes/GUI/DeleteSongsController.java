@@ -40,7 +40,7 @@ public class DeleteSongsController implements Initializable {
         bll.deleteSong(ID);
         //refresh all the tables after delete
         appController.showSongs();
-        appController.displaySongs(null);
+        appController.displaySongsInPlaylist(null);
         appController.showPlayLists();
         closeWindow(actionEvent);
     }

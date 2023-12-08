@@ -311,13 +311,14 @@ public class AppController {
     public void savePlaylist(ActionEvent actionEvent) {
     }
 
+
     public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
         Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
 
         if (selectedPlaylist != null && selectedSong != null) {
             bllPlaylist.addSongToPlaylist(selectedPlaylist.getId(), selectedSong.getId());
-            displaySongs(null);  // Refresh the song list in the selected playlist
+            displaySongsInPlaylist(null);  // Refresh the song list in the selected playlist
             showPlayLists(); //Refresh display everytime new song is added
         }
     }
@@ -327,8 +328,8 @@ public class AppController {
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
             int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
-            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
-            displaySongs(null);  // Refresh the song list in the selected playlist
+            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId(), selectedPlaylist.getId());
+            displaySongsInPlaylist(null);  // Refresh the song list in the selected playlist
             showPlayLists(); //Refresh display everytime new song is added
             // Stops cursor from jumping to the top
             if (tableSongsFromPlayList.getItems().size() > selectedIndex) {
@@ -337,6 +338,18 @@ public class AppController {
                 tableSongsFromPlayList.getSelectionModel().select(selectedIndex - 1);
             }
         }
+    }
+
+    public void moveSongUpPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
+        PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
+        if (selectedPlaylist != null && selectedSong != null) {
+            bllPlaylist.moveSongUpPlaylist(selectedSong.getOrderId(), selectedPlaylist.getId());
+            displaySongsInPlaylist(null);
+        }
+    }
+
+    public void moveSongDownPlaylist(ActionEvent actionEvent) {
     }
 
 
@@ -398,18 +411,11 @@ public class AppController {
             }
         }
 
-
-
-
         int hours = (int) (duration / 3600);
         int minutes = (int) ((duration % 3600) / 60);
         int seconds = (int) (duration % 60);
         //using %02d with String.format will ensure that 2 digits always show up, padding with 0s
         String lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-
-
-
-
 
         if(artist == null || artist.isEmpty()){ //so that we don't run into any errors
             artist = "Unknown";
@@ -418,17 +424,6 @@ public class AppController {
 
         return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
     }
-
-    //Old addSong method (can delete later)
-    /*
-    public void addSong(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddSongs.fxml"));
-        Parent root = loader.load();
-        AddSongWindow controller = loader.getController();
-        controller.setAppController(this);
-        openNewScene(root, "Add Song");
-    }
-     */
 
     public void removeSong(ActionEvent actionEvent) throws IOException {
         Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
@@ -440,6 +435,14 @@ public class AppController {
             controller.setAppController(this);
             openNewScene(root, "RemoveSong");
         }
+    }
+
+    public void createPlaylist(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/AddPlaylist.fxml"));
+        Parent root = loader.load();
+        AddPlaylistController controller = loader.getController();
+        controller.setAppController(this);
+        openNewScene(root, "Create Playlist");
     }
 
     //in order to avoid repeating the same lines of code over and over
@@ -475,7 +478,7 @@ public class AppController {
 
     }
 
-    public void displaySongs(MouseEvent mouseEvent) throws MyTunesExceptions {
+    public void displaySongsInPlaylist(MouseEvent mouseEvent) throws MyTunesExceptions {
         Playlist selected = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
         if (selected != null) {
             columnSongs.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -514,6 +517,7 @@ public class AppController {
         colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
     }
+
 
 
 }
