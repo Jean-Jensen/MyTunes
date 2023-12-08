@@ -105,8 +105,10 @@ public class PlaylistDAO implements IPlaylistDAO {
             pstmt.setInt(1, playlistId);
             pstmt.setInt(2, songId);
             if(isPlaylistEmpty(playlistId)){
+                //if the playlist is empty then just make the orderID = 0
                 pstmt.setInt(3, 0);
             } else{
+                //setting the orderID to be the latest orderID + 1
                 pstmt.setInt(3, getLastID(playlistId) + 1);
             }
             pstmt.executeUpdate();
@@ -136,7 +138,7 @@ public class PlaylistDAO implements IPlaylistDAO {
     @Override
     public void removeSongFromPlaylist(int orderId, int playlistID) throws MyTunesExceptions {
         try (Connection con = cm.getConnection()) {
-            String sql = "DELETE FROM connection WHERE OrderID2 = ? and PlaylistID = ?"; //uses the order ID below to delete a song
+            String sql = "DELETE FROM connection WHERE OrderID2 = ? and PlaylistID = ?"; //uses the order ID and playlist ID below to delete a song
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, orderId);
             stmt.setInt(2, playlistID);
