@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1149.0" style="-fx-background-color: #22a19e; -fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@newstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
+   <bottom>
+      <BorderPane prefHeight="77.0" prefWidth="1165.0" style="-fx-background-color: black; -fx-opacity: .95; -fx-background-radius: 30; -fx-border-radius: 30;">
+         <bottom>
+            <VBox fillWidth="false" BorderPane.alignment="CENTER">
+               <children>
+                  <Slider fx:id="songProgressSlider" onMouseDragged="#adjustSongTime" onMousePressed="#adjustSongTime" prefHeight="14.0" prefWidth="454.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="330.0" />
+                     </VBox.margin>
+                  </Slider>
+                  <ProgressBar fx:id="songProgress" prefWidth="200.0" progress="0.0" />
+               </children>
+            </VBox>
+         </bottom>
+         <left>
+            <HBox maxWidth="200.0" prefHeight="79.0" prefWidth="198.0" BorderPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <ImageView fx:id="albumArt" fitHeight="79.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox prefHeight="79.0" prefWidth="106.0">
+                     <children>
+                        <Label fx:id="lblSongName" prefHeight="17.0" prefWidth="75.0" styleClass="songName" text="Song Name">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblArtist" styleClass="artistName" text="Artist" />
+                     </children>
+                  </VBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets bottom="-5.0" />
+               </BorderPane.margin>
+            </HBox>
+         </left>
+         <right>
+            <Slider fx:id="volumeSlider" styleClass="volume-slider" scaleX="-1" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="30.0" top="35.0" />
+               </BorderPane.margin>
+            </Slider>
+         </right>
+         <center>
+            <HBox prefHeight="35.0" prefWidth="883.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ButtonBar prefHeight="74.0" prefWidth="414.0">
+                    <buttons>
+                      <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prev" styleClass="prevButton" />
+                        <ToggleButton fx:id="togglePlayPause" mnemonicParsing="false" onAction="#togglePlayPause" />
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" styleClass="nextButton" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </HBox>
+         </center>
+         <BorderPane.margin>
+            <Insets top="3.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </bottom>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <left>
+      <VBox fillWidth="false" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+                        <Button mnemonicParsing="false" text="Create" />
+                        <Button fx:id="renamePlaylist" mnemonicParsing="false" onAction="#renamePlaylist" text="Rename" />
+                      <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" text="Delete" />
+                    </buttons>
+                     <HBox.margin>
+                        <Insets left="-5.0" right="10.0" />
+                     </HBox.margin>
+                  </ButtonBar>
+               </children>
+            </HBox>
+            <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongs" prefHeight="505.0" prefWidth="270.0" styleClass="tableLeft" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="colSongCount" prefWidth="75.0" text="Songs" />
+                  <TableColumn fx:id="colLength" prefWidth="75.0" text="Length" />
+              </columns>
+            </TableView>
+         </children>
+         <BorderPane.margin>
+            <Insets right="3.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <center>
+      <VBox maxHeight="Infinity" maxWidth="Infinity" prefHeight="568.0" prefWidth="963.0" style="-fx-background-color: black; -fx-opacity: .95; -fx-background-radius: 30; -fx-border-radius: 30;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="72.0" prefWidth="965.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#showSongTable" text="Songs">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Button>
+                  <TextField fx:id="txtSearch" onKeyReleased="#TestSearch" prefHeight="25.0" prefWidth="193.0" promptText="Search">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#Search" styleClass="searchButton" text="Button">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#openUpdateWindow" text="Update">
+                     <HBox.margin>
+                        <Insets left="350.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="removeSongButton" mnemonicParsing="false" onAction="#removeSong" text="RemSong">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#addSong" text="AddSong">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" top="15.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="270.0">
+               <children>
+                  <Button fx:id="songUp" mnemonicParsing="false" prefHeight="13.0" prefWidth="23.0" styleClass="songUp" text="Button">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Button>
+                <Button fx:id="songDown" mnemonicParsing="false" prefWidth="24.0" styleClass="songDown" text="Button">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="3.0" />
+               </VBox.margin>
+            </HBox>
+            <StackPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000.0">
+               <children>
+                  <TableView fx:id="tableViewDB" layoutX="10.0" layoutY="10.0" maxHeight="Infinity" maxWidth="Infinity" styleClass="tableDB">
+                     <columns>
+                        <TableColumn fx:id="columnSongsDB" prefWidth="75.0" text="Songs(Database)" />
+                        <TableColumn fx:id="columnArtistsDB" prefWidth="75.0" text="Artist" />
+                        <TableColumn fx:id="columnLengthDB" prefWidth="75.0" text="Length" />
+                        <TableColumn fx:id="columnFileTypeDB" prefWidth="75.0" text="Filetype" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="tableSongsFromPlayList" layoutX="10.0" layoutY="10.0" maxHeight="Infinity" maxWidth="Infinity" styleClass="tablePlaylist">
+                     <columns>
+                        <TableColumn fx:id="columnSongs" prefWidth="75.0" text="Songs(Playlist)" />
+                        <TableColumn fx:id="columnArtists" prefWidth="75.0" text="Artist" />
+                        <TableColumn fx:id="columnLength" prefWidth="75.0" text="Length" />
+                        <TableColumn fx:id="columnFileType" prefWidth="75.0" text="Filetype" />
+                     </columns>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </StackPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

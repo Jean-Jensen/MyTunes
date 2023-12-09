@@ -11,7 +11,6 @@ public class PlaylistConnection extends Song { //Had to create this as a subclas
         // this.playlistId = playlistId;
     }
 
-
     public int getOrderId() {
         return orderId;
     }

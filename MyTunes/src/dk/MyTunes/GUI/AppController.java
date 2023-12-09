@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import dk.MyTunes.BE.PlaylistConnection;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -36,7 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 public class AppController {
-//UI Elements
+
+    //UI Elements
     @FXML
     private Label lblSongName;
     @FXML
@@ -62,6 +66,8 @@ public class AppController {
     private Button addSongToPlaylistButton;
     @FXML
     private Button removeSongFromPlaylistButton;
+    @FXML
+    private ToggleButton togglePlayPause;
 //Tables
     @FXML
     private TableView<Playlist> tablePlaylists;
@@ -116,7 +122,10 @@ public class AppController {
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
         setVolumeSlider(); //Initializes the volume slider
-       contextMenu(); //Gives us the ability to right click things
+        contextMenu(); //Gives us the ability to right click things
+        tableViewDB.setVisible(true);
+        tableSongsFromPlayList.setVisible(false);
+        playToggle();
     }
 
 
@@ -378,6 +387,18 @@ public class AppController {
 
     }
 
+    public void TestSearch(KeyEvent keyEvent) throws MyTunesExceptions {
+        columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
+        columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
+
+        List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
+        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
+        tableViewDB.setVisible(true);
+        tableSongsFromPlayList.setVisible(false);
+    }
+
     private void setSongLabels(Song song){
         lblArtist.setText(song.getArtist());
         lblSongName.setText(song.getName());
@@ -458,6 +479,37 @@ public class AppController {
         //System.out.println("Song: " + (bllManager.getLastID()+1) + name + " " + artist + " " + lengthString + " " + fileType + " " + filepath);
 
         return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
+    }
+
+    public void showSongTable(ActionEvent event) {
+        tableViewDB.setVisible(true);
+        tableSongsFromPlayList.setVisible(false);
+    }
+    private void playToggle(){
+        Image playImage = new Image("dk/MyTunes/GUI/FXML/Icons/cyan-play-icon.png");
+        Image pauseImage = new Image("dk/MyTunes/GUI/FXML/Icons/cyan-pause-icon2.png");
+
+        ImageView playView = new ImageView(playImage);
+        playView.setFitWidth(28);
+        playView.setFitHeight(28);
+
+        ImageView pauseView = new ImageView(pauseImage);
+        pauseView.setFitWidth(28);
+        pauseView.setFitHeight(28);
+
+        togglePlayPause.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                togglePlayPause.setGraphic(pauseView);
+            } else {
+                togglePlayPause.setGraphic(playView);
+            }
+        });
+
+        // Set initial graphic
+        togglePlayPause.setGraphic(playView);
+        //use css after this
+        togglePlayPause.getStyleClass().add("playPauseButton");
+
     }
 
     ///////////////////////New Window Buttons////////////////////////
@@ -546,6 +598,8 @@ public class AppController {
             columnFileType.setCellValueFactory(new PropertyValueFactory<>("fileType"));
             List<PlaylistConnection> connections = bllPlaylist.getPlaylistConnections(selected.getId());
             tableSongsFromPlayList.getItems().setAll(connections);
+            tableViewDB.setVisible(false);
+            tableSongsFromPlayList.setVisible(true);
         }
     }
 
