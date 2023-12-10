@@ -98,7 +98,7 @@ public class AppController {
     @FXML
     private TableColumn<Song, String> columnFileTypeDB;
 //Non-UI related
-    private TableView<PlaylistConnection> currentTableView;
+    private TableView<?> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
 
@@ -245,7 +245,7 @@ public class AppController {
             if (newSelection != null) {
                 selectedSong = newSelection;
                 System.out.println(tableViewDB.getSelectionModel().getSelectedItem().getName());
-                currentTableView = tableSongsFromPlayList;
+                currentTableView = tableViewDB;
             }
         });
     }
@@ -303,12 +303,12 @@ public class AppController {
             // Check if there is a next song
             if (currentSong + 1 < currentTableView.getItems().size()) {
                 // Get the next song
-                Song nextSong = currentTableView.getItems().get(currentSong + 1);
+                Song nextSong = (Song) currentTableView.getItems().get(currentSong + 1);
                 playSong(nextSong);
             } else {
                 // If there is no next song, play the first song in the table
                 if (!currentTableView.getItems().isEmpty()) {
-                    Song firstSong = currentTableView.getItems().get(0);
+                    Song firstSong = (Song) currentTableView.getItems().get(0);
                     playSong(firstSong);
                 }
             }
@@ -324,12 +324,12 @@ public class AppController {
     public void next(ActionEvent actionEvent) {
         // Check if currentSong + 1 is a valid index
         if (currentSong + 1 < currentTableView.getItems().size()) {
-            Song nextSong = currentTableView.getItems().get(currentSong + 1);
+            Song nextSong = (Song) currentTableView.getItems().get(currentSong + 1);
             playSong(nextSong);
         } else {
             // If there is no next song, play the first song in the table
             if (!currentTableView.getItems().isEmpty()) {
-                Song firstSong = currentTableView.getItems().get(0);
+                Song firstSong = (Song) currentTableView.getItems().get(0);
                 playSong(firstSong);
             }
         }
@@ -337,7 +337,7 @@ public class AppController {
 
     public void prev(ActionEvent actionEvent) {
         if (previousSong != -1) {
-            Song prevSong = currentTableView.getItems().get(previousSong);
+            Song prevSong = (Song) currentTableView.getItems().get(previousSong);
             playSong(prevSong);
         }
     }
@@ -376,7 +376,7 @@ public class AppController {
     }
 
     ///////////////////////////UI + Buttons//////////////////////////
-    public void Search(ActionEvent actionEvent) throws MyTunesExceptions {
+    public void Search(KeyEvent keyEvent) throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
@@ -384,19 +384,6 @@ public class AppController {
 
         List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
         tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
-
-    }
-
-    public void TestSearch(KeyEvent keyEvent) throws MyTunesExceptions {
-        columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
-        columnLengthDB.setCellValueFactory(new PropertyValueFactory<>("length"));
-        columnFileTypeDB.setCellValueFactory(new PropertyValueFactory<>("fileType"));
-
-        List<Song> songs = bllManager.searchForSong(txtSearch.getText()); //Get all songs from the BLL layer through the getAllSongs method
-        tableViewDB.getItems().setAll(songs);          //that talks to the DAL layer and returns a list of songs
-        tableViewDB.setVisible(true);
-        tableSongsFromPlayList.setVisible(false);
     }
 
     private void setSongLabels(Song song){
