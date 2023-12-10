@@ -121,12 +121,12 @@
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></Button>
-                  <TextField fx:id="txtSearch" onKeyReleased="#TestSearch" prefHeight="25.0" prefWidth="193.0" promptText="Search">
+                  <TextField fx:id="txtSearch" onKeyReleased="#Search" prefHeight="25.0" prefWidth="193.0" promptText="Search">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#Search" styleClass="searchButton" text="Button">
+                  <Button fx:id="searchButton" mnemonicParsing="false" styleClass="searchButton" text="Button">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></Button>
