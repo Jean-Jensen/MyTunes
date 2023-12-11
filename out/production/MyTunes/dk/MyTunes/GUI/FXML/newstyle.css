@@ -12,6 +12,10 @@
     -fx-font-family: "Arial";  /* Arial Black font */
 }
 
+.table-view.tableLeft .table-row-cell:filled:selected {
+    -fx-background-color: #ffffff;
+}
+
 .table-view.tablePlaylist {
     -fx-background-color: transparent;
     -fx-base: transparent;
@@ -25,6 +29,10 @@
     -fx-font-family: "Arial";  /* Arial Black font */
 }
 
+.table-view.tablePlaylist .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
+}
+
 .table-view.tableDB {
     -fx-background-color: transparent;
     -fx-base: transparent;
@@ -36,6 +44,10 @@
     -fx-text-fill: #5fbab8;  /* White font color */
     -fx-background-color: transparent;
     -fx-font-family: "Arial";  /* Arial Black font */
+}
+
+.table-view.tableDB .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
 }
 
 .playPauseButton {
@@ -63,15 +75,15 @@
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-min-width: 38px;
-    -fx-min-height: 38px;
-    -fx-max-width: 38px;
-    -fx-max-height: 38px;
+    -fx-min-width: 42px;
+    -fx-min-height: 42px;
+    -fx-max-width: 42px;
+    -fx-max-height: 42px;
 }
 
 .prevButton:hover {
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }
 
 .nextButton {
@@ -80,15 +92,15 @@
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-min-width: 38px;
-    -fx-min-height: 38px;
-    -fx-max-width: 38px;
-    -fx-max-height: 38px;
+    -fx-min-width: 42px;
+    -fx-min-height: 42px;
+    -fx-max-width: 42px;
+    -fx-max-height: 42px;
 }
 
 .nextButton:hover {
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }
 
 .searchButton {
@@ -159,4 +171,100 @@
 
 .volume-slider .thumb {
     -fx-background-color: #ffffff;
+}
+
+.remove-song-button {
+    -fx-background-image: url('Icons/music-remove-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-max-width: 35px;
+    -fx-max-height: 35px;
+}
+
+.remove-song-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.add-song-button {
+    -fx-background-image: url('Icons/music-add-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-max-width: 35px;
+    -fx-max-height: 35px;
+}
+
+.add-song-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.viewDBButton {
+        -fx-background-image: url('Icons/folder-music-iconsmall.png');
+        -fx-background-size: contain;
+        -fx-background-color: transparent;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center;
+        -fx-min-width: 35px;
+        -fx-min-height: 35px;
+        -fx-max-width: 35px;
+        -fx-max-height: 35px;
+    }
+.viewDBButton:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.volumeIcon {
+    -fx-background-image: url('Icons/volume-iconsmall.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.deletePlaylist {
+    -fx-background-image: url('Icons/text-document-remove-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
+
+.deletePlaylist:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.createPlaylist {
+    -fx-background-image: url('Icons/text-document-add-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
+
+.createPlaylist:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }

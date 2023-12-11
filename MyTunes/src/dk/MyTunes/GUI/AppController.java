@@ -61,6 +61,12 @@ public class AppController {
     @FXML
     private Button removeSongButton;
     @FXML
+    private Button DBViewer;
+    @FXML
+    private Button createPlaylist;
+    @FXML
+    private Button deletePlaylist;
+    @FXML
     private Button addSongButton;
     @FXML
     private Button searchButton;
@@ -152,6 +158,14 @@ public class AppController {
         Tooltip tooltipUpdate = new Tooltip("Update values of currently selected song. Will do nothing if no song selected");
         Tooltip.install(updateButton, tooltipUpdate);
 
+        Tooltip tooltipDBView = new Tooltip("View Song Database");
+        Tooltip.install(DBViewer, tooltipDBView);
+
+        Tooltip tooltipPlaylistAdd = new Tooltip("Add a new playlist");
+        Tooltip.install(createPlaylist, tooltipPlaylistAdd);
+
+        Tooltip tooltipPlaylistRemove = new Tooltip("Remove selected playlist");
+        Tooltip.install(deletePlaylist, tooltipPlaylistRemove);
     }
 
     public void contextMenu(){
