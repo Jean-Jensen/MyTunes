@@ -1,5 +1,6 @@
 package dk.MyTunes.DAL;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.PlaylistConnection;
 import dk.MyTunes.BE.Song;
@@ -148,7 +149,7 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void moveSongUpPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
+    public void moveSongUpPlaylist(int orderID, int playlistID) throws SQLException {
 
         //Getting some the ID's from the playlist, so we know which one comes before the one we're looking for (so we can swap)
         List<Integer> IDs = new ArrayList<>();
@@ -176,7 +177,7 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void moveSongDownPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
+    public void moveSongDownPlaylist(int orderID, int playlistID) throws SQLException {
 
         //Getting some the ID's from the playlist, so we know which one comes before the one we're looking for (so we can swap)
         List<Integer> IDs = new ArrayList<>();
@@ -204,9 +205,14 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void swapSongs(int firstID, int secondID) throws MyTunesExceptions {
-
-        try (Connection con = cm.getConnection()) {
+    public void swapSongs(int firstID, int secondID) throws SQLException {
+        Connection con = null;
+        try {
+            con = cm.getConnection();
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             con.setAutoCommit(false);
 
             //setting the 2nd ID to be a temp value
@@ -218,14 +224,14 @@ public class PlaylistDAO implements IPlaylistDAO {
             //for now, the tempNumber is -1 since we're never going to have an orderID of -1
             pstmt.setString(2, String.valueOf(secondID));
             pstmt.execute();
-            con.commit();
+
 
             //setting the first ID to be the same as the 2nd
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, String.valueOf(secondID));
             pstmt.setString(2, String.valueOf(firstID));
             pstmt.execute();
-            con.commit();
+
 
             //setting the 2nd ID to be the same as the first
             pstmt = con.prepareStatement(sql);
@@ -233,8 +239,10 @@ public class PlaylistDAO implements IPlaylistDAO {
             pstmt.setString(2, String.valueOf(tempNumber));
             pstmt.execute();
             con.commit();
+            con.close();
 
         } catch (SQLException e) {
+            con.rollback();
             throw new MyTunesExceptions("Error updating song with ID " + secondID, e);
         }
 
