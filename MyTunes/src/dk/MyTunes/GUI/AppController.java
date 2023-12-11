@@ -238,7 +238,7 @@ public class AppController {
                             //uses our addsongtoplaylist method
                             bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
                             //updates lists
-                            displaySongs(null);
+                            displaySongsInPlaylist(null);
                             showPlayLists();
                         }
                     } catch (MyTunesExceptions ex) {
@@ -260,9 +260,9 @@ public class AppController {
                 PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
                 if (selectedSong != null) {
                     // Use the removeSongFromPlaylist method
-                    bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
+                    bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId(), tablePlaylists.getSelectionModel().getSelectedItem().getId());
                     // Update lists
-                    displaySongs(null);
+                    displaySongsInPlaylist(null);
                     showPlayLists();
                 }
             } catch (MyTunesExceptions ex) {
@@ -395,13 +395,22 @@ public class AppController {
 
     private void setProgressBar(){ //adjusts the progressbar and slider value everytime a new song plays
         if(mediaPlayer != null){
+            System.out.println(songProgressSlider.getMax());
+            mediaPlayer.setOnReady(new Runnable() {
+                @Override
+                public void run() {
+                    songProgressSlider.setMax(mediaPlayer.getTotalDuration().toSeconds()); //making the max value of the slider the duration of the song in seconds
+                    // it has to be in here because the mediaPlayer can't get the total duration unless its status = ready
+                }
+            });
+
             //add a listener for whenever the current time changes
             //(so we can set the slider to be the same as the current duration)
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                    songProgressSlider.setValue(newValue.toSeconds() / 100);
-                    songProgress.progressProperty().set(newValue.toSeconds() / 100);
+                    songProgressSlider.setValue(newValue.toSeconds());
+                    songProgress.progressProperty().set(newValue.toSeconds()/ 100);
                 }
             });
 
@@ -411,7 +420,7 @@ public class AppController {
     //setting it so that any adjustment of the slider will change the current time in the song
     public void adjustSongTime(MouseEvent mouseEvent) {
         if(mediaPlayer != null){
-            mediaPlayer.seek(Duration.seconds(songProgressSlider.getValue() * 100));
+            mediaPlayer.seek(Duration.seconds(songProgressSlider.getValue()));
             songProgress.progressProperty().set(songProgressSlider.getValue());
         }
     }
@@ -480,46 +489,6 @@ public class AppController {
     }
 
     public void moveSongDownPlaylist(ActionEvent actionEvent) {
-    }
-
-    private Song getSongFromFile(File file) throws MyTunesExceptions, UnsupportedAudioFileException, IOException { //creates Song with correct values from the file
-        String name = file.getName(); //gets filename
-        String filepath = file.getPath(); //string value for the filepath (since we'll be reusing it)
-        String fileType = filepath.substring(filepath.lastIndexOf('.')); //gets filetype by getting everything after the last instance of "."
-
-        //AudioFileFormat fileFormat = null;
-        double duration = 0.0;
-        String artist = "";
-        if(fileType.equals(".mp3")){
-            AudioFileFormat fileFormat = new MpegAudioFileReader().getAudioFileFormat(file);
-            //the MP3SPI library allows us to read MP3 info
-            Map properties = fileFormat.properties();
-            Long durationLong = (Long) properties.get("duration");
-            duration = durationLong.doubleValue() / 1000;
-            duration = (duration / 1000) ;
-            artist = (String) properties.get("artist");
-        } else { //assuming it's a .wav file
-            AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
-            AudioFormat format = audioInput.getFormat();
-            long totalFrames = audioInput.getFrameLength();
-            duration = totalFrames / format.getFrameRate(); //gets duration in seconds
-            if(format.getProperty("artist") != null){ //it most likely will, I've heard .wav files have poor tagging support
-                artist = format.getProperty("artist").toString();
-            }
-        }
-
-        int hours = (int) (duration / 3600);
-        int minutes = (int) ((duration % 3600) / 60);
-        int seconds = (int) (duration % 60);
-        //using %02d with String.format will ensure that 2 digits always show up, padding with 0s
-        String lengthString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-
-        if(artist == null || artist.isEmpty()){ //so that we don't run into any errors
-            artist = "Unknown";
-        }
-        //System.out.println("Song: " + (bllManager.getLastID()+1) + name + " " + artist + " " + lengthString + " " + fileType + " " + filepath);
-
-        return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
     }
 
     public void showSongTable(ActionEvent event) {

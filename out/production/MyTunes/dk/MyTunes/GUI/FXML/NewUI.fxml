@@ -111,7 +111,7 @@
                   </ButtonBar>
                </children>
             </HBox>
-            <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongs" prefHeight="505.0" prefWidth="270.0" styleClass="tableLeft" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongsInPlaylist" prefHeight="505.0" prefWidth="270.0" styleClass="tableLeft" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
                 <TableColumn fx:id="colSongCount" prefWidth="75.0" text="Songs" />
