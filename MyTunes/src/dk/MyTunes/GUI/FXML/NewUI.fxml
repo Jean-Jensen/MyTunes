@@ -55,11 +55,23 @@
             </HBox>
          </left>
          <right>
-            <Slider fx:id="volumeSlider" styleClass="volume-slider" scaleX="-1" BorderPane.alignment="CENTER">
+            <HBox BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets right="30.0" top="35.0" />
                </BorderPane.margin>
-            </Slider>
+               <children>
+                  <Label styleClass="volumeIcon">
+                     <HBox.margin>
+                        <Insets right="5.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Slider fx:id="volumeSlider" scaleX="-1" styleClass="volume-slider">
+                     <HBox.margin>
+                        <Insets top="12.0" />
+                     </HBox.margin>
+                  </Slider>
+               </children>
+            </HBox>
          </right>
          <center>
             <HBox prefHeight="35.0" prefWidth="883.0" BorderPane.alignment="CENTER">
@@ -85,13 +97,13 @@
    <left>
       <VBox fillWidth="false" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="35.0" prefWidth="148.0">
                <children>
                   <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                        <Button mnemonicParsing="false" text="Create" />
+                        <Button fx:id="createPlaylist" mnemonicParsing="false" styleClass="createPlaylist" />
+                      <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" styleClass="deletePlaylist" />
                         <Button fx:id="renamePlaylist" mnemonicParsing="false" onAction="#renamePlaylist" text="Rename" />
-                      <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" text="Delete" />
                     </buttons>
                      <HBox.margin>
                         <Insets left="-5.0" right="10.0" />
@@ -117,9 +129,9 @@
          <children>
             <HBox prefHeight="72.0" prefWidth="965.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#showSongTable" text="Songs">
+                  <Button fx:id="DBViewer" mnemonicParsing="false" onAction="#showSongTable" styleClass="viewDBButton">
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="5.0" top="-5.0" />
                      </HBox.margin></Button>
                   <TextField fx:id="txtSearch" onKeyReleased="#Search" prefHeight="25.0" prefWidth="193.0" promptText="Search">
                      <HBox.margin>
@@ -135,12 +147,12 @@
                         <Insets left="350.0" right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="removeSongButton" mnemonicParsing="false" onAction="#removeSong" text="RemSong">
+                  <Button fx:id="removeSongButton" mnemonicParsing="false" onAction="#removeSong" styleClass="remove-song-button">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#addSong" text="AddSong">
+                  <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#addSong" styleClass="add-song-button">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
