@@ -14,8 +14,8 @@ public interface IPlaylistDAO {
     List<Playlist> getAllPlaylists() throws MyTunesExceptions;
     void updatePlaylist(Playlist p) throws MyTunesExceptions;
     void deletePlaylist(int id) throws MyTunesExceptions;
-    void addSongToPlaylist(int songId, int playlistId) throws MyTunesExceptions;
-    public void removeSongFromPlaylist(int orderId) throws MyTunesExceptions;
+    void addSongToPlaylist(int playlistId, int songId) throws MyTunesExceptions;
+    void removeSongFromPlaylist(int orderId) throws MyTunesExceptions;
     /*List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions;*/
     List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions;
 

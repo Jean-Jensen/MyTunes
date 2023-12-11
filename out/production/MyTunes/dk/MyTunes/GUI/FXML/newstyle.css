@@ -24,9 +24,9 @@
 }
 
 .table-view.tablePlaylist .table-cell {
-    -fx-text-fill: #ffffff;  /* White font color */
+    -fx-text-fill: #ffffff;
     -fx-background-color: transparent;
-    -fx-font-family: "Arial";  /* Arial Black font */
+    -fx-font-family: "Arial";
 }
 
 .table-view.tablePlaylist .table-row-cell:filled:selected {
@@ -41,9 +41,9 @@
 }
 
 .table-view.tableDB .table-cell {
-    -fx-text-fill: #5fbab8;  /* White font color */
+    -fx-text-fill: #5fbab8;
     -fx-background-color: transparent;
-    -fx-font-family: "Arial";  /* Arial Black font */
+    -fx-font-family: "Arial";
 }
 
 .table-view.tableDB .table-row-cell:filled:selected {

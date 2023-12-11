@@ -55,12 +55,29 @@ public class BLLPlaylist {
         }
     }
 
-    public void removeSongFromPlaylist(int orderID) throws MyTunesExceptions {
+    public void removeSongFromPlaylist(int connectionID) throws MyTunesExceptions {
         try {
-            playlistDAO.removeSongFromPlaylist(orderID);
+            playlistDAO.removeSongFromPlaylist(connectionID);
         } catch (SQLException e) {
             bll.errorAlert(e);
             throw new MyTunesExceptions("Error removing song from playlist", e);
+        }
+    }
+    public void moveSongUpPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
+        try {
+            playlistDAO.moveSongUpPlaylist(orderID, playlistID);
+        } catch (SQLException e) {
+            bll.errorAlert(e);
+            throw new MyTunesExceptions("Error moving song up playlist", e);
+        }
+    }
+
+    public void moveSongDownPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
+        try {
+            playlistDAO.moveSongDownPlaylist(orderID, playlistID);
+        } catch (SQLException e) {
+            bll.errorAlert(e);
+            throw new MyTunesExceptions("Error moving song up playlist", e);
         }
     }
 
