@@ -296,7 +296,6 @@ public class AppController {
         if (selectedSong == null) {
             return;
         }
-
         boolean isMediaPlayerDefined = mediaPlayer != null;
         // Check if mediaPlayer is currently playing a song
         boolean isMediaPlayerPlaying = isMediaPlayerDefined && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
