@@ -28,10 +28,15 @@
                             <children>
                                 <Button fx:id="renamePlaylist" mnemonicParsing="false" onAction="#renamePlaylist" styleClass="rename-button" />
                                 <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" styleClass="delete-button" />
-                                <ButtonBar prefHeight="26.0" prefWidth="151.0" />
+                        <Pane prefHeight="30.0" prefWidth="7.0" />
+                                <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="177.0">
+                           <buttons>
+                              <Button layoutX="117.0" layoutY="12.0" minWidth="56.0" mnemonicParsing="false" prefHeight="26.0" text="Update" />
+                              <Button minWidth="38.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="26.0" text="Add" />
+                           </buttons></ButtonBar>
                             </children>
                         </HBox>
-                        <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongs" prefHeight="474.0" prefWidth="361.0" style="-fx-background-color: #0f151f;" styleClass="tablePlaylists">
+                        <TableView fx:id="tablePlaylists" onMouseClicked="#displaySongsInPlaylist" prefHeight="474.0" prefWidth="361.0" style="-fx-background-color: #0f151f;" styleClass="tablePlaylists">
                             <columns>
                                 <TableColumn fx:id="colPlaylistName" prefWidth="279.20001834630966" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Name" />
                                 <TableColumn fx:id="colSongCount" prefWidth="46.39996337890625" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
@@ -82,9 +87,11 @@
                         <HBox>
                             <children>
                                 <Button fx:id="savePlaylist" mnemonicParsing="false" onAction="#savePlaylist" styleClass="savePlaylist-button" />
+                        <Button mnemonicParsing="false" onAction="#moveSongUpPlaylist" text="move up" />
+                        <Button layoutX="34.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSongDownPlaylist" text="move down" />
                             </children>
                         </HBox>
-                        <TableView fx:id="tableSongsFromPlayList" style="-fx-border-width: 0.05; -fx-background-color: #0f151f;" styleClass="tableSongsFromPlayList">
+                        <TableView fx:id="tableSongsFromPlayList" prefHeight="400.0" prefWidth="672.0" style="-fx-border-width: 0.05; -fx-background-color: #0f151f;" styleClass="tableSongsFromPlayList">
                             <columns>
                                 <TableColumn fx:id="columnSongs" prefWidth="120.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Songs" />
                                 <TableColumn fx:id="columnArtists" prefWidth="64.0" style="-fx-background-color: #323d4d; -fx-border-color: #878c94; -fx-border-width: .5;" text="Artists" />
