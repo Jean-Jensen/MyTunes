@@ -12,6 +12,10 @@
     -fx-font-family: "Arial";  /* Arial Black font */
 }
 
+.table-view.tableLeft .table-row-cell:filled:selected {
+    -fx-background-color: #ffffff;
+}
+
 .table-view.tablePlaylist {
     -fx-background-color: transparent;
     -fx-base: transparent;
@@ -25,6 +29,10 @@
     -fx-font-family: "Arial";  /* Arial Black font */
 }
 
+.table-view.tablePlaylist .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
+}
+
 .table-view.tableDB {
     -fx-background-color: transparent;
     -fx-base: transparent;
@@ -36,6 +44,10 @@
     -fx-text-fill: #5fbab8;  /* White font color */
     -fx-background-color: transparent;
     -fx-font-family: "Arial";  /* Arial Black font */
+}
+
+.table-view.tableDB .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
 }
 
 .playPauseButton {

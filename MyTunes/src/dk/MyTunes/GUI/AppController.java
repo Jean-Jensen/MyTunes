@@ -53,6 +53,8 @@ public class AppController {
     private Slider volumeSlider;
     @FXML
     private TextField txtSearch;
+    private ImageView playView;
+    private ImageView pauseView;
 //Buttons
     @FXML
     private Button updateButton;
@@ -125,7 +127,8 @@ public class AppController {
         contextMenu(); //Gives us the ability to right click things
         tableViewDB.setVisible(true);
         tableSongsFromPlayList.setVisible(false);
-        playToggle();
+        updateButtonState(); //This method works with the playToggle below so you cannot toggle if a song isnt selected
+        playToggle();  //toggles the play/pause button image
     }
 
 
@@ -152,9 +155,9 @@ public class AppController {
     }
 
     public void contextMenu(){
-        // Create the context menu
-        ContextMenu contextMenu = new ContextMenu();
-        Menu addToPlaylistMenu = new Menu("Add to playlist");
+        // Create the context menu for tableSongsFromPlaylist
+        ContextMenu contextMenuForPlaylist = new ContextMenu();
+        ContextMenu contextMenuForDB = new ContextMenu();
 
         // Add menuitem for Updatesong that runs openUpdateWindow method
         MenuItem updateSongItem = new MenuItem("Update song");
@@ -165,6 +168,8 @@ public class AppController {
                 ex.printStackTrace();
             }
         });
+
+
         MenuItem addSong = new MenuItem("Add Song");
         addSong.setOnAction(mouseClick -> {
             try {
@@ -173,6 +178,7 @@ public class AppController {
                 ex.printStackTrace();
             }
         });
+
         MenuItem deleteSong = new MenuItem("Delete Song");
         deleteSong.setOnAction(mouseClick -> {
             try {
@@ -182,18 +188,20 @@ public class AppController {
             }
         });
 
+        contextMenuForPlaylist.getItems().add(removePlaylistSong());
+        contextMenuForDB.getItems().add(updateSongItem);
+        contextMenuForDB.getItems().add(addSong);
+        contextMenuForDB.getItems().add(deleteSong);
+        contextMenuForDB.getItems().add(addPlaylistSong());
 
-        contextMenu.getItems().add(updateSongItem);
-        contextMenu.getItems().add(addSong);
-        contextMenu.getItems().add(deleteSong);
-        contextMenu.getItems().add(createAddToPlaylistMenu());
 
-        // Set the context menu on the TableView
-        tableViewDB.setContextMenu(contextMenu);
-        tableSongsFromPlayList.setContextMenu(contextMenu);
+        // Set the context menu on the tableViewDB
+        tableViewDB.setContextMenu(contextMenuForDB);
+        tableSongsFromPlayList.setContextMenu(contextMenuForPlaylist);
+
     }
 
-    private Menu createAddToPlaylistMenu() {
+    private Menu addPlaylistSong() {
         Menu addToPlaylistMenu = new Menu("Add to playlist");
         // Create local list for playlists
         List<Playlist> playlists = null;
@@ -228,6 +236,26 @@ public class AppController {
             }
         }
         return addToPlaylistMenu;
+    }
+
+    private MenuItem removePlaylistSong() {
+        MenuItem removeFromPlaylist = new MenuItem("Remove from playlist");
+        removeFromPlaylist.setOnAction(e -> {
+            try {
+                // Get the selected song
+                PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
+                if (selectedSong != null) {
+                    // Use the removeSongFromPlaylist method
+                    bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
+                    // Update lists
+                    displaySongs(null);
+                    showPlayLists();
+                }
+            } catch (MyTunesExceptions ex) {
+                ex.printStackTrace();
+            }
+        });
+        return removeFromPlaylist;
     }
 
     /////////////////Media-player Functions//////////////////
@@ -472,30 +500,40 @@ public class AppController {
         tableViewDB.setVisible(true);
         tableSongsFromPlayList.setVisible(false);
     }
+
+    private void updateButtonState() {
+        if (selectedSong != null && togglePlayPause.isSelected()) {
+            togglePlayPause.setGraphic(pauseView);
+        } else {
+            togglePlayPause.setGraphic(playView);
+        }
+    }
     private void playToggle(){
         Image playImage = new Image("dk/MyTunes/GUI/FXML/Icons/cyan-play-icon.png");
         Image pauseImage = new Image("dk/MyTunes/GUI/FXML/Icons/cyan-pause-icon2.png");
 
-        ImageView playView = new ImageView(playImage);
+        playView = new ImageView(playImage);
         playView.setFitWidth(28);
         playView.setFitHeight(28);
 
-        ImageView pauseView = new ImageView(pauseImage);
+        pauseView = new ImageView(pauseImage);
         pauseView.setFitWidth(28);
         pauseView.setFitHeight(28);
 
-        togglePlayPause.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+    togglePlayPause.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+        if(selectedSong != null) {
             if (isNowSelected) {
                 togglePlayPause.setGraphic(pauseView);
             } else {
                 togglePlayPause.setGraphic(playView);
             }
-        });
+        }
+    });
 
-        // Set initial graphic
-        togglePlayPause.setGraphic(playView);
-        //use css after this
-        togglePlayPause.getStyleClass().add("playPauseButton");
+    // Set initial graphic
+    togglePlayPause.setGraphic(playView);
+    //use css after this
+    togglePlayPause.getStyleClass().add("playPauseButton");
 
     }
 
@@ -617,7 +655,5 @@ public class AppController {
         colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
     }
-
-
 }
 
