@@ -1,0 +1,270 @@
+
+.table-view.tableLeft {
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-control-inner-background-alt: transparent;
+}
+
+.table-view.tableLeft .table-cell {
+    -fx-text-fill: #000000;
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial Black";
+}
+
+.table-view.tableLeft .table-row-cell:filled:selected {
+    -fx-background-color: #ffffff;
+}
+
+.table-view.tablePlaylist {
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-control-inner-background-alt: transparent;
+}
+
+.table-view.tablePlaylist .table-cell {
+    -fx-text-fill: #ffffff;  /* White font color */
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";  /* Arial Black font */
+}
+
+.table-view.tablePlaylist .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
+}
+
+.table-view.tableDB {
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-control-inner-background-alt: transparent;
+}
+
+.table-view.tableDB .table-cell {
+    -fx-text-fill: #5fbab8;  /* White font color */
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";  /* Arial Black font */
+}
+
+.table-view.tableDB .table-row-cell:filled:selected {
+    -fx-background-color: #0e1515;
+}
+
+.playPauseButton {
+    -fx-background-color: transparent;
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-max-width: 28px;
+    -fx-max-height: 28px;
+}
+
+
+.playPauseButton:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.playPauseButton, .playPauseButton:selected {
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.prevButton {
+    -fx-background-image: url('Icons/white-play-prev-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 42px;
+    -fx-min-height: 42px;
+    -fx-max-width: 42px;
+    -fx-max-height: 42px;
+}
+
+.prevButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.nextButton {
+    -fx-background-image: url('Icons/white-play-next-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 42px;
+    -fx-min-height: 42px;
+    -fx-max-width: 42px;
+    -fx-max-height: 42px;
+}
+
+.nextButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.searchButton {
+    -fx-background-image: url('Icons/search-icon2.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.searchButton:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.songUp {
+    -fx-background-image: url('Icons/line-angle-up-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 15px;
+    -fx-min-height: 15px;
+    -fx-max-width: 15px;
+    -fx-max-height: 15px;
+}
+
+.songUp:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.songDown {
+    -fx-background-image: url('Icons/line-angle-down-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 15px;
+    -fx-min-height: 15px;
+    -fx-max-width: 15px;
+    -fx-max-height: 15px;
+}
+
+.songDown:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.songName {
+    -fx-text-fill: #5fbab8;
+    -fx-font-family: "Arial Black";
+
+}
+
+.artistName {
+    -fx-text-fill: #5fbab8;
+    -fx-font-family: "Arial";
+}
+
+.volume-slider .track {
+    -fx-background-color: #5fbab8;
+}
+
+.volume-slider .thumb {
+    -fx-background-color: #ffffff;
+}
+
+.remove-song-button {
+    -fx-background-image: url('Icons/music-remove-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-max-width: 35px;
+    -fx-max-height: 35px;
+}
+
+.remove-song-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.add-song-button {
+    -fx-background-image: url('Icons/music-add-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-max-width: 35px;
+    -fx-max-height: 35px;
+}
+
+.add-song-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.viewDBButton {
+        -fx-background-image: url('Icons/folder-music-iconsmall.png');
+        -fx-background-size: contain;
+        -fx-background-color: transparent;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center;
+        -fx-min-width: 35px;
+        -fx-min-height: 35px;
+        -fx-max-width: 35px;
+        -fx-max-height: 35px;
+    }
+.viewDBButton:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.volumeIcon {
+    -fx-background-image: url('Icons/volume-iconsmall.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.deletePlaylist {
+    -fx-background-image: url('Icons/text-document-remove-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
+
+.deletePlaylist:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.createPlaylist {
+    -fx-background-image: url('Icons/text-document-add-icon.png');
+    -fx-background-size: contain;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
+
+.createPlaylist:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
