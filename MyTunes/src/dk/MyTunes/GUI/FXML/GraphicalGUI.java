@@ -13,17 +13,17 @@ public class GraphicalGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("NewUI.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("My Tunes");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         // Set minimum size
-        primaryStage.setMinWidth(300);
-        primaryStage.setMinHeight(200);
+        //primaryStage.setMinWidth(300);
+        //primaryStage.setMinHeight(200);
         // Set maximum size
-        primaryStage.setMaxWidth(1024);
-        primaryStage.setMaxHeight(768);
+        //primaryStage.setMaxWidth(1024);
+        //primaryStage.setMaxHeight(768);
         primaryStage.show();
     }
 }
