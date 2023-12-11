@@ -239,12 +239,13 @@ public class PlaylistDAO implements IPlaylistDAO {
             pstmt.setString(2, String.valueOf(tempNumber));
             pstmt.execute();
             con.commit();
-
+            con.close();
 
         } catch (SQLException e) {
             con.rollback();
             throw new MyTunesExceptions("Error updating song with ID " + secondID, e);
         }
+
 
     }
 
