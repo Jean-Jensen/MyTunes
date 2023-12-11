@@ -125,7 +125,7 @@ public class AppController {
 
     public void initialize() throws MyTunesExceptions {
         songSelector(); //This figured out which song in which table you have selected and plays that one
-       toolTips(); //Lets you add notes to buttons when you hover them with your mouse
+        toolTips(); //Lets you add notes to buttons when you hover them with your mouse
         coloumnSizes(); //This makes it so the header for the table (Columns) readjust to the window size
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
@@ -137,8 +137,9 @@ public class AppController {
         playToggle();  //toggles the play/pause button image
     }
 
-
+    ///////////////////////////////////////////////////////////
     ///////////////////Quality of Life/////////////////////////
+    ///////////////////////////////////////////////////////////
     public void toolTips() {
         Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
         Tooltip.install(addSongToPlaylistButton, tooltipAddSong);
@@ -260,7 +261,7 @@ public class AppController {
                 PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
                 if (selectedSong != null) {
                     // Use the removeSongFromPlaylist method
-                    bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId(), tablePlaylists.getSelectionModel().getSelectedItem().getId());
+                    bllPlaylist.removeSongFromPlaylist(selectedSong.getConnectionID());
                     // Update lists
                     displaySongsInPlaylist(null);
                     showPlayLists();
@@ -271,8 +272,9 @@ public class AppController {
         });
         return removeFromPlaylist;
     }
-
+    /////////////////////////////////////////////////////////
     /////////////////Media-player Functions//////////////////
+    /////////////////////////////////////////////////////////
     public void songSelector() {
         // Add a listener to the selection model of tableSongsFromPlayList
         tableSongsFromPlayList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -424,8 +426,9 @@ public class AppController {
             songProgress.progressProperty().set(songProgressSlider.getValue());
         }
     }
-
+    /////////////////////////////////////////////////////////////////
     ///////////////////////////UI + Buttons//////////////////////////
+    /////////////////////////////////////////////////////////////////
     public void Search(KeyEvent keyEvent) throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
@@ -467,7 +470,7 @@ public class AppController {
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
             int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
-            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId(), selectedPlaylist.getId());
+            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
             displaySongsInPlaylist(null);  // Refresh the song list in the selected playlist
             showPlayLists(); //Refresh display everytime new song is added
             // Stops cursor from jumping to the top
@@ -480,7 +483,7 @@ public class AppController {
     }
 
     public void moveSongUpPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
-        Playlist selectedPlaylist = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
             bllPlaylist.moveSongUpPlaylist(selectedSong.getOrderId(), selectedPlaylist.getId());
@@ -488,7 +491,13 @@ public class AppController {
         }
     }
 
-    public void moveSongDownPlaylist(ActionEvent actionEvent) {
+    public void moveSongDownPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+        Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
+        PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
+        if (selectedPlaylist != null && selectedSong != null) {
+            bllPlaylist.moveSongDownPlaylist(selectedSong.getOrderId(), selectedPlaylist.getId());
+            displaySongsInPlaylist(null);
+        }
     }
 
     public void showSongTable(ActionEvent event) {
@@ -531,8 +540,9 @@ public class AppController {
     togglePlayPause.getStyleClass().add("playPauseButton");
 
     }
-
+    /////////////////////////////////////////////////////////////////
     ///////////////////////New Window Buttons////////////////////////
+    /////////////////////////////////////////////////////////////////
     @FXML
     public void openUpdateWindow() throws IOException {
         try {
@@ -633,8 +643,9 @@ public class AppController {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
-
+    //////////////////////////////////////////////////////////////
     ///////////////////////Table Displays/////////////////////////
+    //////////////////////////////////////////////////////////////
     public void showSongs() throws MyTunesExceptions {
         columnSongsDB.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnArtistsDB.setCellValueFactory(new PropertyValueFactory<>("artist"));
