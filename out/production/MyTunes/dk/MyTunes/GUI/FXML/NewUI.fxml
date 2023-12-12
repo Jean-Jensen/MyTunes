@@ -139,14 +139,9 @@
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#openUpdateWindow" text="Update">
-                     <HBox.margin>
-                        <Insets left="350.0" right="5.0" />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="removeSongButton" mnemonicParsing="false" onAction="#removeSong" styleClass="remove-song-button">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="475.0" right="5.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#addSong" styleClass="add-song-button">
