@@ -57,12 +57,14 @@ public class BLLManager {
         }
     }
 
-    public void updateSong(Song s) throws MyTunesExceptions {
+
+
+    public void updateSong(int id, String newName, String newArtist) throws MyTunesExceptions {
         try{
-            songsDAO.updateSong(s);
+            songsDAO.updateSong(id, newName, newArtist);
         }catch (SQLException e) {
             errorAlert(e);
-            throw new MyTunesExceptions("Error updating song with ID " + s.getId(), e);
+            throw new MyTunesExceptions("Error updating song with ID ", e);
         }
     }
 
