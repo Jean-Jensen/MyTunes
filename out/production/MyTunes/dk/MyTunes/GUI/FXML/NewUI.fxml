@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1149.0" style="-fx-background-color: #22a19e; -fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@newstyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1149.0" style="-fx-background-color: #22a19e; -fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@newstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.MyTunes.GUI.AppController">
    <bottom>
       <BorderPane prefHeight="77.0" prefWidth="1165.0" style="-fx-background-color: black; -fx-opacity: .95; -fx-background-radius: 30; -fx-border-radius: 30;">
          <bottom>
@@ -27,7 +26,6 @@
                         <Insets bottom="10.0" left="330.0" />
                      </VBox.margin>
                   </Slider>
-                  <ProgressBar fx:id="songProgress" prefWidth="200.0" progress="0.0" />
                </children>
             </VBox>
          </bottom>
@@ -97,13 +95,12 @@
    <left>
       <VBox fillWidth="false" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="35.0" prefWidth="148.0">
+            <HBox prefHeight="35.0" prefWidth="25.0">
                <children>
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                  <ButtonBar prefHeight="35.0" prefWidth="30.0">
                     <buttons>
                         <Button fx:id="createPlaylist" mnemonicParsing="false" onAction="#createPlaylist" styleClass="createPlaylist" />
                       <Button fx:id="deletePlaylist" mnemonicParsing="false" onAction="#deletePlaylist" styleClass="deletePlaylist" />
-                        <Button fx:id="renamePlaylist" mnemonicParsing="false" onAction="#renamePlaylist" text="Rename" />
                     </buttons>
                      <HBox.margin>
                         <Insets left="-5.0" right="10.0" />
@@ -142,14 +139,9 @@
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#openUpdateWindow" text="Update">
-                     <HBox.margin>
-                        <Insets left="350.0" right="5.0" />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="removeSongButton" mnemonicParsing="false" onAction="#removeSong" styleClass="remove-song-button">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="475.0" right="5.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#addSong" styleClass="add-song-button">

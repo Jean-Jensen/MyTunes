@@ -2,8 +2,8 @@ package dk.MyTunes.BLL;
 
 import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.PlaylistConnection;
+import dk.MyTunes.DAL.IPlaylistDAO;
 import dk.MyTunes.DAL.PlaylistDAO;
-import dk.MyTunes.DAL.SongsDAO;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.util.List;
 public class BLLPlaylist {
 
     private BLLManager bll = new BLLManager();
-    private PlaylistDAO playlistDAO = new PlaylistDAO();
+    IPlaylistDAO playlistDAO = new PlaylistDAO();
 
     public void createPlaylist(String name) throws MyTunesExceptions {
         try {
@@ -33,8 +33,8 @@ public class BLLPlaylist {
         }
     }
 
-    public void updatePlaylist(Playlist p) throws MyTunesExceptions {
-        playlistDAO.updatePlaylist(p);
+    public void updatePlaylist(int id, String newName) throws MyTunesExceptions {
+        playlistDAO.updatePlaylist(id, newName);
     }
 
     public void deletePlaylist(int id) throws MyTunesExceptions {
@@ -64,14 +64,13 @@ public class BLLPlaylist {
         }
     }
     public void moveSongUpPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
-        try {
-            playlistDAO.moveSongUpPlaylist(orderID, playlistID);
-        } catch (SQLException e) {
-            bll.errorAlert(e);
-            throw new MyTunesExceptions("Error moving song up playlist", e);
-        }
+     try {
+        playlistDAO.moveSongUpPlaylist(orderID, playlistID);
+    } catch (SQLException e) {
+        bll.errorAlert(e);
+        throw new MyTunesExceptions("Error moving song up playlist", e);
     }
-
+}
     public void moveSongDownPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
         try {
             playlistDAO.moveSongDownPlaylist(orderID, playlistID);
@@ -81,9 +80,6 @@ public class BLLPlaylist {
         }
     }
 
-    /*public List<Song> getSongsInPlaylist(int playlistId) throws MyTunesExceptions {
-        return playlistDAO.getSongsInPlaylist(playlistId);
-    }*/
     public List<PlaylistConnection> getPlaylistConnections(int playlistId) throws MyTunesExceptions {
         try {
             return playlistDAO.getPlaylistConnections(playlistId);
@@ -92,6 +88,4 @@ public class BLLPlaylist {
             throw new MyTunesExceptions("Error getting orderID", e);
         }
     }
-
-
 }

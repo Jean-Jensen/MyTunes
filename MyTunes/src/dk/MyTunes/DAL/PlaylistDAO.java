@@ -1,6 +1,5 @@
 package dk.MyTunes.DAL;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.MyTunes.BE.Playlist;
 import dk.MyTunes.BE.PlaylistConnection;
 import dk.MyTunes.BE.Song;
@@ -83,8 +82,16 @@ public class PlaylistDAO implements IPlaylistDAO {
     }
 
     @Override
-    public void updatePlaylist(Playlist p) throws MyTunesExceptions {
-
+    public void updatePlaylist(int id, String newName) throws MyTunesExceptions {
+        try (Connection con = cm.getConnection()){
+            String sql = "UPDATE Playlist SET Name = ? WHERE ID = ?";
+            PreparedStatement prStmt = con.prepareStatement(sql);
+            prStmt.setString(1, newName);
+            prStmt.setInt(2, id);
+            prStmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new MyTunesExceptions("Error renaming playlist", e);
+        }
     }
 
     @Override
@@ -149,7 +156,7 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void moveSongUpPlaylist(int orderID, int playlistID) throws SQLException {
+    public void moveSongUpPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
 
         //Getting some the ID's from the playlist, so we know which one comes before the one we're looking for (so we can swap)
         List<Integer> IDs = new ArrayList<>();
@@ -177,7 +184,7 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void moveSongDownPlaylist(int orderID, int playlistID) throws SQLException {
+    public void moveSongDownPlaylist(int orderID, int playlistID) throws MyTunesExceptions {
 
         //Getting some the ID's from the playlist, so we know which one comes before the one we're looking for (so we can swap)
         List<Integer> IDs = new ArrayList<>();
@@ -205,14 +212,9 @@ public class PlaylistDAO implements IPlaylistDAO {
         }
     }
 
-    public void swapSongs(int firstID, int secondID) throws SQLException {
-        Connection con = null;
-        try {
-            con = cm.getConnection();
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+    public void swapSongs(int firstID, int secondID) throws MyTunesExceptions {
+
+        try (Connection con = cm.getConnection()){
             con.setAutoCommit(false);
 
             //setting the 2nd ID to be a temp value
@@ -239,14 +241,11 @@ public class PlaylistDAO implements IPlaylistDAO {
             pstmt.setString(2, String.valueOf(tempNumber));
             pstmt.execute();
             con.commit();
-            con.close();
 
         } catch (SQLException e) {
-            con.rollback();
-            throw new MyTunesExceptions("Error updating song with ID " + secondID, e);
+            throw new MyTunesExceptions("Error swapping songs with IDs " + firstID + " and " + secondID, e);
+
         }
-
-
     }
 
 

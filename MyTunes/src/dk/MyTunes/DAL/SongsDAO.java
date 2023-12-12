@@ -1,7 +1,5 @@
 package dk.MyTunes.DAL;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 
@@ -28,8 +26,7 @@ public class SongsDAO implements ISongsDAO {
                 String fileType = rs.getString("fileType");
                 String filePath = rs.getString("filePath");
 
-                Song s = new Song(sid, name, artist, length, fileType,filePath);
-                return s;
+                return new Song(sid, name, artist, length, fileType,filePath);
 
             }
             return null;
@@ -68,7 +65,6 @@ public class SongsDAO implements ISongsDAO {
        return songs;
    }
 
-
     @Override
     public void deleteSong(int id) throws MyTunesExceptions{
         try(Connection con = cm.getConnection()){
@@ -85,21 +81,17 @@ public class SongsDAO implements ISongsDAO {
     }
 
     @Override
-    public void updateSong(Song s) throws MyTunesExceptions{
+    public void updateSong(int id, String newName, String newArtist) throws MyTunesExceptions{
         try(Connection con = cm.getConnection())
         {
-            String sql = "UPDATE songs SET name=?, artist=?, length=?, fileType=?, filePath=? WHERE id=?";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, s.getName());
-            pstmt.setString(2, s.getArtist());
-            pstmt.setString(3, s.getLength());
-            pstmt.setString(4, s.getFileType());
-            pstmt.setString(5, s.getFilePath());
-            pstmt.setInt(6, s.getId());
-            pstmt.execute();
-            con.commit();
+            String sql = "UPDATE songs SET Name=?, artist=? WHERE id=?";
+            PreparedStatement prStmt = con.prepareStatement(sql);
+            prStmt.setString(1, newName);
+            prStmt.setString(2, newArtist);
+            prStmt.setInt(3, id);
+            prStmt.executeUpdate();
         } catch (SQLException e) {
-            throw new MyTunesExceptions("Error updating song with ID " + s.getId(), e);
+            throw new MyTunesExceptions("Error changing name/artist", e);
         }
     }
 

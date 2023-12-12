@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import dk.MyTunes.BE.PlaylistConnection;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -35,18 +36,18 @@ import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 import javax.sound.sampled.*;
 import javax.sound.sampled.spi.AudioFileReader;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class AppController {
-
+    @FXML
+    public Button renamePlaylist;
     //UI Elements
     @FXML
     private Label lblSongName;
     @FXML
     private Label lblArtist;
-    @FXML
-    private ProgressBar songProgress;
     @FXML
     private Slider songProgressSlider;
     @FXML
@@ -55,6 +56,8 @@ public class AppController {
     private TextField txtSearch;
     private ImageView playView;
     private ImageView pauseView;
+    private ContextMenu contextMenuForDB;
+
 //Buttons
     @FXML
     private Button updateButton;
@@ -109,7 +112,6 @@ public class AppController {
     private TableView<?> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
-
     private MediaPlayer mediaPlayer;
     private Song selectedSong;
     private int currentSong;
@@ -130,11 +132,12 @@ public class AppController {
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
         setVolumeSlider(); //Initializes the volume slider
-        contextMenu(); //Gives us the ability to right click things
-        tableViewDB.setVisible(true);
-        tableSongsFromPlayList.setVisible(false);
+        contextMenu(); //Gives us the ability to right-click things
         updateButtonState(); //This method works with the playToggle below so you cannot toggle if a song isnt selected
         playToggle();  //toggles the play/pause button image
+        renamePlaylist(); //Sets up our cell to be editable and commits the edits to database
+        tableSetUp(); //Setting up our tables properly on start up
+        renameSongAndArtist();
     }
 
     ///////////////////////////////////////////////////////////
@@ -172,18 +175,7 @@ public class AppController {
     public void contextMenu(){
         // Create the context menu for tableSongsFromPlaylist
         ContextMenu contextMenuForPlaylist = new ContextMenu();
-        ContextMenu contextMenuForDB = new ContextMenu();
-
-        // Add menuitem for Updatesong that runs openUpdateWindow method
-        MenuItem updateSongItem = new MenuItem("Update song");
-        updateSongItem.setOnAction(mouseClick -> {
-            try {
-                openUpdateWindow();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-
+        contextMenuForDB = new ContextMenu();
 
         MenuItem addSong = new MenuItem("Add Song");
         addSong.setOnAction(mouseClick -> {
@@ -204,10 +196,9 @@ public class AppController {
         });
 
         contextMenuForPlaylist.getItems().add(removePlaylistSong());
-        contextMenuForDB.getItems().add(updateSongItem);
         contextMenuForDB.getItems().add(addSong);
         contextMenuForDB.getItems().add(deleteSong);
-        contextMenuForDB.getItems().add(addPlaylistSong());
+        contextMenuForDB.getItems().add(addToPlaylistMenuSubMenu());
 
 
         // Set the context menu on the tableViewDB
@@ -216,7 +207,13 @@ public class AppController {
 
     }
 
-    private Menu addPlaylistSong() {
+    private void refreshContextMenu() { //this is only run after changing playlist names
+        // Clear the existing menu items
+        contextMenuForDB.getItems().clear();
+        // Update context menu
+        contextMenuForDB.getItems().add(addToPlaylistMenuSubMenu());
+    }
+    private Menu addToPlaylistMenuSubMenu() {
         Menu addToPlaylistMenu = new Menu("Add to playlist");
         // Create local list for playlists
         List<Playlist> playlists = null;
@@ -225,32 +222,35 @@ public class AppController {
         } catch (MyTunesExceptions e) {
             e.printStackTrace();
         }
-        //Makes sure there is playlists
+        //Makes sure there are playlists
         if (playlists != null) {
+            //Loop to display all playlists
             for (Playlist playlist : playlists) {
-                //Loop to display all playlists
+                // Create Menuitem and run addSongToselectedPlaylist method on action
                 MenuItem playlistItem = new MenuItem(playlist.getName());
-                playlistItem.setOnAction(e -> {
-                    try {
-                        //to target the playlist you click
-                        tablePlaylists.getSelectionModel().select(playlist);
-                        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-                        if (selectedSong != null) {
-                            //uses our addsongtoplaylist method
-                            bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
-                            //updates lists
-                            displaySongsInPlaylist(null);
-                            showPlayLists();
-                        }
-                    } catch (MyTunesExceptions ex) {
-                        ex.printStackTrace();
-                    }
-                });
+                playlistItem.setOnAction(e -> addSongToSelectedPlaylist(playlist));
                 // Add playlistItem to the addToPlaylistMenu menu
                 addToPlaylistMenu.getItems().add(playlistItem);
             }
         }
         return addToPlaylistMenu;
+    }
+
+    private void addSongToSelectedPlaylist(Playlist playlist) {
+        try {
+            //to target the playlist you click
+            tablePlaylists.getSelectionModel().select(playlist);
+            Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+            if (selectedSong != null) {
+                //uses our addsongtoplaylist method
+                bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
+                //updates lists
+                displaySongsInPlaylist(null);
+                showPlayLists();
+            }
+        } catch (MyTunesExceptions ex) {
+            ex.printStackTrace();
+        }
     }
 
     private MenuItem removePlaylistSong() {
@@ -412,7 +412,6 @@ public class AppController {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                     songProgressSlider.setValue(newValue.toSeconds());
-                    songProgress.progressProperty().set(newValue.toSeconds()/ 100);
                 }
             });
 
@@ -423,7 +422,7 @@ public class AppController {
     public void adjustSongTime(MouseEvent mouseEvent) {
         if(mediaPlayer != null){
             mediaPlayer.seek(Duration.seconds(songProgressSlider.getValue()));
-            songProgress.progressProperty().set(songProgressSlider.getValue());
+
         }
     }
     /////////////////////////////////////////////////////////////////
@@ -444,15 +443,48 @@ public class AppController {
         lblSongName.setText(song.getName());
     }
 
-    public void renamePlaylist(ActionEvent actionEvent) {
+    public void renamePlaylist() {
+        //make the cell able to become a textfield
+        colPlaylistName.setCellFactory(TextFieldTableCell.forTableColumn());
+        //After editing, it sets the name in the database with .setOnEditCommit
+        colPlaylistName.setOnEditCommit(event -> {
+            Playlist playlist = event.getRowValue();
+            playlist.setName(event.getNewValue());
+            try {
+                bllPlaylist.updatePlaylist(playlist.getId(), event.getNewValue());
+                refreshContextMenu();
+            } catch (MyTunesExceptions e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void renameSongAndArtist(){
+        columnSongsDB.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnArtistsDB.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnSongsDB.setOnEditCommit(event -> {
+            Song song = event.getRowValue();
+            song.setName(event.getNewValue());
+            try {
+                bllManager.updateSong(song.getId(), song.getName(), song.getArtist());
+            } catch (MyTunesExceptions e) {
+                e.printStackTrace();
+            }
+        });
+
+        columnArtistsDB.setOnEditCommit(event -> {
+            Song song = event.getRowValue();
+            song.setArtist(event.getNewValue());
+            try {
+                bllManager.updateSong(song.getId(), song.getName(), song.getArtist());
+            } catch (MyTunesExceptions e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void deletePlaylist(ActionEvent actionEvent) {
     }
-
-    public void savePlaylist(ActionEvent actionEvent) {
-    }
-
 
     public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
         Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
@@ -482,7 +514,7 @@ public class AppController {
         }
     }
 
-    public void moveSongUpPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+    public void moveSongUpPlaylist(ActionEvent actionEvent) throws SQLException {
         Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
@@ -499,6 +531,7 @@ public class AppController {
             displaySongsInPlaylist(null);
         }
     }
+
 
     public void showSongTable(ActionEvent event) {
         tableViewDB.setVisible(true);
@@ -543,25 +576,7 @@ public class AppController {
     /////////////////////////////////////////////////////////////////
     ///////////////////////New Window Buttons////////////////////////
     /////////////////////////////////////////////////////////////////
-    @FXML
-    public void openUpdateWindow() throws IOException {
-        try {
-            Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-            if (selectedSong != null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/UpdateSongs.fxml"));
-                int id = selectedSong.getId();
-                Parent root = loader.load();
-                UpdateSongWindow controller = loader.getController();
-                controller.setAppController(this);
-                controller.setID(id);
-                openNewScene(root, "Update Song");
 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void addSong(ActionEvent actionEvent) throws MyTunesExceptions, IOException, UnsupportedAudioFileException {
         FileChooser chooser = new FileChooser();
@@ -668,7 +683,7 @@ public class AppController {
     }
 
     public void displaySongsInPlaylist(MouseEvent mouseEvent) throws MyTunesExceptions {
-        Playlist selected = (Playlist) tablePlaylists.getSelectionModel().getSelectedItem();
+        Playlist selected = tablePlaylists.getSelectionModel().getSelectedItem();
         if (selected != null) {
             columnSongs.setCellValueFactory(new PropertyValueFactory<>("name"));
             columnArtists.setCellValueFactory(new PropertyValueFactory<>("artist"));
@@ -678,15 +693,6 @@ public class AppController {
             tableSongsFromPlayList.getItems().setAll(connections);
             tableViewDB.setVisible(false);
             tableSongsFromPlayList.setVisible(true);
-        }
-    }
-
-    public void updateSongInTableView(Song updatedSong) {
-        // Find the index of the song in the TableView's items
-        int index = tableViewDB.getItems().indexOf(updatedSong);
-        // Replace the song in the TableView's items with the updated song
-        if (index != -1) {
-            tableViewDB.getItems().set(index, updatedSong);
         }
     }
 
@@ -707,6 +713,14 @@ public class AppController {
         colPlaylistName.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
+    }
+
+    private void tableSetUp() {
+        //Hides and shows the respective tables on init
+        tableViewDB.setVisible(true);
+        tableSongsFromPlayList.setVisible(false);
+        tablePlaylists.setEditable(true); //This needs to be true to allow our renamePlaylist method to work
+        tableViewDB.setEditable(true);
     }
 }
 
