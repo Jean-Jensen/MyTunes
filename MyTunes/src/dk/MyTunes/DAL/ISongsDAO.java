@@ -2,7 +2,6 @@ package dk.MyTunes.DAL;
 
 import dk.MyTunes.BE.Song;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
-
 import java.util.List;
 
 public interface ISongsDAO {
