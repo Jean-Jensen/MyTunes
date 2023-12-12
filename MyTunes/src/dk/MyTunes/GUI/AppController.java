@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import dk.MyTunes.BE.PlaylistConnection;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -35,18 +36,18 @@ import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 import javax.sound.sampled.*;
 import javax.sound.sampled.spi.AudioFileReader;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class AppController {
-
+    @FXML
+    public Button renamePlaylist;
     //UI Elements
     @FXML
     private Label lblSongName;
     @FXML
     private Label lblArtist;
-    @FXML
-    private ProgressBar songProgress;
     @FXML
     private Slider songProgressSlider;
     @FXML
@@ -135,6 +136,8 @@ public class AppController {
         tableSongsFromPlayList.setVisible(false);
         updateButtonState(); //This method works with the playToggle below so you cannot toggle if a song isnt selected
         playToggle();  //toggles the play/pause button image
+        tablePlaylists.setEditable(true); //This needs to be true to allow our renamePlaylist method to work
+        renamePlaylist(); //Sets up our cell to be editable and commits the edits to database
     }
 
     ///////////////////////////////////////////////////////////
@@ -412,7 +415,6 @@ public class AppController {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                     songProgressSlider.setValue(newValue.toSeconds());
-                    songProgress.progressProperty().set(newValue.toSeconds()/ 100);
                 }
             });
 
@@ -423,7 +425,7 @@ public class AppController {
     public void adjustSongTime(MouseEvent mouseEvent) {
         if(mediaPlayer != null){
             mediaPlayer.seek(Duration.seconds(songProgressSlider.getValue()));
-            songProgress.progressProperty().set(songProgressSlider.getValue());
+
         }
     }
     /////////////////////////////////////////////////////////////////
@@ -444,15 +446,24 @@ public class AppController {
         lblSongName.setText(song.getName());
     }
 
-    public void renamePlaylist(ActionEvent actionEvent) {
+    public void renamePlaylist() {
+        //make the cell able to become a textfield
+        colPlaylistName.setCellFactory(TextFieldTableCell.forTableColumn());
+        //After editing, it sets the name in the database with .setOnEditCommit
+        colPlaylistName.setOnEditCommit(event -> {
+            Playlist playlist = event.getRowValue();
+            playlist.setName(event.getNewValue());
+            try {
+                bllPlaylist.updatePlaylist(playlist.getId(), event.getNewValue());
+            } catch (MyTunesExceptions e) {
+                e.printStackTrace();
+            }
+        });
     }
+
 
     public void deletePlaylist(ActionEvent actionEvent) {
     }
-
-    public void savePlaylist(ActionEvent actionEvent) {
-    }
-
 
     public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
         Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
@@ -470,7 +481,7 @@ public class AppController {
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
             int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
-            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
+            bllPlaylist.removeSongFromPlaylist(selectedSong.getConnectionID());
             displaySongsInPlaylist(null);  // Refresh the song list in the selected playlist
             showPlayLists(); //Refresh display everytime new song is added
             // Stops cursor from jumping to the top
@@ -482,7 +493,7 @@ public class AppController {
         }
     }
 
-    public void moveSongUpPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+    public void moveSongUpPlaylist(ActionEvent actionEvent) throws SQLException {
         Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {

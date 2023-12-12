@@ -4,7 +4,6 @@ import dk.MyTunes.BE.Song;
 import dk.MyTunes.DAL.SongsDAO;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.scene.control.Alert;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,16 +22,12 @@ public class BLLManager {
             errorAlert("Invalid file format");
             throw new MyTunesExceptions("Invalid file format");
         }
-
-
         try{
             songsDAO.createSong(s);
         } catch (SQLException e) {
             errorAlert(e);
             throw new MyTunesExceptions("Error creating song", e);
-
         }
-
     }
 
     public List<Song> searchForSong(String searchWord) throws MyTunesExceptions {
@@ -42,7 +37,6 @@ public class BLLManager {
             errorAlert(e);
             throw new MyTunesExceptions("Error getting all songs where name/artist is " + searchWord, e);
         }
-
     }
 
     public void deleteSong(int id) throws MyTunesExceptions {
@@ -61,7 +55,6 @@ public class BLLManager {
             errorAlert(e);
             throw new MyTunesExceptions("Error getting all songs", e);
         }
-
     }
 
     public void updateSong(Song s) throws MyTunesExceptions {
@@ -80,7 +73,6 @@ public class BLLManager {
             errorAlert(e);
             throw new MyTunesExceptions("Error getting song with ID " + id, e);
         }
-
     }
 
     public int getLastID() throws MyTunesExceptions {

@@ -28,7 +28,9 @@ public class Song {
         this.fileType = fileType;
     }
 
-
+// The equals and hashcode needed to be set up this way to auto-update our tables in real time when using the update button/method
+//Jeppe if you read this one and you know why I would love a proper explanation because I read
+//alot about it but was still confused outside of "It just works"
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
