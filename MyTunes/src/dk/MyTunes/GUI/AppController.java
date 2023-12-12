@@ -56,6 +56,8 @@ public class AppController {
     private TextField txtSearch;
     private ImageView playView;
     private ImageView pauseView;
+    private ContextMenu contextMenuForDB;
+
 //Buttons
     @FXML
     private Button updateButton;
@@ -110,7 +112,6 @@ public class AppController {
     private TableView<?> currentTableView;
     private BLLManager bllManager;  //The only thing the GUI talks to is the bllManager
     private BLLPlaylist bllPlaylist = new BLLPlaylist();
-
     private MediaPlayer mediaPlayer;
     private Song selectedSong;
     private int currentSong;
@@ -131,13 +132,11 @@ public class AppController {
         showSongs(); //Shows the songs in the Database on the Database Table
         showPlayLists(); //Shows the songs in the Playlist Database on the Playlist Table
         setVolumeSlider(); //Initializes the volume slider
-        contextMenu(); //Gives us the ability to right click things
-        tableViewDB.setVisible(true);
-        tableSongsFromPlayList.setVisible(false);
+        contextMenu(); //Gives us the ability to right-click things
         updateButtonState(); //This method works with the playToggle below so you cannot toggle if a song isnt selected
         playToggle();  //toggles the play/pause button image
-        tablePlaylists.setEditable(true); //This needs to be true to allow our renamePlaylist method to work
         renamePlaylist(); //Sets up our cell to be editable and commits the edits to database
+        tableSetUp(); //Setting up our tables properly on start up
     }
 
     ///////////////////////////////////////////////////////////
@@ -175,7 +174,7 @@ public class AppController {
     public void contextMenu(){
         // Create the context menu for tableSongsFromPlaylist
         ContextMenu contextMenuForPlaylist = new ContextMenu();
-        ContextMenu contextMenuForDB = new ContextMenu();
+        contextMenuForDB = new ContextMenu();
 
         // Add menuitem for Updatesong that runs openUpdateWindow method
         MenuItem updateSongItem = new MenuItem("Update song");
@@ -210,7 +209,7 @@ public class AppController {
         contextMenuForDB.getItems().add(updateSongItem);
         contextMenuForDB.getItems().add(addSong);
         contextMenuForDB.getItems().add(deleteSong);
-        contextMenuForDB.getItems().add(addPlaylistSong());
+        contextMenuForDB.getItems().add(addToPlaylistMenuSubMenu());
 
 
         // Set the context menu on the tableViewDB
@@ -219,7 +218,13 @@ public class AppController {
 
     }
 
-    private Menu addPlaylistSong() {
+    private void refreshContextMenu() { //this is only run after changing playlist names
+        // Clear the existing menu items
+        contextMenuForDB.getItems().clear();
+        // Update context menu
+        contextMenuForDB.getItems().add(addToPlaylistMenuSubMenu());
+    }
+    private Menu addToPlaylistMenuSubMenu() {
         Menu addToPlaylistMenu = new Menu("Add to playlist");
         // Create local list for playlists
         List<Playlist> playlists = null;
@@ -228,32 +233,35 @@ public class AppController {
         } catch (MyTunesExceptions e) {
             e.printStackTrace();
         }
-        //Makes sure there is playlists
+        //Makes sure there are playlists
         if (playlists != null) {
+            //Loop to display all playlists
             for (Playlist playlist : playlists) {
-                //Loop to display all playlists
+                // Create Menuitem and run addSongToselectedPlaylist method on action
                 MenuItem playlistItem = new MenuItem(playlist.getName());
-                playlistItem.setOnAction(e -> {
-                    try {
-                        //to target the playlist you click
-                        tablePlaylists.getSelectionModel().select(playlist);
-                        Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
-                        if (selectedSong != null) {
-                            //uses our addsongtoplaylist method
-                            bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
-                            //updates lists
-                            displaySongsInPlaylist(null);
-                            showPlayLists();
-                        }
-                    } catch (MyTunesExceptions ex) {
-                        ex.printStackTrace();
-                    }
-                });
+                playlistItem.setOnAction(e -> addSongToSelectedPlaylist(playlist));
                 // Add playlistItem to the addToPlaylistMenu menu
                 addToPlaylistMenu.getItems().add(playlistItem);
             }
         }
         return addToPlaylistMenu;
+    }
+
+    private void addSongToSelectedPlaylist(Playlist playlist) {
+        try {
+            //to target the playlist you click
+            tablePlaylists.getSelectionModel().select(playlist);
+            Song selectedSong = tableViewDB.getSelectionModel().getSelectedItem();
+            if (selectedSong != null) {
+                //uses our addsongtoplaylist method
+                bllPlaylist.addSongToPlaylist(playlist.getId(), selectedSong.getId());
+                //updates lists
+                displaySongsInPlaylist(null);
+                showPlayLists();
+            }
+        } catch (MyTunesExceptions ex) {
+            ex.printStackTrace();
+        }
     }
 
     private MenuItem removePlaylistSong() {
@@ -455,6 +463,7 @@ public class AppController {
             playlist.setName(event.getNewValue());
             try {
                 bllPlaylist.updatePlaylist(playlist.getId(), event.getNewValue());
+                refreshContextMenu();
             } catch (MyTunesExceptions e) {
                 e.printStackTrace();
             }
@@ -718,6 +727,13 @@ public class AppController {
         colPlaylistName.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colLength.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
         colSongCount.prefWidthProperty().bind(tablePlaylists.widthProperty().divide(numberOfColumnsPlaylist));
+    }
+
+    private void tableSetUp() {
+        //Hides and shows the respective tables on init
+        tableViewDB.setVisible(true);
+        tableSongsFromPlayList.setVisible(false);
+        tablePlaylists.setEditable(true); //This needs to be true to allow our renamePlaylist method to work
     }
 }
 
