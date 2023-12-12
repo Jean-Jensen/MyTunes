@@ -28,8 +28,7 @@ public class SongsDAO implements ISongsDAO {
                 String fileType = rs.getString("fileType");
                 String filePath = rs.getString("filePath");
 
-                Song s = new Song(sid, name, artist, length, fileType,filePath);
-                return s;
+                return new Song(sid, name, artist, length, fileType,filePath);
 
             }
             return null;
@@ -89,6 +88,7 @@ public class SongsDAO implements ISongsDAO {
         try(Connection con = cm.getConnection())
         {
             String sql = "UPDATE songs SET name=?, artist=?, length=?, fileType=?, filePath=? WHERE id=?";
+            //Selects all of the SET options to a specific ID
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, s.getName());
             pstmt.setString(2, s.getArtist());
