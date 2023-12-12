@@ -470,7 +470,7 @@ public class AppController {
         PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null && selectedSong != null) {
             int selectedIndex = tableSongsFromPlayList.getSelectionModel().getSelectedIndex();
-            bllPlaylist.removeSongFromPlaylist(selectedSong.getOrderId());
+            bllPlaylist.removeSongFromPlaylist(selectedSong.getConnectionID());
             displaySongsInPlaylist(null);  // Refresh the song list in the selected playlist
             showPlayLists(); //Refresh display everytime new song is added
             // Stops cursor from jumping to the top
