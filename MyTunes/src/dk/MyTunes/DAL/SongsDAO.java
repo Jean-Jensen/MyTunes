@@ -36,9 +36,6 @@ public class SongsDAO implements ISongsDAO {
    }
 
    public List<Song> searchForSong(String searchword) throws MyTunesExceptions {
-        if(searchword.isEmpty()){
-            return getAllSongs();
-        }
        List<Song> songs = new ArrayList<>();
        try (Connection con = cm.getConnection()) {
            String sql = "SELECT * FROM songs a WHERE Name LIKE ?" +

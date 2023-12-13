@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="010c53e4-bb0f-4d4e-9113-4d2dedd29cba" name="Changes" comment="-Deleted Old UI">
-      <change afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/DeletePlaylistController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/FXML/DeletePlaylist.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/GUI/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/BLL/BLLManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyTunes/src/dk/MyTunes/DAL/SongsDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +152,7 @@
       <workItem from="1702332403445" duration="855000" />
       <workItem from="1702400727987" duration="814000" />
       <workItem from="1702487280171" duration="327000" />
-      <workItem from="1702487820886" duration="904000" />
+      <workItem from="1702487820886" duration="4330000" />
     </task>
     <task id="LOCAL-00001" summary="-Updated the way Update window worked, using getSong instead of getList for better load times&#10;-Fixed ISongsDAO to reflect getLastID so we could use it in bllManager&#10;-Added Exceptions with comments">
       <option name="closed" value="true" />

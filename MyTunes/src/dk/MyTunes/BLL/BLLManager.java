@@ -33,6 +33,9 @@ public class BLLManager {
 
     public List<Song> searchForSong(String searchWord) throws MyTunesExceptions {
         try{
+            if(searchWord.isEmpty()){
+                return getAllSongs();
+            }
             return songsDAO.searchForSong(searchWord);
         }catch (SQLException e) {
             errorAlert(e);
