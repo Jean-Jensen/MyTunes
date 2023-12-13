@@ -1,6 +1,7 @@
 package dk.MyTunes.BLL;
 
 import dk.MyTunes.BE.Song;
+import dk.MyTunes.DAL.ISongsDAO;
 import dk.MyTunes.DAL.SongsDAO;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.scene.control.Alert;
