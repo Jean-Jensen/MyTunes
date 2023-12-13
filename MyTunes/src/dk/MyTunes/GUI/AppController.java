@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -41,8 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AppController {
-    @FXML
-    public Button renamePlaylist;
+
     //UI Elements
     @FXML
     private Label lblSongName;
@@ -60,8 +60,6 @@ public class AppController {
 
 //Buttons
     @FXML
-    private Button updateButton;
-    @FXML
     private Button removeSongButton;
     @FXML
     private Button DBViewer;
@@ -74,11 +72,9 @@ public class AppController {
     @FXML
     private Button searchButton;
     @FXML
-    private Button addSongToPlaylistButton;
-    @FXML
-    private Button removeSongFromPlaylistButton;
-    @FXML
     private ToggleButton togglePlayPause;
+    public Button songUp;
+    public Button songDown;
 //Tables
     @FXML
     private TableView<Playlist> tablePlaylists;
@@ -135,41 +131,29 @@ public class AppController {
         contextMenu(); //Gives us the ability to right-click things
         updateButtonState(); //This method works with the playToggle below so you cannot toggle if a song isnt selected
         playToggle();  //toggles the play/pause button image
-        renamePlaylist(); //Sets up our cell to be editable and commits the edits to database
+        renamePlaylist(); //Sets up our TableView cell to be editable and commits the edits to database
+        renameSongAndArtist(); //Same as above
         tableSetUp(); //Setting up our tables properly on start up
-        renameSongAndArtist();
+
     }
 
     ///////////////////////////////////////////////////////////
     ///////////////////Quality of Life/////////////////////////
     ///////////////////////////////////////////////////////////
     public void toolTips() {
-        Tooltip tooltipAddSong = new Tooltip("Add selected song to the selected playlist");
-        Tooltip.install(addSongToPlaylistButton, tooltipAddSong);
+        installTooltip(searchButton, "Search for song that contains what you typed in its name/artist name");
+        installTooltip(addSongButton, "Add song to songs list");
+        installTooltip(removeSongButton, "Delete currently selected song. Will do nothing if no song selected");
+        installTooltip(DBViewer, "View Song Database");
+        installTooltip(createPlaylist, "Add a new playlist");
+        installTooltip(deletePlaylist, "Remove selected playlist");
+        installTooltip(songUp,"Move a song up in playlist");
+        installTooltip(songDown,"Move a song down in playlist");
+    }
 
-        Tooltip tooltipRemoveSong = new Tooltip("Remove selected song from the selected playlist");
-        Tooltip.install(removeSongFromPlaylistButton, tooltipRemoveSong);
-
-        Tooltip tooltipSearch = new Tooltip("Search for song that contains what you typed in its name/artist name");
-        Tooltip.install(searchButton, tooltipSearch);
-
-        Tooltip tooltipAdd = new Tooltip("Add song to songs list");
-        Tooltip.install(addSongButton, tooltipAdd);
-
-        Tooltip tooltipDelete = new Tooltip("Delete currently selected song. Will do nothing if no song selected");
-        Tooltip.install(removeSongButton, tooltipDelete);
-
-        Tooltip tooltipUpdate = new Tooltip("Update values of currently selected song. Will do nothing if no song selected");
-        Tooltip.install(updateButton, tooltipUpdate);
-
-        Tooltip tooltipDBView = new Tooltip("View Song Database");
-        Tooltip.install(DBViewer, tooltipDBView);
-
-        Tooltip tooltipPlaylistAdd = new Tooltip("Add a new playlist");
-        Tooltip.install(createPlaylist, tooltipPlaylistAdd);
-
-        Tooltip tooltipPlaylistRemove = new Tooltip("Remove selected playlist");
-        Tooltip.install(deletePlaylist, tooltipPlaylistRemove);
+    private void installTooltip(Node node, String text) {
+        Tooltip tooltip = new Tooltip(text);
+        Tooltip.install(node, tooltip);
     }
 
     public void contextMenu(){
@@ -288,7 +272,6 @@ public class AppController {
         tableViewDB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedSong = newSelection;
-                System.out.println(tableViewDB.getSelectionModel().getSelectedItem().getName());
                 currentTableView = tableViewDB;
             }
         });
@@ -397,7 +380,6 @@ public class AppController {
 
     private void setProgressBar(){ //adjusts the progressbar and slider value everytime a new song plays
         if(mediaPlayer != null){
-            System.out.println(songProgressSlider.getMax());
             mediaPlayer.setOnReady(new Runnable() {
                 @Override
                 public void run() {
@@ -627,7 +609,6 @@ public class AppController {
         if(artist == null || artist.isEmpty()){ //so that we don't run into any errors
             artist = "Unknown";
         }
-        //System.out.println("Song: " + (bllManager.getLastID()+1) + name + " " + artist + " " + lengthString + " " + fileType + " " + filepath);
 
         return new Song(bllManager.getLastID()+1, name, artist, lengthString, fileType, filepath);
     }
@@ -688,12 +669,23 @@ public class AppController {
     public void displaySongsInPlaylist(MouseEvent mouseEvent) throws MyTunesExceptions {
         Playlist selected = tablePlaylists.getSelectionModel().getSelectedItem();
         if (selected != null) {
+            // Stores the song you have selected
+            PlaylistConnection selectedSong = tableSongsFromPlayList.getSelectionModel().getSelectedItem();
             columnSongs.setCellValueFactory(new PropertyValueFactory<>("name"));
             columnArtists.setCellValueFactory(new PropertyValueFactory<>("artist"));
             columnLength.setCellValueFactory(new PropertyValueFactory<>("length"));
             columnFileType.setCellValueFactory(new PropertyValueFactory<>("fileType"));
             List<PlaylistConnection> connections = bllPlaylist.getPlaylistConnections(selected.getId());
             tableSongsFromPlayList.getItems().setAll(connections);
+            // Reselect the song
+            if (selectedSong != null) {
+                for (int i = 0; i < connections.size(); i++) {
+                    if (connections.get(i).getId() == selectedSong.getId()) {
+                        tableSongsFromPlayList.getSelectionModel().select(i);
+                        break; //stops the loop once it finds the selectedSong
+                    }
+                }
+            }
             tableViewDB.setVisible(false);
             tableSongsFromPlayList.setVisible(true);
         }

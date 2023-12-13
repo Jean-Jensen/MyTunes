@@ -1,6 +1,7 @@
 package dk.MyTunes.BLL;
 
 import dk.MyTunes.BE.Song;
+import dk.MyTunes.DAL.ISongsDAO;
 import dk.MyTunes.DAL.SongsDAO;
 import dk.MyTunes.Exceptions.MyTunesExceptions;
 import javafx.scene.control.Alert;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BLLManager {
-    SongsDAO songsDAO = new SongsDAO();
+    ISongsDAO songsDAO = new SongsDAO();
 
     public void createSong(Song s) throws MyTunesExceptions {
         if(s.getArtist().isEmpty() || s.getName().isEmpty() || s.getLength().isEmpty() || s.getFilePath().isEmpty()) {
