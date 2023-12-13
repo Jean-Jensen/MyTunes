@@ -465,11 +465,7 @@ public class AppController {
         });
     }
 
-    public void deletePlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
-        Playlist selected = tablePlaylists.getSelectionModel().getSelectedItem();
-        bllPlaylist.deletePlaylist(selected.getId());
-        showPlayLists();
-    }
+
 
     public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
         Playlist selectedPlaylist = tablePlaylists.getSelectionModel().getSelectedItem();
@@ -632,9 +628,20 @@ public class AppController {
         controller.setAppController(this);
         openNewScene(root, "Create Playlist");
     }
+    public void deletePlaylist(ActionEvent actionEvent) throws IOException {
+        Playlist selected = tablePlaylists.getSelectionModel().getSelectedItem();
+        if(selected != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/DeletePlaylist.fxml"));
+            Parent root = loader.load();
+            DeletePlaylistController controller = loader.getController();
+            controller.setAppController(this);
+            controller.setData(selected.getId(), selected.getName());
+            openNewScene(root, "Delete Playlist");
+        }
+    }
 
     //in order to avoid repeating the same lines of code over and over
-    private void openNewScene(Parent root, String title) throws IOException {
+    private void openNewScene(Parent root, String title) {
         Scene scene = new Scene(root);
         Stage primaryStage = new Stage();
         primaryStage.setTitle(title);
