@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BLLManager {
-    SongsDAO songsDAO = new SongsDAO();
+    ISongsDAO songsDAO = new SongsDAO();
 
     public void createSong(Song s) throws MyTunesExceptions {
         if(s.getArtist().isEmpty() || s.getName().isEmpty() || s.getLength().isEmpty() || s.getFilePath().isEmpty()) {
