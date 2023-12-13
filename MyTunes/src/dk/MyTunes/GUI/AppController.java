@@ -483,7 +483,10 @@ public class AppController {
         });
     }
 
-    public void deletePlaylist(ActionEvent actionEvent) {
+    public void deletePlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
+        Playlist selected = tablePlaylists.getSelectionModel().getSelectedItem();
+        bllPlaylist.deletePlaylist(selected.getId());
+        showPlayLists();
     }
 
     public void addSongToPlaylist(ActionEvent actionEvent) throws MyTunesExceptions {
