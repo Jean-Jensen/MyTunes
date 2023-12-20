@@ -121,7 +121,6 @@ public class PlaylistDAO implements IPlaylistDAO {
                 pstmt.setInt(3, getLastID(playlistId) + 1);
             }
             pstmt.executeUpdate();
-            con.commit();
         } catch (SQLException e) {
             throw new MyTunesExceptions("Error adding song to playlist", e);
         }
